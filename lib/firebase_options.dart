@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,22 +41,53 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDPLlj8Bp0SDf0CVuJx2qeGP63pFqWH7VI',
-    appId: '1:346719973558:web:e5743405286c49e6557617',
-    messagingSenderId: '346719973558',
-    projectId: 'storeimage-40b3d',
-    authDomain: 'storeimage-40b3d.firebaseapp.com',
-    databaseURL: 'https://storeimage-40b3d-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'storeimage-40b3d.appspot.com',
-    measurementId: 'G-19Y66QH1VM',
+    apiKey: 'AIzaSyDWwwY7yOv0RppAVBGtL1IjhXI5Revls_U',
+    appId: '1:1008882272315:web:246eed14fb6940ed55f41e',
+    messagingSenderId: '1008882272315',
+    projectId: 'quiz-app-a04a3',
+    authDomain: 'quiz-app-a04a3.firebaseapp.com',
+    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
+    storageBucket: 'quiz-app-a04a3.appspot.com',
+    measurementId: 'G-NHJXR32YRV',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAtQIKpLlKK2IqiAvNASs-lkDXSIVfZJa0',
-    appId: '1:346719973558:android:65bc4d1a22bf5359557617',
-    messagingSenderId: '346719973558',
-    projectId: 'storeimage-40b3d',
-    databaseURL: 'https://storeimage-40b3d-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'storeimage-40b3d.appspot.com',
+    apiKey: 'AIzaSyBjjr3ZV0DdMw0OSDbKyO-VtMpluUKyAlo',
+    appId: '1:1008882272315:android:5c5cf2b3b60e86be55f41e',
+    messagingSenderId: '1008882272315',
+    projectId: 'quiz-app-a04a3',
+    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
+    storageBucket: 'quiz-app-a04a3.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBiWEm6-Sb46OLg3v__Ccxy3EgainHrxPQ',
+    appId: '1:1008882272315:ios:3ecef24f81e0068b55f41e',
+    messagingSenderId: '1008882272315',
+    projectId: 'quiz-app-a04a3',
+    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
+    storageBucket: 'quiz-app-a04a3.appspot.com',
+    iosBundleId: 'com.example.prolifeService',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBiWEm6-Sb46OLg3v__Ccxy3EgainHrxPQ',
+    appId: '1:1008882272315:ios:3ecef24f81e0068b55f41e',
+    messagingSenderId: '1008882272315',
+    projectId: 'quiz-app-a04a3',
+    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
+    storageBucket: 'quiz-app-a04a3.appspot.com',
+    iosBundleId: 'com.example.prolifeService',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDWwwY7yOv0RppAVBGtL1IjhXI5Revls_U',
+    appId: '1:1008882272315:web:06e9e16a349d038855f41e',
+    messagingSenderId: '1008882272315',
+    projectId: 'quiz-app-a04a3',
+    authDomain: 'quiz-app-a04a3.firebaseapp.com',
+    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
+    storageBucket: 'quiz-app-a04a3.appspot.com',
+    measurementId: 'G-8YQRXPQEYH',
   );
 }
