@@ -15,7 +15,16 @@ void main() async {
   );
 
 
+import 'package:prolife_service/text_page.dart';
 
+import 'bottonNavigation/botton_nav.dart';
+import 'firebase_options.dart';
+
+void main() async{
+WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -32,6 +41,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const SplashScreen(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: BottomNavScreen(),
+      // home: RatingScreen(),
     );
   }
 }
