@@ -1,0 +1,163 @@
+{
+  "project_info": {
+    "project_number": "842818888924",
+    "firebase_url": "https://image-uplode-4d545-default-rtdb.firebaseio.com",
+    "project_id": "image-uplode-4d545",
+    "storage_bucket": "image-uplode-4d545.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:76e99eaafb482959994019",
+        "android_client_info": {
+          "package_name": "com.example.imageuplode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842818888924-ae93uv5i3hrabcq9mogt4q9u3s212r0i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:eb341562c23be3de994019",
+        "android_client_info": {
+          "package_name": "com.example.prolife_service"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842818888924-tjg2gsce9hl30ik665tc1kqc3pa95jgp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.prolife_service",
+            "certificate_hash": "4b859a171307c46260ac6a4c1cb07f680ec9b0c8"
+          }
+        },
+        {
+          "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842818888924-ae93uv5i3hrabcq9mogt4q9u3s212r0i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:a9896b2dfecb1a71994019",
+        "android_client_info": {
+          "package_name": "com.example.prolifeservice_partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842818888924-ae93uv5i3hrabcq9mogt4q9u3s212r0i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:c407e32aa3808f2e994019",
+        "android_client_info": {
+          "package_name": "com.example.whats_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842818888924-ae93uv5i3hrabcq9mogt4q9u3s212r0i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
