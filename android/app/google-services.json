@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:56a1f00aead4c86e994019",
+        "android_client_info": {
+          "package_name": "com.edugaon.prolife.service"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842818888924-ush3gnjeekmsgj6u396629qhji99hcep.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842818888924-ae93uv5i3hrabcq9mogt4q9u3s212r0i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:842818888924:android:76e99eaafb482959994019",
         "android_client_info": {
           "package_name": "com.example.imageuplode"
