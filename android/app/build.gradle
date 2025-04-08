@@ -11,13 +11,11 @@ plugins {
 android {
     namespace = "com.example.prolife_service"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion "25.1.8937393"
+    ndkVersion = "25.1.8937393"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
-
     }
 
     kotlinOptions {
@@ -46,9 +44,4 @@ android {
 
 flutter {
     source = "../.."
-}
-dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
-    implementation 'androidx.multidex:multidex:2.0.1' // Optional, if needed
-    // Other dependencies
 }
