@@ -1,21 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Add this import for SystemChrome
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
-import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0x00ffffff), statusBarBrightness: Brightness.dark));
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-
-
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,14 +16,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ProLife Service',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: GetMaterialApp(
+        title: 'Flutter Auth',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }
+
+// class AuthWrapper extends StatelessWidget {
+//   const AuthWrapper({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final authProvider = Provider.of<AuthProvider>(context);
+//
+//     if (authProvider.isLoading) {
+//       return const Scaffold(
+//         body: Center(child: CircularProgressIndicator()),
+//       );
+//     } else {
+//       return authProvider.user != null
+//           ? const HomeScreen()
+//           : const SignUpScreen();
+//     }
+//   }
+// }
