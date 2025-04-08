@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:prolife_service/home_page_view/home_screen.dart';
 
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -12,6 +16,7 @@ class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
 
   User? get user => _user;
+
   bool get isLoading => _isLoading;
 
   AuthProvider() {
@@ -29,7 +34,7 @@ class AuthProvider with ChangeNotifier {
       if (googleUser == null) return;
 
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
 
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -37,9 +42,11 @@ class AuthProvider with ChangeNotifier {
       );
 
       final UserCredential userCredential =
-      await _auth.signInWithCredential(credential);
+          await _auth.signInWithCredential(credential);
 
       if (userCredential.user != null) {
+        Fluttertoast.showToast(msg: "Singup successfully");
+        Get.to(HomeScreen());
         await _checkAndCreateUser(userCredential.user!);
       }
     } catch (e) {
