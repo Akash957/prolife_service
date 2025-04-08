@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prolife_service/view/onboarding/onboarding1.dart';
+import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

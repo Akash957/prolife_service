@@ -1,14 +1,33 @@
 {
   "project_info": {
-    "project_number": "1008882272315",
-    "firebase_url": "https://quiz-app-a04a3-default-rtdb.firebaseio.com",
-    "project_id": "quiz-app-a04a3",
-    "storage_bucket": "quiz-app-a04a3.appspot.com"
+    "project_number": "842818888924",
+    "firebase_url": "https://image-uplode-4d545-default-rtdb.firebaseio.com",
+    "project_id": "image-uplode-4d545",
+    "storage_bucket": "image-uplode-4d545.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1008882272315:android:5c5cf2b3b60e86be55f41e",
+        "mobilesdk_app_id": "1:842818888924:android:76e99eaafb482959994019",
+        "android_client_info": {
+          "package_name": "com.example.imageuplode"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:eb341562c23be3de994019",
         "android_client_info": {
           "package_name": "com.example.prolife_service"
         }
@@ -16,7 +35,45 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBjjr3ZV0DdMw0OSDbKyO-VtMpluUKyAlo"
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:a9896b2dfecb1a71994019",
+        "android_client_info": {
+          "package_name": "com.example.prolifeservice_partner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842818888924:android:c407e32aa3808f2e994019",
+        "android_client_info": {
+          "package_name": "com.example.whats_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY"
         }
       ],
       "services": {
