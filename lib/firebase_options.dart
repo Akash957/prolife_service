@@ -41,53 +41,53 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDWwwY7yOv0RppAVBGtL1IjhXI5Revls_U',
-    appId: '1:1008882272315:web:246eed14fb6940ed55f41e',
-    messagingSenderId: '1008882272315',
-    projectId: 'quiz-app-a04a3',
-    authDomain: 'quiz-app-a04a3.firebaseapp.com',
-    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
-    storageBucket: 'quiz-app-a04a3.appspot.com',
-    measurementId: 'G-NHJXR32YRV',
+    apiKey: 'AIzaSyAh-Pk91R3E3T0ZgJmHTuAWFjlENcA-aKw',
+    appId: '1:842818888924:web:181665b7a3e8482d994019',
+    messagingSenderId: '842818888924',
+    projectId: 'image-uplode-4d545',
+    authDomain: 'image-uplode-4d545.firebaseapp.com',
+    databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
+    storageBucket: 'image-uplode-4d545.appspot.com',
+    measurementId: 'G-ZSD7V7GCEJ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBjjr3ZV0DdMw0OSDbKyO-VtMpluUKyAlo',
-    appId: '1:1008882272315:android:5c5cf2b3b60e86be55f41e',
-    messagingSenderId: '1008882272315',
-    projectId: 'quiz-app-a04a3',
-    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
-    storageBucket: 'quiz-app-a04a3.appspot.com',
+    apiKey: 'AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY',
+    appId: '1:842818888924:android:eb341562c23be3de994019',
+    messagingSenderId: '842818888924',
+    projectId: 'image-uplode-4d545',
+    databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
+    storageBucket: 'image-uplode-4d545.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBiWEm6-Sb46OLg3v__Ccxy3EgainHrxPQ',
-    appId: '1:1008882272315:ios:3ecef24f81e0068b55f41e',
-    messagingSenderId: '1008882272315',
-    projectId: 'quiz-app-a04a3',
-    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
-    storageBucket: 'quiz-app-a04a3.appspot.com',
+    apiKey: 'AIzaSyAYEc_NM7EiOv3YqzP3abl3GqesCPdkRgc',
+    appId: '1:842818888924:ios:afea128052e1e39b994019',
+    messagingSenderId: '842818888924',
+    projectId: 'image-uplode-4d545',
+    databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
+    storageBucket: 'image-uplode-4d545.appspot.com',
     iosBundleId: 'com.example.prolifeService',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBiWEm6-Sb46OLg3v__Ccxy3EgainHrxPQ',
-    appId: '1:1008882272315:ios:3ecef24f81e0068b55f41e',
-    messagingSenderId: '1008882272315',
-    projectId: 'quiz-app-a04a3',
-    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
-    storageBucket: 'quiz-app-a04a3.appspot.com',
+    apiKey: 'AIzaSyAYEc_NM7EiOv3YqzP3abl3GqesCPdkRgc',
+    appId: '1:842818888924:ios:afea128052e1e39b994019',
+    messagingSenderId: '842818888924',
+    projectId: 'image-uplode-4d545',
+    databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
+    storageBucket: 'image-uplode-4d545.appspot.com',
     iosBundleId: 'com.example.prolifeService',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDWwwY7yOv0RppAVBGtL1IjhXI5Revls_U',
-    appId: '1:1008882272315:web:06e9e16a349d038855f41e',
-    messagingSenderId: '1008882272315',
-    projectId: 'quiz-app-a04a3',
-    authDomain: 'quiz-app-a04a3.firebaseapp.com',
-    databaseURL: 'https://quiz-app-a04a3-default-rtdb.firebaseio.com',
-    storageBucket: 'quiz-app-a04a3.appspot.com',
-    measurementId: 'G-8YQRXPQEYH',
+    apiKey: 'AIzaSyAh-Pk91R3E3T0ZgJmHTuAWFjlENcA-aKw',
+    appId: '1:842818888924:web:e497dc0defc158ab994019',
+    messagingSenderId: '842818888924',
+    projectId: 'image-uplode-4d545',
+    authDomain: 'image-uplode-4d545.firebaseapp.com',
+    databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
+    storageBucket: 'image-uplode-4d545.appspot.com',
+    measurementId: 'G-9FNLG3YXQ2',
   );
 }
