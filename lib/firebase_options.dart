@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDdw_P4E2uOPxIDEaAGxsXEd0qTa41CMwY',
-    appId: '1:842818888924:android:eb341562c23be3de994019',
+    appId: '1:842818888924:android:56a1f00aead4c86e994019',
     messagingSenderId: '842818888924',
     projectId: 'image-uplode-4d545',
     databaseURL: 'https://image-uplode-4d545-default-rtdb.firebaseio.com',
