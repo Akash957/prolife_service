@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:prolife_service/screens/edit_profile_page.dart';
+import 'package:prolife_service/screens/settings_pages/privacy_policy_page.dart';
+import 'package:prolife_service/screens/settings_pages/termsandconditions_page.dart';
 
 import '../global_widget/listtile_widget.dart';
 
@@ -44,8 +46,14 @@ class ProfilePage extends StatelessWidget {
                 GlobalListTile(icon: Icons.lock, title: 'Change Password'),
                 GlobalListTile(icon: Icons.book, title: 'My Booking'),
                 GlobalListTile(icon: Icons.location_on, title: 'My Address'),
-                GlobalListTile(icon: Icons.privacy_tip, title: 'Privacy Policy'),
-                GlobalListTile(icon: Icons.description, title: 'Terms & Conditions'),
+                GlobalListTile(icon: Icons.privacy_tip, title: 'Privacy Policy',onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  PrivacyPolicyPage(),));
+
+                },),
+                GlobalListTile(icon: Icons.description, title: 'Terms & Conditions',onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  TermsAndConditionsPage(),));
+
+                },),
                 GlobalListTile(icon: Icons.support_agent, title: 'Customer Service'),
                 GlobalListTile(icon: Icons.language, title: 'Languages'),
                 Divider(),
