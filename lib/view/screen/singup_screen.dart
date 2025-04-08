@@ -42,6 +42,7 @@ class _GoogleSignInButtonState extends State<_GoogleSignInButton> {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+
     return Column(
       children: [
         ElevatedButton(
