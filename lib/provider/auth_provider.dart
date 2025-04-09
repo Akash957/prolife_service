@@ -7,8 +7,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prolife_service/home_page_view/home_screen.dart';
 
-import '../bottonNavigation/botton_nav.dart';
-
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -48,7 +46,7 @@ class AuthProvider with ChangeNotifier {
 
       if (userCredential.user != null) {
         Fluttertoast.showToast(msg: "Singup successfully");
-        Get.to(BottomNavScreen());
+        Get.to(HomeScreen());
         await _checkAndCreateUser(userCredential.user!);
       }
     } catch (e) {
