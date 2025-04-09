@@ -86,9 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       width: 20,
                     ),
-                    GlobleWidget.WorkNameText(context, "All Category"),
+    GlobalWidget.WorkNameText(context, "All Category"),
                     Spacer(),
-                    GlobleWidget.SeeAllCategories(() {}, context, "See All"),
+                    GlobalWidget.SeeAllCategories(() {}, context, "See All"),
                     SizedBox(
                       width: 20,
                     )
