@@ -63,7 +63,6 @@ class ProfilePage extends StatelessWidget {
                     leading: Icon(Icons.logout, color: Colors.red),
                     title: Text('Logout', style: TextStyle(color: Colors.red)),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BookingSuccessScreen(),));
                     },
                   ),
                 ],

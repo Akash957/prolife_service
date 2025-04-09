@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prolife_service/global_widget/globle_screen.dart';
 
+import '../globle_widget/globle_screen.dart';
 import 'click_on_categories.dart';
 
 class AllCategoriesPage extends StatefulWidget {

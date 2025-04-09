@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:prolife_service/screens/profile_screen.dart';
-import '../global_widget/globle_screen.dart';
+import '../globle_widget/globle_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.notifications_none_outlined,
                       size: 40,
                     ))
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     GlobleWidget.WorkNameText(context, "All Category"),
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   allowHalfRating: true,
                                   itemCount: 5,
                                   itemSize: 30,
-                                  itemBuilder: (context, _) => Icon(
+                                  itemBuilder: (context, _) => const Icon(
                                     Icons.star,
                                     color: Colors.blue,
                                   ),

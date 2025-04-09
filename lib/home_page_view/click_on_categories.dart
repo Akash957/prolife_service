@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../global_widget/globle_screen.dart';
+import '../globle_widget/globle_screen.dart';
 
 class ClickOnCategories extends StatefulWidget {
   const ClickOnCategories({super.key});

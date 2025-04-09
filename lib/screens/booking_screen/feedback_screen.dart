@@ -52,7 +52,6 @@ class FeedbackScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),));
               },
               child: const Text(
                 'Done',
