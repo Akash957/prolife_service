@@ -1,0 +1,2 @@
+C:/Users/niraj/AndroidStudioProjects/prolife_service/android/app/.cxx/Debug/13206l1m/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/niraj/AndroidStudioProjects/prolife_service/android/app/.cxx/Debug/13206l1m/armeabi-v7a/CMakeFiles/rebuild_cache.dir
