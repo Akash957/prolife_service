@@ -2,11 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:prolife_service/screens/booking_screen/booking_success.dart';
-import 'package:prolife_service/screens/profile_screen.dart';
+// import 'package:prolife_service/screens/booking_screen/booking_success.dart';
+// import 'package:prolife_service/screens/profile_screen.dart';
 
-import 'screens/home_page.dart';
-import 'package:flutter/services.dart'; // Add this import for SystemChrome
+// import 'screens/home_page.dart';
+// import 'package:flutter/services.dart'; // Add this import for SystemChrome
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart'; // Don't forget this!
 import 'package:prolife_service/provider/auth_provider.dart'; // Your AuthProvider path
