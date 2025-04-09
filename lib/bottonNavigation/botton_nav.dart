@@ -13,7 +13,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   var index = 0;
   List pagecontrooller = [
     HomeScreen(),
-    AllCategoriesPage(),
+    AllCategories(),
     HomeScreen(),
     HomeScreen(),
   ];
@@ -24,7 +24,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       body: pagecontrooller[index],
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 15,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           currentIndex: index,
           type: BottomNavigationBarType.fixed,
           onTap: (value) {
@@ -32,7 +32,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               index = value;
             });
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
                 label: 'Home', icon: Icon(Icons.home,size: 30,)),
             BottomNavigationBarItem(
