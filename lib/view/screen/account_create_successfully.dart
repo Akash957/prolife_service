@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../bottonNavigation/botton_nav.dart';
 import '../../home_page_view/home_screen.dart';
 
 class AccountCreateSuccessfully extends StatefulWidget {
@@ -62,7 +63,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomeScreen(),
+                      builder: (context) => BottomNavScreen(),
                     ));
               },
               child: const Text(

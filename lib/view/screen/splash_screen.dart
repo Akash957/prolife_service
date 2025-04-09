@@ -5,6 +5,8 @@ import 'package:prolife_service/home_page_view/home_screen.dart';
 import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
 
+import '../../bottonNavigation/botton_nav.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -24,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _checkAuthState() async {
     User? user = _auth.currentUser;
     if (user != null) {
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => BottomNavScreen());
     } else {
       Get.offAll(() => OnboardingScreen());
     }
