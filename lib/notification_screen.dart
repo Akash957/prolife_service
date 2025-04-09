@@ -37,7 +37,7 @@ class NotificationScreen extends StatelessWidget {
             subtitle: "Now the plumbing service is available",
             color: Colors.pinkAccent,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
           const NotificationSectionTitle(title: "Yesterday"),
           NotificationCard(
             icon: Icons.local_offer,
@@ -45,7 +45,7 @@ class NotificationScreen extends StatelessWidget {
             subtitle: "You get a special promo today!",
             color: Colors.amber,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
           const NotificationSectionTitle(title: "December 22, 2025"),
           NotificationCard(
             icon: Icons.credit_card,
@@ -72,11 +72,11 @@ class NotificationSectionTitle extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext      context) {
+  Widget build(BuildContext context) {
     return Text(
       title, style: const
       TextStyle(
-        fontSize: 16,
+        fontSize: 25,
         fontWeight: FontWeight.bold,
         color: Colors.black87,
       ),
@@ -101,7 +101,7 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 20),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
@@ -115,7 +115,7 @@ class NotificationCard extends StatelessWidget {
         title: Text(
           title,
           style: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black),
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 4),
