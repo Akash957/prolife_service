@@ -2,7 +2,27 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class GlobleWidget {
+class GlobalWidget {
+  static BookingImage(BuildContext context, image,) {
+
+    return Row(
+      children: [
+        SizedBox(width: 20,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image(
+              image: NetworkImage(image),
+              height: 120,
+              width: 120,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
   static AllCategoryImage(BuildContext context, String text1, String text2,
       image, VoidCallback onPressed) {
     var widthScreen = MediaQuery.of(context).size.width * 2;
@@ -24,7 +44,7 @@ class GlobleWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image(
-                  image: AssetImage(image),
+                  image: NetworkImage(image),
                   height: heightScreen * 0.1,
                   width: widthScreen * 0.1,
                   fit: BoxFit.fitWidth,
@@ -65,8 +85,9 @@ class GlobleWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: AssetImage(image),
+              child:
+              Image(
+                image: NetworkImage(image),
                 height: 120,
                 width: 120,
                 fit: BoxFit.fitWidth,
@@ -83,9 +104,9 @@ class GlobleWidget {
   }
 
   static BestServicesImage1(
-    BuildContext context,
-    String image,
-  ) {
+      BuildContext context,
+      String image,
+      ) {
     var widthScreen = MediaQuery.of(context).size.width * 0.7;
     var heightScreen = MediaQuery.of(context).size.height * 0.2;
     return InkWell(
@@ -98,7 +119,7 @@ class GlobleWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: AssetImage(image),
+              image: NetworkImage(image),
               fit: BoxFit.cover,
             ),
           ),
@@ -106,11 +127,82 @@ class GlobleWidget {
       ),
     );
   }
-
+  static ReferImage(
+      BuildContext context,
+      String image,
+      ) {
+    var widthScreen = MediaQuery.of(context).size.width * 1.0;
+    var heightScreen = MediaQuery.of(context).size.height * 0.2;
+    return InkWell(
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          height: heightScreen,
+          width: widthScreen,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              image: NetworkImage(image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  static ServiceDateilImage(
+      BuildContext context,
+      String image,
+      ) {
+    var widthScreen = MediaQuery.of(context).size.width * 1.0;
+    var heightScreen = MediaQuery.of(context).size.height * 0.3;
+    return InkWell(
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          height: heightScreen,
+          width: widthScreen,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              image: NetworkImage(image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  static ServiceDetailsImage(
+      BuildContext context,
+      String image,
+      ) {
+    var widthScreen = MediaQuery.of(context).size.width * 0.8;
+    var heightScreen = MediaQuery.of(context).size.height * 0.3;
+    return InkWell(
+      child: Card(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          height: heightScreen,
+          width: widthScreen,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              image: NetworkImage(image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   static BestServicesCircleAvatar(
-    BuildContext context,
-    String image,
-  ) {
+      BuildContext context,
+      String image,
+      ) {
     return CircleAvatar(
       radius: 25,
       child: Image(
@@ -120,25 +212,25 @@ class GlobleWidget {
   }
 
   static ServicesPersonName(
-    BuildContext context,
-    String text,
-  ) {
+      BuildContext context,
+      String text,
+      ) {
     return Text(text,
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
   }
 
   static ServicesProvide(
-    BuildContext context,
-    String text,
-  ) {
+      BuildContext context,
+      String text,
+      ) {
     return Text(text,
         style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal));
   }
 
   static WorkNameText(
-    BuildContext context,
-    String text,
-  ) {
+      BuildContext context,
+      String text,
+      ) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Text(
@@ -149,10 +241,10 @@ class GlobleWidget {
   }
 
   static SeeAllCategories(
-    VoidCallback onPressed,
-    BuildContext context,
-    String text,
-  ) {
+      VoidCallback onPressed,
+      BuildContext context,
+      String text,
+      ) {
     return InkWell(
       onTap: onPressed,
       child: Text(
@@ -166,10 +258,10 @@ class GlobleWidget {
   }
 
   static TextSpanTextOriginal(
-    BuildContext context,
-    String text1,
-    String text2,
-  ) {
+      BuildContext context,
+      String text1,
+      String text2,
+      ) {
     return Padding(
       padding: EdgeInsets.only(left: 10),
       child: Text.rich(TextSpan(children: [
@@ -183,7 +275,7 @@ class GlobleWidget {
           ),
         ),
         TextSpan(
-            // text: "₹50",
+          // text: "₹50",
             text: "₹${text2}",
             style: TextStyle(
               fontSize: 18,
@@ -198,25 +290,45 @@ class GlobleWidget {
   }
 
   static ServicesProvideAddButton(
-    VoidCallback onPressed,
-    BuildContext context,
-    String text,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5), // Border radius 5
+      VoidCallback onPressed,
+      BuildContext context,
+      String text,
+      ) {
+    return
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5), // Border radius 5
+              ),
             ),
-          ),
-          onPressed: onPressed,
-          child: Text(
-            text,
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          )),
-    );
+            onPressed: onPressed,
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            )),
+      );
+  }
+  static IncreaseDecreaseButton(
+      VoidCallback onPressed,
+      BuildContext context,
+      IconData icon) {
+    return
+      Container(
+        height: 35,
+        width: 35,
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(5), // Border radius yahan set hota hai
+        ),
+        child: Icon(
+          icon,
+          size: 32,
+          color: Colors.white,
+        ),
+      );
   }
 
   static ClickIcon(
