@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+ import 'package:get/get.dart';
 import '../getx_service/getx_screen.dart';
-import 'click_on_categories.dart';
+ import 'click_on_categories.dart';
 
 class AllCategories extends StatefulWidget {
   const AllCategories({super.key});
