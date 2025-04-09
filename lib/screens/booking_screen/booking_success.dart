@@ -52,11 +52,7 @@ class BookingSuccessScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FeedbackScreen(),
-                    ));
+
               },
               child: const Text(
                 'Done',

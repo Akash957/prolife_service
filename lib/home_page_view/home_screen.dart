@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:prolife_service/screens/profile_screen.dart';
+import '../globle_widget/globle_screen.dart';
+ import 'package:get/get.dart';
 import 'package:prolife_service/globle_widget/globle_screen.dart';
 
 import '../getx_service/getx_screen.dart';
 import 'all_categories.dart';
 import 'click_on_categories.dart';
-
+ 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -32,7 +35,170 @@ class _HomeScreenState extends State<HomeScreen> {
           preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
+             child: Row(
+              children: [
+                const Icon(
+                  Icons.location_on_outlined,
+                  size: 40,
+                ),
+                const Text(
+                  "Service Address",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
+                    },
+                    icon: const Icon(
+                      Icons.notifications_none_outlined,
+                      size: 40,
+                    ))
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.blue.shade100),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "Search",
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+              ),
+            ),
+          ),
+          Expanded(
+              child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GlobleWidget.WorkNameText(context, "All Category"),
+                    Spacer(),
+                    GlobleWidget.SeeAllCategories(() {}, context, "See All"),
+                    SizedBox(
+                      width: 20,
+                    )
+                  ],
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Carpenter",
+                          "assets/image/carpernter_bc.png",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Cleaner",
+                          "assets/image/cliner.png",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Painter",
+                          "assets/image/painter_bc.png",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Electrician",
+                          "assets/image/electric_bc.png",
+                          () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Ac Repair",
+                          "assets/image/ac_repairing_bc.png",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Plumber",
+                          "assets/image/plumber.png",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Men's Salon",
+                          "assets/image/salon.jpeg",
+                          () {},
+                        ),
+                        GlobleWidget.AllCategory(
+                          context,
+                          "Beauty",
+                          "assets/image/beauty_bc.png",
+                          () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 20),
+                  child: Row(
+                    children: [
+                      GlobleWidget.WorkNameText(context, "Best Service"),
+                      Spacer(),
+                      GlobleWidget.SeeAllCategories(() {}, context, "See All")
+                    ],
+                  ),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        height: heightScreen * 0.4,
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GlobleWidget.BestServicesImage1(
+                                context,
+                                "assets/image/kitchen.jpeg",
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: RatingBar.builder(
+                                  // minRating: 0,
+                                  // direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 30,
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.blue,
+             child: TextField(
               onChanged: (value) {
                 getController.updateSearch(value);
               },
@@ -102,17 +268,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
                                     child: Image.network(data['url']),
-                                  ),
+                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     left: 2,
                                     right: 2,
                                   ),
-                                  child: Text(
+                                   GlobleWidget.ServicesProvideAddButton(
+                                      () {}, context, "Add")
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: heightScreen * 0.4,
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GlobleWidget.BestServicesImage1(
+                                context,
+                                "assets/image/kitchen.jpeg",
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: RatingBar.builder(
+                                  // minRating: 0,
+                                  // direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemSize: 30,
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.blue,
+                                   child: Text(
                                     data['name'],
                                     style: TextStyle(fontSize: 10),
-                                  ),
+                                   ),
                                 ),
                               ],
                             ),
