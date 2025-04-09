@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prolife_service/globle_widget/globle_screen.dart';
+import 'package:prolife_service/global_widget/globle_screen.dart';
 
 import 'click_on_categories.dart';
 

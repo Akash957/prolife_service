@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../globle_widget/globle_screen.dart';
+import '../global_widget/globle_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
