@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:prolife_service/screen/cart_page.dart';
+import 'package:prolife_service/screen/select_payment_method.dart';
 
 import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:prolife_service/screens/profile_screen.dart';
@@ -51,8 +52,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      home: SelectPaymentMethod(),
       // home: CartPage(),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
     );
   }
 }
