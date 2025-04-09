@@ -1,4 +1,4 @@
-package com.example.prolife_service
+package com.edugaon.prolife.service
 
 import io.flutter.embedding.android.FlutterActivity
 
