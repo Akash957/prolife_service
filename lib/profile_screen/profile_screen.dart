@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prolife_service/screens/booking_screen/booking_success.dart';
-import 'package:prolife_service/screens/edit_profile_page.dart';
+import 'package:prolife_service/profile_screen/edit_profile_page.dart';
 import 'package:prolife_service/screens/settings_pages/privacy_policy_page.dart';
-import 'package:prolife_service/screens/settings_pages/termsandconditions_page.dart';
+import 'package:prolife_service/screens/settings_pages/terms_and_conditions_page.dart';
 
 import '../global_widget/listtile_widget.dart';
 

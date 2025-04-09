@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
+import '../profile_screen/profile_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -15,7 +16,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     HomeScreen(),
     AllCategories(),
     HomeScreen(),
-    HomeScreen(),
+    ProfilePage(),
   ];
 
   @override
