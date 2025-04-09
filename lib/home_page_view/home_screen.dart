@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../globle_widget/globle_screen.dart';
+import 'package:prolife_service/screens/profile_screen.dart';
+import '../global_widget/globle_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,17 +25,19 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.location_on_outlined,
                   size: 40,
                 ),
-                Text(
+                const Text(
                   "Service Address",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
+                    },
                     icon: Icon(
                       Icons.notifications_none_outlined,
                       size: 40,
