@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_common/get_reset.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../screen/singup_screen.dart';
 import 'onboarding_model.dart';
 
 class Onboarding1 extends StatelessWidget {
@@ -17,7 +21,12 @@ class Onboarding1 extends StatelessWidget {
               left: 290,
             ),
             child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  );
+                },
                 child: const Text("Skip",
                     style: TextStyle(color: Colors.grey, fontSize: 20))),
           ),

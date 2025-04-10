@@ -9,14 +9,10 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color(0x00ffffff),
-    statusBarBrightness: Brightness.dark,
-  ));
+
   await Firebase.initializeApp(
     name: 'image-uplode-4d545',
     options: DefaultFirebaseOptions.currentPlatform,
@@ -34,16 +30,13 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ProLife Service',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
