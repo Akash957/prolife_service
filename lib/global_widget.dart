@@ -13,4 +13,7 @@ class GlobalWidgetAll{
     );
 
   }
+  static TextField(String text){
+
+  }
 }
