@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:prolife_service/home_page_view/home_screen.dart';
-
 import '../view/screen/account_create_successfully.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -20,6 +17,9 @@ class AuthProvider with ChangeNotifier {
   User? get user => _user;
 
   bool get isLoading => _isLoading;
+  Map<String, dynamic>? _userData;
+
+  Map<String, dynamic>? get userData => _userData;
 
   AuthProvider() {
     _auth.authStateChanges().listen((User? user) {
@@ -90,4 +90,5 @@ class AuthProvider with ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
 }

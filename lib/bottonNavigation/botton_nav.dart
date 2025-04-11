@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screens/profile_screen.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
 
@@ -15,7 +16,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     HomeScreen(),
     AllCategories(),
     HomeScreen(),
-    HomeScreen(),
+    ProfilePage(),
   ];
 
   @override

@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:prolife_service/screens/edit_profile_page.dart';
 import 'package:prolife_service/screens/settings_pages/privacy_policy_page.dart';
 import 'package:prolife_service/screens/settings_pages/termsandconditions_page.dart';
+import 'package:provider/provider.dart';
 
 import '../global_widget/listtile_widget.dart';
+import '../provider/auth_provider.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -23,7 +24,8 @@ class ProfilePage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage('https://lh3.googleusercontent.com/p/AF1QipOZVAVKpNQUqXJ5_nmk--VjM4AY95-ooPvbUPXc=s1360-w1360-h1020'),
+                  backgroundImage: NetworkImage(
+                      'https://lh3.googleusercontent.com/p/AF1QipOZVAVKpNQUqXJ5_nmk--VjM4AY95-ooPvbUPXc=s1360-w1360-h1020'),
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -42,27 +44,56 @@ class ProfilePage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  GlobalListTile(icon: Icons.edit, title: 'Edit Profile',onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditProfilePage(),));
-                  },),
+                  GlobalListTile(
+                    icon: Icons.edit,
+                    title: 'Edit Profile',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfilePage(),
+                          ));
+                    },
+                  ),
                   GlobalListTile(icon: Icons.lock, title: 'Change Password'),
                   GlobalListTile(icon: Icons.book, title: 'My Booking'),
                   GlobalListTile(icon: Icons.location_on, title: 'My Address'),
-                  GlobalListTile(icon: Icons.privacy_tip, title: 'Privacy Policy',onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  PrivacyPolicyPage(),));
-
-                  },),
-                  GlobalListTile(icon: Icons.description, title: 'Terms & Conditions',onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  const TermsAndConditionsPage(),));
-
-                  },),
-                  GlobalListTile(icon: Icons.support_agent, title: 'Customer Service'),
-                  GlobalListTile(icon: Icons.language, title: 'Languages'),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.logout, color: Colors.red),
-                    title: Text('Logout', style: TextStyle(color: Colors.red)),
+                  GlobalListTile(
+                    icon: Icons.privacy_tip,
+                    title: 'Privacy Policy',
                     onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PrivacyPolicyPage(),
+                          ));
+                    },
+                  ),
+                  GlobalListTile(
+                    icon: Icons.description,
+                    title: 'Terms & Conditions',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const TermsAndConditionsPage(),
+                          ));
+                    },
+                  ),
+                  const GlobalListTile(
+                      icon: Icons.support_agent, title: 'Customer Service'),
+                  const GlobalListTile(
+                      icon: Icons.language, title: 'Languages'),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.logout, color: Colors.red),
+                    title: const Text('Logout',
+                        style: TextStyle(color: Colors.red)),
+                    onTap: () {
+                      var provider =
+                          Provider.of<AuthProvider>(context, listen: false);
+                      provider.signOut();
                     },
                   ),
                 ],
@@ -71,7 +102,6 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }
