@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prolife_service/screens/profile_screen.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
+import '../profile_screen/profile_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});

@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Store"),
+        title: const Text("Location"),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(
