@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:prolife_service/view/screen/singup_screen.dart';
 import '../view/screen/account_create_successfully.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -78,6 +79,8 @@ class AuthProvider with ChangeNotifier {
       _setLoading(true);
       await _googleSignIn.signOut();
       await _auth.signOut();
+      Get.to(const SignUpScreen());
+      Fluttertoast.showToast(msg: "Sign Out Successfully");
     } catch (e) {
       debugPrint("Sign Out Error: $e");
       rethrow;

@@ -48,9 +48,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   Expanded(
                     child: Column(
                       children: [
-                        CustomTextField(hintText: "Enter Name", controller: provider.nameController),
-                        CustomTextField(hintText: "Enter Email", controller: provider.emailController),
-                        CustomTextField(hintText: "Enter Phone", controller: provider.phoneController),
+                        CustomTextField(hintText: "Enter Name", controller: provider.nameController,),
+                        CustomTextField(hintText: "Enter Email", controller: provider.emailController,keyboardType: TextInputType.emailAddress,),
+                        CustomTextField(hintText: "Enter Phone", controller: provider.phoneController,keyboardType: TextInputType.phone,),
                         const SizedBox(height: 20),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

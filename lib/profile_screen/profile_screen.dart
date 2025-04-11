@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:prolife_service/profile_screen/edit_profile_page.dart';
 import 'package:prolife_service/screens/settings_pages/privacy_policy_page.dart';
 import 'package:prolife_service/screens/settings_pages/terms_and_conditions_page.dart';
+import 'package:provider/provider.dart';
 
 import '../global_widget/listtile_widget.dart';
 
@@ -30,12 +32,6 @@ class ProfilePage extends StatelessWidget {
                   'Neeraj Kumar',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                // IconButton(
-                //   icon: Icon(Icons.camera_alt),
-                //   onPressed: () {
-                //     // Code to change profile picture
-                //   },
-                // ),
                 SizedBox(height: 20),
               ],
             ),
@@ -63,6 +59,8 @@ class ProfilePage extends StatelessWidget {
                     leading: Icon(Icons.logout, color: Colors.red),
                     title: Text('Logout', style: TextStyle(color: Colors.red)),
                     onTap: () {
+                      var provider = Provider.of<AuthProvider>(context,listen: false);
+                      provider.signOut();
                     },
                   ),
                 ],
