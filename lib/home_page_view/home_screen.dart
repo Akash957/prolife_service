@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../provider/location_provider.dart';
@@ -18,19 +19,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
-
   final getController = Get.put(GetService());
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
 
   @override
   void initState() {
     super.initState();
     getController.allCategories();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: InkWell(
-          onTap: () {
-            Get.to(() => const LocationScreen());
-          },
+          onTap: () => Get.to(() => const LocationScreen()),
           child: Row(
             children: [
               const Icon(Icons.location_on, color: Colors.orange),
@@ -54,36 +52,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (locationProvider.currentAddress != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        locationProvider.currentAddress!,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 14),
-                      ),
+                    Text(
+                      locationProvider.currentAddress!,
+                      style: const TextStyle(fontSize: 14),
+                    )
+                  else
+                    const Text(
+                      "Tap to select location",
+                      style: TextStyle(fontSize: 14),
                     ),
-                  const Text(
-                    "Amnour, Saran, 841460",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
                 ],
               ),
             ],
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search image...",
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
           ),
         ),
       ),
@@ -92,11 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: [
               GlobalWidget.WorkNameText(context, "All Categories"),
-              Spacer(),
-              GlobalWidget.SeeAllCategories(() {
-                Get.to(AllCategories());
-              }, context, "See All"),
-              SizedBox(width: 20),
+              const Spacer(),
+              GlobalWidget.SeeAllCategories(
+                () => Get.to(() => const AllCategories()),
+                context,
+                "See All",
+              ),
+              const SizedBox(width: 20),
             ],
           ),
           SizedBox(
@@ -106,12 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 stream: getController.filteredImages,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
+
                   final docs = snapshot.data!.docs;
+
                   if (docs.isEmpty) {
-                    return Center(child: Text("No matching results"));
+                    return const Center(child: Text("No matching results"));
                   }
+
                   return GridView.builder(
                     itemCount: docs.length,
                     gridDelegate:
@@ -125,9 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       var data = docs[index];
                       return InkWell(
-                        onTap: () {
-                          Get.to(ClickOnCategories());
-                        },
+                        onTap: () => Get.to(() => const ClickOnCategories()),
                         child: Card(
                           color: Colors.white,
                           elevation: 1,
@@ -148,10 +131,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 2, right: 2),
+                                    const EdgeInsets.symmetric(horizontal: 2),
                                 child: Text(
                                   data['name'],
-                                  style: TextStyle(fontSize: 10),
+                                  style: const TextStyle(fontSize: 10),
                                 ),
                               ),
                             ],
@@ -167,9 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: [
               GlobalWidget.WorkNameText(context, "Best Services"),
-              Spacer(),
+              const Spacer(),
               GlobalWidget.SeeAllCategories(() {}, context, "See All"),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
             ],
           ),
         ],
