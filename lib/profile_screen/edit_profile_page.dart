@@ -23,6 +23,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Edit Profile"),
+      ),
       body: SafeArea(
           child:Consumer<ProfileProvider>(
             builder: (context, provider, child){

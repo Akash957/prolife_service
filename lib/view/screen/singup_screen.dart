@@ -39,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.only(bottom: 10),
               child: ElevatedButton(
                 onPressed: isTermsAccepted && !authProvider.isLoading
-                    ? () => authProvider.signInWithGoogle()
+                    ? () => authProvider.signInWithGoogle(context)
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,

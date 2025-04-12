@@ -60,7 +60,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                     const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               ),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => BottomNavScreen(),
