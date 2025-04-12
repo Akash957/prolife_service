@@ -10,7 +10,7 @@ class UserModel {
     required this.name,
     required this.email,
     this.imageUrl,
-    this.phone
+    this.phone,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -18,10 +18,8 @@ class UserModel {
       id: map['id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      phone: map['phone'] ?? '',
+      phone: map['phone'],
       imageUrl: map['imageUrl'],
-
-
     );
   }
 
@@ -30,8 +28,8 @@ class UserModel {
       'id': id,
       'name': name,
       'email': email,
+      'phone': phone,
       'imageUrl': imageUrl,
-      'phone':phone
     };
   }
 }
