@@ -33,7 +33,7 @@ class _LocationScreenState extends State<LocationScreen> {
             children: [
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade400),
                   borderRadius: BorderRadius.circular(12),
@@ -41,9 +41,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
+                      onPressed: () => Get.back(),
                       icon: const Icon(Icons.arrow_back_rounded),
                     ),
                     const SizedBox(width: 10),
@@ -52,15 +50,13 @@ class _LocationScreenState extends State<LocationScreen> {
                         controller: _searchController,
                         decoration: const InputDecoration(
                           hintText:
-                          "Search for your location/society/apartment",
+                              "Search for your location/society/apartment",
                           border: InputBorder.none,
                         ),
                         onChanged: (value) {
-                          if (value.isNotEmpty) {
-                            locationProvider.searchPlaces(value);
-                          } else {
-                            locationProvider.clearSearch();
-                          }
+                          value.isNotEmpty
+                              ? locationProvider.searchPlaces(value)
+                              : locationProvider.clearSearch();
                         },
                       ),
                     ),
@@ -98,18 +94,17 @@ class _LocationScreenState extends State<LocationScreen> {
                     itemBuilder: (context, index) {
                       final place = locationProvider.searchResults[index];
                       return ListTile(
-                        leading: const Icon(Icons.location_on),
-                        title: Text(place['description']),
-                        onTap: () async {
-                          final address = await locationProvider
-                              .getPlaceDetails(place['place_id']);
-                          if (address != null) {
-                            locationProvider.setAddress(address);
-                            locationProvider.clearSearch();
-                            Get.to(() => const HomeScreen());
-                          }
-                        },
-                      );
+                          leading: const Icon(Icons.location_on),
+                          title: Text(place['description']),
+                          onTap: () async {
+                            final address = await locationProvider
+                                .getPlaceDetails(place['place_id']);
+                            if (address != null) {
+                              locationProvider.setAddress(address);
+                              locationProvider.clearSearch();
+                              Get.to(() => const HomeScreen());
+                            }
+                          });
                     },
                   ),
                 ),

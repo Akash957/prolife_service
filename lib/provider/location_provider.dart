@@ -7,14 +7,12 @@ import 'package:http/http.dart' as http;
 
 class LocationProvider with ChangeNotifier {
   String? _currentAddress;
+  List<dynamic> _searchResults = [];
+  final String apikey = 'AlzaSyLlkDIhqWEBbrwuVI8A_g6-IrRHJmolieX';
 
   String? get currentAddress => _currentAddress;
 
-  List<dynamic> _searchResults = [];
-
   List<dynamic> get searchResults => _searchResults;
-
-  final String apikey = 'AIzaSyD10uZ4QX31vHAfcKxsHT8aQdgQR0XqYgo';
 
   Future<void> getCurrentLocation() async {
     try {
@@ -28,13 +26,13 @@ class LocationProvider with ChangeNotifier {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          Fluttertoast.showToast(msg: 'Permission Denied');
+          Fluttertoast.showToast(msg: 'Location permission denied');
           return;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        Fluttertoast.showToast(msg: 'Permission Denied Forever');
+        Fluttertoast.showToast(msg: 'Permission permanently denied');
         return;
       }
 
@@ -52,19 +50,22 @@ class LocationProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error: $e");
+      Fluttertoast.showToast(msg: "Location error: $e");
     }
   }
 
   Future<void> searchPlaces(String input) async {
     final url =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&key=$apikey';
+        "https://maps.gomaps.pro/maps/api/place/autocomplete/json?input=$input&key=$apikey";
+
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        _searchResults = data['predictions'];
+        _searchResults = data['predictions'] ?? [];
         notifyListeners();
+      } else {
+        Fluttertoast.showToast(msg: "Search failed: ${response.reasonPhrase}");
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Search failed: $e");
@@ -73,12 +74,16 @@ class LocationProvider with ChangeNotifier {
 
   Future<String?> getPlaceDetails(String placeId) async {
     final url =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apikey';
+        'https://maps.gomaps.pro/maps/api/place/details/json?place_id=$placeId&key=$apikey';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['result']['formatted_address'];
+        if (data != null &&
+            data['result'] != null &&
+            data['result']['formatted_address'] != null) {
+          return data['result']['formatted_address'];
+        }
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "Details fetch failed: $e");
