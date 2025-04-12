@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:prolife_service/view/screen/singup_screen.dart';
 
 import '../models/user_model.dart';
 import '../view/screen/account_create_successfully.dart';
@@ -38,7 +39,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle(BuildContext context) async {
     try {
       setLoading(true);
 
@@ -56,7 +57,7 @@ class AuthProvider with ChangeNotifier {
 
       if (userCredential.user != null) {
         Fluttertoast.showToast(msg: "Signup successfully");
-        Get.to(AccountCreateSuccessfully());
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AccountCreateSuccessfully(),));
         await checkAndCreateUser(userCredential.user!);
       }
     } catch (e) {
@@ -107,12 +108,14 @@ class AuthProvider with ChangeNotifier {
   //   }
   // }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     try {
       setLoading(true);
       await googleSignIn.signOut();
       await auth.signOut();
       currentUserModel = null;
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
+      notifyListeners();
     } catch (e) {
       debugPrint("Sign Out Error: $e");
       rethrow;
