@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prolife_service/global_widget/globle_screen.dart';
+
+import 'helper_widget.dart';
 
 class AddAddress extends StatefulWidget {
   const AddAddress({super.key});
@@ -25,7 +29,10 @@ class _AddAddressState extends State<AddAddress> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(CupertinoIcons.arrow_left),
-        title: Text("add delivery address",style: TextStyle(fontSize: 25),),
+        title: Text(
+          "add delivery address",
+          style: TextStyle(fontSize: 25),
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -225,17 +232,171 @@ class _AddAddressState extends State<AddAddress> {
             //     SizedBox(width: 15,),
             //   ],
             // ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Container(
-              width: 260,
+                width: 260,
                 height: 45,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(30))),
+                          builder: (context) {
+                            return Container(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              padding: EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Divider(
+                                    indent: 120,
+                                    endIndent: 120,
+                                    color: Colors.grey,
+                                    thickness: 4,
+                                  ),
+                                  Text(
+                                    "Select Date",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 10),
+                                        dateBox("Tue", "29"),
+                                        dateBox("Wed", "30"),
+                                        dateBox("Thu", "31"),
+                                        dateBox("Fri", "01"),
+                                        dateBox("Sat", "02"),
+                                        dateBox("Sun", "03"),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Text(
+                                    "Select Time",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Wrap(
+                                    runSpacing: 10,
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(width: 10),
+                                      timeBox("10:00 AM"),
+                                      timeBox("11:00 AM"),
+                                      timeBox("11:00 AM"),
+                                      timeBox("11:00 AM"),
+                                      timeBox("12:30 PM"),
+                                      timeBox("01:30 PM"),
+                                    ],
+                                  ),
+
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //   children: [
+                                  //     SizedBox(width: 20,),
+                                  //     Container(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       color: CupertinoColors.opaqueSeparator,
+                                  //       child: Center(child: Text("Tue\n29")),
+                                  //     ),
+                                  //     Container(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       color: CupertinoColors.opaqueSeparator,
+                                  //       child: Center(child: Text("Tue\n29")),
+                                  //     ),
+                                  //     Container(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       color: CupertinoColors.opaqueSeparator,
+                                  //       child: Center(child: Text("Thu\n30")),
+                                  //     ),
+                                  //     Container(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       color: CupertinoColors.opaqueSeparator,
+                                  //       child: Center(child: Text("Fri\n01")),
+                                  //     ),
+                                  //     Container(
+                                  //       width: 50,
+                                  //       height: 50,
+                                  //       color: CupertinoColors.opaqueSeparator,
+                                  //       child: Center(child: Text("Tue\n02",)),
+                                  //     ),
+                                  //     SizedBox(width: 20,)
+                                  //   ],
+                                  // ),
+                                  SizedBox(height: 10,),
+                                  Center(
+                                    child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                            ),
+                                            backgroundColor: Colors.blue,fixedSize: Size(250, 45)),
+                                        child: Text("Proceed to checkout",style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),)),
+                                  )
+                                ],
+                              ),
+                            );
+                          });
+                      // showModalBottomSheet(
+                      //     context: context,
+                      //     isScrollControlled: true,
+                      //     shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.vertical(
+                      //             top: Radius.circular(30))),
+                      //     builder: (context) {
+                      //       return Container(
+                      //         height: MediaQuery.of(context).size.height * 0.5,
+                      //         padding: EdgeInsets.all(16),
+                      //         child: Center(
+                      //           child: Text(
+                      //             "Bottom Sheet Content",
+                      //             style: TextStyle(fontSize: 20),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     }
+                      //     );
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(3))),
-                    child: Text("Save address",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),)))
+                    child: Text(
+                      "Save address",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    )))
           ],
         ),
       ),
