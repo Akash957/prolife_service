@@ -10,6 +10,7 @@ class MyBookingScreen extends StatelessWidget {
     required String title,
     required String dateTime,
     String? amountPaid,
+    required BuildContext context,
     bool showBookAgain = false,
   }) {
     return Card(
@@ -48,7 +49,7 @@ class MyBookingScreen extends StatelessWidget {
               dateTime,
               style: const TextStyle(color: Colors.grey),
             ),
-            if (amountPaid  != null) ...[
+            if (amountPaid != null) ...[
               const Divider(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,9 +65,23 @@ class MyBookingScreen extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                   if (showBookAgain)
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Book Again"),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          // Handle "Book Again" action
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        ),
+                        child: Text(
+                          'Book Again',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -87,7 +102,8 @@ class MyBookingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            const Text("Carpenters", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Carpenters",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             buildBookingCard(
               status: "JOB COMPLETED",
               statusColor: Colors.blue,
@@ -96,27 +112,31 @@ class MyBookingScreen extends StatelessWidget {
               dateTime: "Mon, Mar 28, 2025 at 10:00 AM",
               amountPaid: "Amount Paid ₹190",
               showBookAgain: true,
+              context: context,
             ),
             const SizedBox(height: 8),
-            const Text("Plumbers", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Plumbers",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             buildBookingCard(
               status: "BOOKING CANCELLED",
               statusColor: Colors.red,
               statusBgColor: Colors.red.shade100,
               title: "Flush Tank Repair",
               dateTime: "Mon, Mar 25, 2025 at 11:00 AM",
+              context: context,
             ),
             const SizedBox(height: 8),
-            const Text("Carpenters", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Carpenters",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             buildBookingCard(
-              status: "JOB COMPLETED",
-              statusColor: Colors.blue,
-              statusBgColor: Colors.blue.shade50,
-              title: "Main Door Repair",
-              dateTime: "Mon, Mar 25, 2025 at 11:00 AM",
-              amountPaid: "Amount Paid ₹290",
-              showBookAgain: true,
-            ),
+                status: "JOB COMPLETED",
+                statusColor: Colors.blue,
+                statusBgColor: Colors.blue.shade50,
+                title: "Main Door Repair",
+                dateTime: "Mon, Mar 25, 2025 at 11:00 AM",
+                amountPaid: "Amount Paid ₹290",
+                showBookAgain: true,
+                context: context),
           ],
         ),
       ),

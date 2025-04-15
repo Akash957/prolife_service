@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileProvider extends ChangeNotifier {
   Map<String, dynamic>? userData;
@@ -52,7 +53,7 @@ class ProfileProvider extends ChangeNotifier {
           .collection('users')
           .doc(_userId)
           .update(updatedData);
-
+      Fluttertoast.showToast(msg: 'Profile updated successfully');
       await getUserData();
     } catch (e) {
       debugPrint('Error updating profile: $e');
