@@ -57,7 +57,11 @@ class AuthProvider with ChangeNotifier {
 
       if (userCredential.user != null) {
         Fluttertoast.showToast(msg: "Signup successfully");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AccountCreateSuccessfully(),));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AccountCreateSuccessfully(),
+            ));
         await checkAndCreateUser(userCredential.user!);
       }
     } catch (e) {
@@ -89,32 +93,17 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> updateUserProfile(UserModel updatedUser) async {
-  //   try {
-  //     setLoading(true);
-  //     if (currentUser == null) return;
-  //
-  //     await firestore
-  //         .collection('users')
-  //         .doc(currentUser!.uid)
-  //         .update(updatedUser.toMap());
-  //     currentUserModel = updatedUser;
-  //     notifyListeners();
-  //   } catch (e) {
-  //     debugPrint("Error updating user profile: $e");
-  //     rethrow;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
   Future<void> signOut(BuildContext context) async {
     try {
       setLoading(true);
       await googleSignIn.signOut();
       await auth.signOut();
       currentUserModel = null;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpScreen(),));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SignUpScreen(),
+          ));
       notifyListeners();
     } catch (e) {
       debugPrint("Sign Out Error: $e");

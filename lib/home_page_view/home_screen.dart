@@ -90,13 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (!snapshot.hasData) {
                     return const Center(child: CircularProgressIndicator());
                   }
-
                   final docs = snapshot.data!.docs;
-
                   if (docs.isEmpty) {
                     return const Center(child: Text("No matching results"));
                   }
-
                   return GridView.builder(
                     itemCount: docs.length,
                     gridDelegate:

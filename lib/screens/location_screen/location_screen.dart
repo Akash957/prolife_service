@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../bottonNavigation/botton_nav.dart';
 import '../../provider/location_provider.dart';
 import '../../home_page_view/home_screen.dart';
 
@@ -68,7 +69,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 onTap: () async {
                   await locationProvider.getCurrentLocation();
                   if (locationProvider.currentAddress != null) {
-                    Get.to(() => const HomeScreen());
+                    Get.to(() => const BottomNavScreen());
                   }
                 },
                 child: const Row(
