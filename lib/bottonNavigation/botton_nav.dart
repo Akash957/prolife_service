@@ -22,10 +22,10 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
       body: pagecontrooller[index],
       bottomNavigationBar: BottomNavigationBar(
           selectedFontSize: 15,
+          backgroundColor: Colors.white,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           currentIndex: index,
           type: BottomNavigationBarType.fixed,

@@ -33,16 +33,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Profile")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          title: const Text(
+        "Edit Profile",
+      )),
       body: SafeArea(
         child: Consumer<ProfileProvider>(
           builder: (context, provider, _) {
             if (provider.userData == null) {
               return const Center(child: CircularProgressIndicator());
             }
-
             final imageUrl = provider.userData?['imageUrl'];
-
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
               child: Column(

@@ -40,7 +40,7 @@ class _AllCategoriesState extends State<AllCategories> {
             icon: Icon(showSearch ? Icons.close : Icons.search),
             onPressed: () {
               setState(() {
-                showSearch = !showSearch; // 👈 toggle value
+                showSearch = !showSearch;
               });
             },
           ),
