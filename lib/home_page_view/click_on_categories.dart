@@ -15,9 +15,10 @@ class ClickProduct extends StatelessWidget {
     var heightScreen = MediaQuery.of(context).size.height;
     var widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Center(child: Text('Click on Categories')),
+        title: const Center(child: Text('Electrician')),
       ),
       body: Column(
         children: [
@@ -33,6 +34,7 @@ class ClickProduct extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(5),
                               child: Card(
+                                color: Colors.white,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -57,25 +59,19 @@ class ClickProduct extends StatelessWidget {
                                     ),
                                     GlobalWidget.WorkNameText(
                                         context, product.name),
-                                    GlobalWidget.TextSpanTextOriginal(context, product.price, product.price2),
                                     Row(
                                       children: [
-                                        GlobalWidget.BestServicesCircleAvatar(context, "http://static.vecteezy.com/system/resources/thumbnails/036/442/721/small_2x/ai-generated-portrait-of-a-young-man-no-facial-expression-facing-the-camera-isolated-white-background-ai-generative-photo.jpg"),
-                                        Column(
-                                          children: [
-                                            GlobalWidget.workername(context, "worker name"),
-                                            GlobalWidget.serviceType(context, "serviceType"),
-                                          ],
-                                        ),
-
+                                        GlobalWidget.TextSpanTextOriginal(
+                                            context,
+                                            product.price,
+                                            product.price2),
                                         Spacer(),
                                         GlobalWidget.ServicesProvideAddButton(
-                                                () {
-                                              Get.to(ServiceDetailsPage(product: product,));
-                                            }, context, "Add")
+                                            () {
+                                          Get.to(ServiceDetailsPage());
+                                        }, context, "Add")
                                       ],
                                     )
-
                                   ],
                                 ),
                               ),

@@ -200,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.edit,
                             iconColor: Color(0xFF6A11CB),
-                            title: 'edit_profile'.tr,
+                            title: 'Edit Profile'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -214,14 +214,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.calendar_today,
                             iconColor: Color(0xFF2575FC),
-                            title: 'my_bookings'.tr,
+                            title: 'My Bookings'.tr,
                             onTap: () {},
                           ),
                           Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.location_pin,
                             iconColor: Color(0xFF4CAF50),
-                            title: 'my_addresses'.tr,
+                            title: 'My Addresses'.tr,
                             onTap: () {},
                           ),
                         ],
@@ -240,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.privacy_tip,
                             iconColor: Color(0xFF9C27B0),
-                            title: 'privacy_policy'.tr,
+                            title: 'Privacy Policy'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -254,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.description,
                             iconColor: Color(0xFF673AB7),
-                            title: 'terms_conditions'.tr,
+                            title: 'Terms Conditions'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -268,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.support_agent,
                             iconColor: Color(0xFFFF9800),
-                            title: 'customer_support'.tr,
+                            title: 'Customer Support'.tr,
                             onTap: () {},
                           ),
                           Divider(height: 1, indent: 16),
@@ -296,7 +296,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: ElevatedButton.icon(
                       icon: Icon(Icons.logout, color: Colors.white),
                       label: Text(
-                        'logout'.tr,
+                        'Logout'.tr,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
