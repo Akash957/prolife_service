@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../globle_widget/globle_screen.dart';
+import '../global_widget/globle_screen.dart';
  import 'package:get/get.dart';
 import '../getx_service/getx_screen.dart';
  import 'click_on_categories.dart';

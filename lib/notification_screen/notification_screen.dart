@@ -23,8 +23,8 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: [
-          const NotificationSectionTitle(title: "Today"),
+        children: const [
+          NotificationSectionTitle(title: "Today"),
           NotificationCard(
             icon: Icons.payment,
             title: "Payment Successful!",
@@ -37,16 +37,16 @@ class NotificationScreen extends StatelessWidget {
             subtitle: "Now the plumbing service is available",
             color: Colors.pinkAccent,
           ),
-          const SizedBox(height: 30),
-          const NotificationSectionTitle(title: "Yesterday"),
+           SizedBox(height: 25),
+           NotificationSectionTitle(title: "Yesterday"),
           NotificationCard(
             icon: Icons.local_offer,
             title: "Today’s Special Offers",
             subtitle: "You get a special promo today!",
             color: Colors.amber,
           ),
-          const SizedBox(height: 30),
-          const NotificationSectionTitle(title: "December 22, 2025"),
+           SizedBox(height: 25),
+           NotificationSectionTitle(title: "December 22, 2025"),
           NotificationCard(
             icon: Icons.credit_card,
             title: "Credit Card Connected!",
@@ -68,18 +68,12 @@ class NotificationScreen extends StatelessWidget {
 class NotificationSectionTitle extends StatelessWidget {
   final String title;
 
-  const NotificationSectionTitle({Key? key, required this.title})
-      : super(key: key);
+  const NotificationSectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      title, style: const
-      TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-        color: Colors.black87,
-      ),
+      title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87,),
     );
   }
 }
@@ -106,7 +100,7 @@ class NotificationCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
         contentPadding:
-        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+         const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         leading: CircleAvatar(
           radius: 24,
           backgroundColor: color.withOpacity(0.15),
@@ -114,7 +108,7 @@ class NotificationCard extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: const TextStyle(
+          style:  const TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         ),
         subtitle: Padding(
