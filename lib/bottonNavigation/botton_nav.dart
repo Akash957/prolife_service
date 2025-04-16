@@ -14,7 +14,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   var index = 0;
   List pagecontrooller = [
     HomeScreen(),
-    AllCategories(),
+    HomeScreen(),
     HomeScreen(),
     ProfilePage(),
   ];
