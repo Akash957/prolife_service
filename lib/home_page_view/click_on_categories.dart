@@ -15,9 +15,10 @@ class ClickProduct extends StatelessWidget {
     var heightScreen = MediaQuery.of(context).size.height;
     var widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: const Center(child: Text('Click on Categories')),
+        title: const Center(child: Text('Electrician')),
       ),
       body: Column(
         children: [
@@ -33,6 +34,7 @@ class ClickProduct extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(5),
                               child: Card(
+                                color: Colors.white,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +62,9 @@ class ClickProduct extends StatelessWidget {
                                     Row(
                                       children: [
                                         GlobalWidget.TextSpanTextOriginal(
-                                            context, product.price, product.price2),
+                                            context,
+                                            product.price,
+                                            product.price2),
                                         Spacer(),
                                         GlobalWidget.ServicesProvideAddButton(
                                             () {
