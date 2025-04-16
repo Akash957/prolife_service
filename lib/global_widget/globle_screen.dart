@@ -127,7 +127,8 @@ class GlobalWidget {
       ),
     );
   }
-  static ReferImage(
+  static
+  ReferImage(
       BuildContext context,
       String image,
       ) {
@@ -141,7 +142,8 @@ class GlobalWidget {
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
             image: NetworkImage(image),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
+            alignment: Alignment.center
           ),
         ),
       ),
@@ -199,12 +201,24 @@ class GlobalWidget {
       BuildContext context,
       String image,
       ) {
-    return CircleAvatar(
-      radius: 25,
-      child: Image(
-        image: AssetImage(image),
-      ),
-    );
+    return
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.fill,
+                  alignment: Alignment.center
+              ),
+            ),
+          ),
+        ),
+      );
   }
 
   static ServicesPersonName(
@@ -229,9 +243,13 @@ class GlobalWidget {
       ) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      child: SizedBox(
+        width: 200,
+        child: Text(
+          maxLines: 2,
+          text,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.grey[700]),
+        ),
       ),
     );
   }
@@ -290,8 +308,7 @@ class GlobalWidget {
       BuildContext context,
       String text,
       ) {
-    return
-      Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -332,6 +349,14 @@ class GlobalWidget {
     return InkWell(
       onTap: onPressed,
       child: Icon(icon),
-    );
+    );}
+
+  static workername(
+       BuildContext context, String text) {
+    return Text(text,style: TextStyle(fontSize: 18,fontStyle: FontStyle.italic),);
+  }
+  static serviceType(
+       BuildContext context, String text) {
+    return Text(text,style: TextStyle(fontSize: 18,fontStyle: FontStyle.italic),);
   }
 }

@@ -57,17 +57,25 @@ class ClickProduct extends StatelessWidget {
                                     ),
                                     GlobalWidget.WorkNameText(
                                         context, product.name),
+                                    GlobalWidget.TextSpanTextOriginal(context, product.price, product.price2),
                                     Row(
                                       children: [
-                                        GlobalWidget.TextSpanTextOriginal(
-                                            context, product.price, product.price2),
+                                        GlobalWidget.BestServicesCircleAvatar(context, "http://static.vecteezy.com/system/resources/thumbnails/036/442/721/small_2x/ai-generated-portrait-of-a-young-man-no-facial-expression-facing-the-camera-isolated-white-background-ai-generative-photo.jpg"),
+                                        Column(
+                                          children: [
+                                            GlobalWidget.workername(context, "worker name"),
+                                            GlobalWidget.serviceType(context, "serviceType"),
+                                          ],
+                                        ),
+
                                         Spacer(),
                                         GlobalWidget.ServicesProvideAddButton(
-                                            () {
-                                          Get.to(ServiceDetailsPage());
-                                        }, context, "Add")
+                                                () {
+                                              Get.to(ServiceDetailsPage(product: product,));
+                                            }, context, "Add")
                                       ],
                                     )
+
                                   ],
                                 ),
                               ),

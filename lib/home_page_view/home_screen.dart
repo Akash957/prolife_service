@@ -56,54 +56,54 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ],
           ),
-          Expanded(
-            child: Obx(
-                  () => SizedBox(
-                height: 350,
-                child: GridView.builder(
-                  itemCount: categoryController.categories.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
-                    childAspectRatio: 0.8,
-                  ),
-                  padding: const EdgeInsets.all(5),
-                  itemBuilder: (context, index) {
-                    final category = categoryController.categories[index];
-                    return InkWell(
-                      onTap: () {
-                        Get.to(ClickProduct());
-                        categoryController.filterProductsByCategory(category.name,);
-                      },
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 1,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Image.network(category.imageUrl),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2, right: 2),
-                              child: Text(
-                                category.name,
-                                style: const TextStyle(fontSize: 10),
-                              ),
-                            ),
-                          ],
-                        ),
+          SizedBox(
+            height: 260,
+            child: Expanded(
+              child: Obx(
+                    () => GridView.builder(
+                      itemCount: categoryController.categories.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 1,
+                        crossAxisSpacing: 1,
+                        childAspectRatio: 0.8,
                       ),
-                    );
-                  },
-                ),
+                      padding: const EdgeInsets.all(5),
+                      itemBuilder: (context, index) {
+                        final category = categoryController.categories[index];
+                        return InkWell(
+                          onTap: () {
+                            Get.to(ClickProduct());
+                            categoryController.filterProductsByCategory(category.name,);
+                          },
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 1,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(5),
+                                    child: Image.network(category.imageUrl),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2, right: 2),
+                                  child: Text(
+                                    category.name,
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
               ),
             ),
           ),
