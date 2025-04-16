@@ -134,18 +134,14 @@ class GlobalWidget {
     var widthScreen = MediaQuery.of(context).size.width * 1.0;
     var heightScreen = MediaQuery.of(context).size.height * 0.2;
     return InkWell(
-      child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Container(
-          height: heightScreen,
-          width: widthScreen,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.cover,
-            ),
+      child: Container(
+        height: heightScreen,
+        width: widthScreen,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: NetworkImage(image),
+            fit: BoxFit.cover,
           ),
         ),
       ),
