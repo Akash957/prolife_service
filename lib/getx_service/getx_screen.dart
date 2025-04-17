@@ -19,9 +19,9 @@ class GetService extends GetxController {
   Future<void> fetchData() async {
     try {
       final categorySnapshot =
-          await FirebaseFirestore.instance.collection('category_item').get();
+      await FirebaseFirestore.instance.collection('category_item').get();
       categories.value = categorySnapshot.docs.map(
-        (doc) {
+            (doc) {
           final data = doc.data();
           return CategoryModel(
             name: data["name"],
@@ -32,9 +32,9 @@ class GetService extends GetxController {
       ).toList();
 
       final partnerSnapshot =
-          await FirebaseFirestore.instance.collection('partners').get();
+      await FirebaseFirestore.instance.collection('partners').get();
       partners.value = partnerSnapshot.docs.map(
-        (doc) {
+            (doc) {
           final data = doc.data();
           return PartnersModel(
             name: data["name"],
@@ -56,7 +56,8 @@ class GetService extends GetxController {
 
   void filterPartnersByCategory(String categoryName) {
     selectedCategory.value = categoryName;
-    filteredPartners.value = partners.where((partner) =>
-    partner.workType == categoryName).toList();
+    filteredPartners.value = partners
+        .where((partner) => partner.workType == categoryName)
+        .toList();
   }
 }
