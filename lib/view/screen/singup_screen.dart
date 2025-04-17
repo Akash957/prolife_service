@@ -4,7 +4,7 @@ import 'package:get/get_common/get_reset.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth_provider.dart';
-import '../../screens/settings_pages/termsandconditions_page.dart';
+import '../../screens/settings_pages/terms_and_conditions_page.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -39,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.only(bottom: 10),
               child: ElevatedButton(
                 onPressed: isTermsAccepted && !authProvider.isLoading
-                    ? () => authProvider.signInWithGoogle()
+                    ? () => authProvider.signInWithGoogle(context)
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,

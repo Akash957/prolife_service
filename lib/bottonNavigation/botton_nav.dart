@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screens/booking_screen/my_booking_screen.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
+import '../profile_screen/profile_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -14,8 +16,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   List pagecontrooller = [
     HomeScreen(),
     AllCategories(),
-    HomeScreen(),
-    HomeScreen(),
+    MyBookingScreen(),
+    ProfilePage(),
   ];
 
   @override
@@ -24,6 +26,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       body: pagecontrooller[index],
       bottomNavigationBar: BottomNavigationBar(
           selectedFontSize: 15,
+          backgroundColor: Colors.white,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           currentIndex: index,
           type: BottomNavigationBarType.fixed,
