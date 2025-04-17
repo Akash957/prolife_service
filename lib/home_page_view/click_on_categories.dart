@@ -6,78 +6,74 @@ import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 
 class ClickProduct extends StatelessWidget {
-  ClickProduct({super.key});
-
   final categoryController = Get.put(GetService());
+
+  ClickProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var heightScreen = MediaQuery.of(context).size.height;
-    var widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
+        title: const Center(child: Text('Click on Categories')),
         backgroundColor: Colors.blue,
-        title: const Center(child: Text('Electrician')),
       ),
       body: Column(
         children: [
           Expanded(
             child: Obx(() => ListView.builder(
-                  itemCount: categoryController.filteredProducts.length,
+                  itemCount: categoryController.filteredPartners.length,
                   itemBuilder: (context, index) {
-                    final product = categoryController.filteredProducts[index];
-                    return SizedBox(
-                        width: double.infinity,
+                    final partner = categoryController.filteredPartners[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Card(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            GlobalWidget.ReferImage(context, partner.imageUrl),
                             Padding(
-                              padding: const EdgeInsets.all(5),
-                              child: Card(
-                                color: Colors.white,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GlobalWidget.ReferImage(
-                                        context, product.imageUrl),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8),
-                                      child: RatingBar.builder(
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemSize: 30,
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Colors.blue,
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                          print(
-                                              'User selected rating: $rating');
-                                        },
-                                      ),
-                                    ),
-                                    GlobalWidget.WorkNameText(
-                                        context, product.name),
-                                    Row(
-                                      children: [
-                                        GlobalWidget.TextSpanTextOriginal(
-                                            context,
-                                            product.price,
-                                            product.price2),
-                                        Spacer(),
-                                        GlobalWidget.ServicesProvideAddButton(
-                                            () {
-                                          Get.to(ServiceDetailsPage());
-                                        }, context, "Add")
-                                      ],
-                                    )
-                                  ],
+                              padding: const EdgeInsets.only(left: 8),
+                              child: RatingBar.builder(
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 30,
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: Colors.blue,
                                 ),
+                                onRatingUpdate: (rating) {
+                                  print('Rating: $rating');
+                                },
                               ),
                             ),
+                            GlobalWidget.WorkNameText(context, partner.name),
+                            Row(
+                              children: [
+                                GlobalWidget.BestServicesCircleAvatar(
+                                    context, partner.workingImageUrl),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GlobalWidget.workername(
+                                        context, partner.name),
+                                    GlobalWidget.serviceType(
+                                        context, partner.workType),
+                                  ],
+                                ),
+                                const Spacer(),
+                                GlobalWidget.ServicesProvideAddButton(
+                                  () {
+                                    Get.to(ServiceDetailsPage());
+                                  },
+                                  context,
+                                  "Add",
+                                ),
+                              ],
+                            ),
                           ],
-                        ));
+                        ),
+                      ),
+                    );
                   },
                 )),
           ),

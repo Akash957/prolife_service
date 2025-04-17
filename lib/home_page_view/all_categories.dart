@@ -63,7 +63,7 @@ class _AllCategoriesState extends State<AllCategories> {
             title: InkWell(
               onTap: () {
                 Get.to(ClickProduct());
-                categoryController.filterProductsByCategory(category.name,);
+                categoryController.filterPartnersByCategory(category.name,);
               },
               child: Card(
                 child: Row(

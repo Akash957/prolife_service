@@ -21,11 +21,10 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Service Details"))),
-      body:
-      Obx(() => ListView.builder(
-            itemCount: categoryController.filteredProducts.length,
+      body: Obx(() => ListView.builder(
+            itemCount: categoryController.filteredPartners.length,
             itemBuilder: (context, index) {
-              final product = categoryController.filteredProducts[index];
+              final product = categoryController.filteredPartners[index];
               return SizedBox(
                   width: double.infinity,
                   child: Column(

@@ -19,8 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
   final getController = Get.put(GetService());
 
-
-
   @override
   Widget build(BuildContext context) {
     final locationProvider = Provider.of<LocationProvider>(context);
@@ -28,33 +26,33 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          title: InkWell(
-              onTap: () => Get.to(() => const LocationScreen()),
-              child: Row(
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: InkWell(
+          onTap: () => Get.to(() => const LocationScreen()),
+          child: Row(
+            children: [
+              const Icon(Icons.location_on, color: Colors.orange),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.location_on, color: Colors.orange),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (locationProvider.currentAddress != null)
-                        Text(
-                          locationProvider.currentAddress!,
-                          style: const TextStyle(fontSize: 14),
-                        )
-                      else
-                        const Text(
-                          "Tap to select location",
-                          style: TextStyle(fontSize: 14),
-                        ),
-                    ],
-                  ),
+                  if (locationProvider.currentAddress != null)
+                    Text(
+                      locationProvider.currentAddress!,
+                      style: const TextStyle(fontSize: 14),
+                    )
+                  else
+                    const Text(
+                      "Tap to select location",
+                      style: TextStyle(fontSize: 14),
+                    ),
                 ],
               ),
-              ),
+            ],
           ),
+        ),
+      ),
       body: Column(
         children: [
           Row(
@@ -87,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return InkWell(
                       onTap: () {
                         Get.to(ClickProduct());
-                        categoryController.filterProductsByCategory(
+                        categoryController.filterPartnersByCategory(
                           category.name,
                         );
                       },
