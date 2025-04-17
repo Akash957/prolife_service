@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:prolife_service/profile_screen/app_translations.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';

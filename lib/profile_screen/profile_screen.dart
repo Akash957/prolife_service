@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
+import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
+import 'package:prolife_service/screens/booking_screen/detail_page.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/language_service.dart';
 import '../provider/auth_provider.dart';
 import '../provider/profile_provider.dart';
+import '../screens/booking_screen/booking_details.dart';
 import '../screens/settings_pages/privacy_policy_page.dart';
 import '../screens/settings_pages/terms_and_conditions_page.dart';
 import 'edit_profile_page.dart';
@@ -210,27 +213,31 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          Divider(height: 1, indent: 16),
+                          const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.calendar_today,
-                            iconColor: Color(0xFF2575FC),
+                            iconColor: const Color(0xFF2575FC),
                             title: 'my_bookings'.tr,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(const BookingDetailsPage());
+                            },
                           ),
-                          Divider(height: 1, indent: 16),
+                          const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.location_pin,
-                            iconColor: Color(0xFF4CAF50),
+                            iconColor: const Color(0xFF4CAF50),
                             title: 'my_addresses'.tr,
-                            onTap: () {},
+                            onTap: () {
+
+                            },
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Material(
                       borderRadius: BorderRadius.circular(12),
                       elevation: 2,
@@ -250,7 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          Divider(height: 1, indent: 16),
+                          const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.description,
                             iconColor: Color(0xFF673AB7),
@@ -264,7 +271,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          Divider(height: 1, indent: 16),
+                          const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.support_agent,
                             iconColor: Color(0xFFFF9800),
