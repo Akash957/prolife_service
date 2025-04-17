@@ -3,11 +3,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../global_widget/globle_screen.dart';
-import '../models/product_model.dart';
+import '../models/partner.dart';
 import 'booking_summery.dart';
 
 class ServiceDetailsPage extends StatefulWidget {
-  final ProductModel product;
+  final PartnerModel product;
   const ServiceDetailsPage({super.key,required this.product});
 
   @override
@@ -46,8 +46,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   context,
                   widget.product.name,
                 ),
-                GlobalWidget.TextSpanTextOriginal(
-                    context, widget.product.price, widget.product.price2),
+                // GlobalWidget.TextSpanTextOriginal(
+                //     context, widget.product, widget.product.price2),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
