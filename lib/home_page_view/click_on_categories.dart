@@ -13,25 +13,24 @@ class ClickProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text('Click on Categories')),
-          backgroundColor: Colors.blue,
-        ),
-        body: Column(
-            children: [
-              Expanded(
-                child: Obx(() => ListView.builder(
-                  itemCount: categoryController.filteredProducts.length,
+      appBar: AppBar(
+        title: const Center(child: Text('Click on Categories')),
+        backgroundColor: Colors.blue,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(() => ListView.builder(
+                  itemCount: categoryController.filteredPartners.length,
                   itemBuilder: (context, index) {
-                    final partner = categoryController.filteredProducts[index];
+                    final partner = categoryController.filteredPartners[index];
                     return Padding(
                       padding: const EdgeInsets.all(5),
                       child: Card(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GlobalWidget.ReferImage(
-                                context, partner.imageUrl),
+                            GlobalWidget.ReferImage(context, partner.imageUrl),
                             Padding(
                               padding: const EdgeInsets.only(left: 8),
                               child: RatingBar.builder(
@@ -47,8 +46,7 @@ class ClickProduct extends StatelessWidget {
                                 },
                               ),
                             ),
-                            GlobalWidget.WorkNameText(
-                                context, partner.name),
+                            GlobalWidget.WorkNameText(context, partner.name),
                             Row(
                               children: [
                                 GlobalWidget.BestServicesCircleAvatar(
@@ -64,8 +62,8 @@ class ClickProduct extends StatelessWidget {
                                 ),
                                 const Spacer(),
                                 GlobalWidget.ServicesProvideAddButton(
-                                      () {
-                                    Get.to(ServiceDetailsPage(product: partner,));
+                                  () {
+                                    Get.to(ServiceDetailsPage());
                                   },
                                   context,
                                   "Add",
@@ -78,9 +76,9 @@ class ClickProduct extends StatelessWidget {
                     );
                   },
                 )),
-              ),
-            ],
-        ),
-        );
-    }
+          ),
+        ],
+      ),
+    );
+  }
 }

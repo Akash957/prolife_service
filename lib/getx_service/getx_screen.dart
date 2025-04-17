@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import '../models/categories_model.dart';
-import '../models/partner.dart';
+import '../models/partners_model.dart';
 
 class GetService extends GetxController {
   RxList categories = <CategoryModel>[].obs;
-  RxList partnerList = <PartnerModel>[].obs;
-  RxList filteredProducts = <PartnerModel>[].obs;
-  RxList filteredProductsByType = <PartnerModel>[].obs;
+  RxList partners = <PartnersModel>[].obs;
+  RxList filteredPartners = <PartnersModel>[].obs;
   RxString selectedCategory = ''.obs;
 
   @override
@@ -25,17 +24,19 @@ class GetService extends GetxController {
         (doc) {
           final data = doc.data();
           return CategoryModel(
-              name: data["name"],
-              imageUrl: data["imageUrl"],
-              service: data["service"]);
+            name: data["name"],
+            imageUrl: data["imageUrl"],
+            service: data["service"],
+          );
         },
       ).toList();
 
-      final productSnapshot = await FirebaseFirestore.instance.collection('partners').get();
-      partnerList.value = productSnapshot.docs.map(
+      final partnerSnapshot =
+          await FirebaseFirestore.instance.collection('partners').get();
+      partners.value = partnerSnapshot.docs.map(
         (doc) {
           final data = doc.data();
-          return PartnerModel(
+          return PartnersModel(
             name: data["name"],
             imageUrl: data["imageUrl"],
             workType: data["workType"],
@@ -46,17 +47,16 @@ class GetService extends GetxController {
 
       if (categories.isNotEmpty) {
         selectedCategory.value = categories.first.name;
-        filterProductsByWorkType(selectedCategory.value);
+        filterPartnersByCategory(selectedCategory.value);
       }
     } catch (e) {
       print('Error fetching data: $e');
     }
   }
 
-  void filterProductsByWorkType(String workType) {
-    selectedCategory.value = workType;
-    filteredProducts.value = partnerList.where((product) => product.workType == workType).toList();
-    filteredProductsByType.clear();
+  void filterPartnersByCategory(String categoryName) {
+    selectedCategory.value = categoryName;
+    filteredPartners.value = partners.where((partner) =>
+    partner.workType == categoryName).toList();
   }
 }
-
