@@ -1,5 +1,4 @@
 class PartnersModel {
-  final String partner_id;
   final String name;
   final String imageUrl;
   final String workType;
@@ -8,13 +7,13 @@ class PartnersModel {
   final String price1;
   final String price2;
 
-  PartnersModel(
-      {required this.partner_id,
-      required this.name,
-      required this.imageUrl,
-      required this.workType,
-      required this.workingImageUrl,
-      required this.service_name,
-      required this.price1,
-      required this.price2});
+  PartnersModel({
+    required this.name,
+    required this.imageUrl,
+    required this.workType,
+    required this.workingImageUrl,
+    required this.service_name,
+    required this.price1,
+    required this.price2,
+  });
 }
