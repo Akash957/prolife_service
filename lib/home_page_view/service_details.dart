@@ -110,19 +110,19 @@ import 'booking_summery.dart';
 
 class ServiceDetailsPage extends StatefulWidget {
   final PartnersModel product;
-  const ServiceDetailsPage({super.key,required this.product});
+
+  const ServiceDetailsPage({super.key, required this.product});
 
   @override
   State<ServiceDetailsPage> createState() => _ServiceDetailsPageState();
 }
 
 class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Service Details"))),
-      body:Column(
+      body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(5),
@@ -130,7 +130,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GlobalWidget.ServiceDateilImage(
-                    context, widget.product.imageUrl),
+                    context, widget.product.workingImageUrl),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: RatingBar.builder(
@@ -144,12 +144,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     },
                   ),
                 ),
-                GlobalWidget.WorkNameText(
-                  context,
-                  widget.product.name,
-                ),
-                // GlobalWidget.TextSpanTextOriginal(
-                //     context, widget.product, widget.product.price2),
+                GlobalWidget.WorkNameText(context, widget.product.name,),
+                GlobalWidget.TextSpanTextOriginal(
+                    context, widget.product.originalPrice, widget.product.discountPrice),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
@@ -159,8 +156,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                GlobalWidget.WorkNameText(
-                    context, "About Service Provider"),
+                GlobalWidget.WorkNameText(context, "About Service Provider"),
               ],
             ),
           ),
@@ -181,7 +177,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
               ),
             ),
             onPressed: () {
-              Get.to(BookingSummaryScreen(product:widget.product,));
+              Get.to(BookingSummaryScreen(
+                product: widget.product,
+              ));
             },
             child: Text(
               "Booking Service",
