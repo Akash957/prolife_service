@@ -114,13 +114,13 @@ class GlobalWidget {
     String image,
   ) {
     var widthScreen = MediaQuery.of(context).size.width * 0.7;
-    var heightScreen = MediaQuery.of(context).size.height * 0.2;
+    // var heightScreen = MediaQuery.of(context).size;
     return InkWell(
       child: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
-          height: heightScreen,
+          height: 150,
           width: widthScreen,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -208,8 +208,7 @@ class GlobalWidget {
   static BestServicesCircleAvatar(
     BuildContext context,
     String image,
-  ) {
-    return Padding(
+  ) {return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         child: Container(
@@ -224,8 +223,27 @@ class GlobalWidget {
           ),
         ),
       ),
-    );
-  }
+    );}
+  static BestServicesCircleAvatar2(
+    BuildContext context,
+    String image,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        child: Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            image: DecorationImage(
+                image: NetworkImage(image),
+                fit: BoxFit.fill,
+                alignment: Alignment.center),
+          ),
+        ),
+      ),
+    );}
   static BestServicesProfile(
       BuildContext context,
       String image,
@@ -271,7 +289,7 @@ class GlobalWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: SizedBox(
-        width: 200,
+        width: 160,
         child: Text(
           maxLines: 2,
           text,
@@ -332,14 +350,13 @@ class GlobalWidget {
       ])),
     );
   }
-
   static ServicesProvideAddButton(
     VoidCallback onPressed,
     BuildContext context,
     String text,
   ) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
@@ -378,8 +395,11 @@ class GlobalWidget {
   // }
 
   static Widget workername(BuildContext context, String text) {
-    return Text(text,
-        style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic));
+    return SizedBox(
+      width: 80,
+      child: Text(text,
+          style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 15, fontStyle: FontStyle.italic)),
+    );
   }
 
   static Widget serviceType(BuildContext context, String text) {

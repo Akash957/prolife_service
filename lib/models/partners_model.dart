@@ -1,19 +1,19 @@
 class PartnersModel {
   final String name;
-  final String imageUrl;
+  final String profileImage;
   final String workType;
   final String workingImageUrl;
-  final String service_name;
-  final String price1;
-  final String price2;
+  final String serviceName;
+  final String originalPrice;
+  final String discountPrice;
 
   PartnersModel({
     required this.name,
-    required this.imageUrl,
+    required this.profileImage,
     required this.workType,
     required this.workingImageUrl,
-    required this.service_name,
-    required this.price1,
-    required this.price2,
+    required this.serviceName,
+    required this.originalPrice,
+    required this.discountPrice,
   });
 }

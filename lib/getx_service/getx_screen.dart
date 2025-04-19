@@ -38,12 +38,12 @@ class GetService extends GetxController {
           final data = doc.data();
           return PartnersModel(
             name: "${data["name"]}",
-            imageUrl: "${data["imageUrl"]}",
+            profileImage: "${data["profileImage"]}",
             workType:"${ data["workType"]}",
             workingImageUrl: "${data["workingImageUrl"]}",
-            service_name: "${data["service_name"]}",
-            price1: "${data["price1"]}",
-            price2: "${data["price2"]}",
+            serviceName: "${data["serviceName"]}",
+            originalPrice: "${data["originalPrice"]}",
+            discountPrice: "${data["discountPrice"]}",
           );
         },
       ).toList();

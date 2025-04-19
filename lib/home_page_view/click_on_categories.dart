@@ -21,7 +21,8 @@ class ClickProduct extends StatelessWidget {
       Column(
         children: [
           Expanded(
-            child: Obx(() => ListView.builder(
+            child:
+            Obx(() => ListView.builder(
               itemCount: categoryController.filteredProducts.length,
               itemBuilder: (context, index) {
                 final partner = categoryController.filteredProducts[index];
@@ -32,7 +33,7 @@ class ClickProduct extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GlobalWidget.ReferImage(
-                            context, partner.imageUrl),
+                            context, partner.workingImageUrl),
                         Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: RatingBar.builder(
@@ -49,12 +50,12 @@ class ClickProduct extends StatelessWidget {
                           ),
                         ),
                         GlobalWidget.WorkNameText(
-                            context, partner.service_name),
-                        GlobalWidget.TextSpanTextOriginal(context, partner.price1, partner.price2),
+                            context, partner.serviceName),
+                        GlobalWidget.TextSpanTextOriginal(context, partner.originalPrice, partner.discountPrice),
                         Row(
                           children: [
                             GlobalWidget.BestServicesCircleAvatar(
-                                context, partner.workingImageUrl),
+                                context, partner.profileImage),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
