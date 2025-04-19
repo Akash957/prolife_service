@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
-import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/language_service.dart';
 import '../provider/auth_provider.dart';
@@ -37,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: const Text('English'),
+                title: Text('English'),
                 leading: Radio(
                   value: 'en',
                   groupValue: languageService.currentLocale,
@@ -48,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: const Text('Español'),
+                title: Text('Español'),
                 leading: Radio(
                   value: 'es',
                   groupValue: languageService.currentLocale,
@@ -59,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: const Text('हिंदी'),
+                title: Text('हिंदी'),
                 leading: Radio(
                   value: 'hi',
                   groupValue: languageService.currentLocale,
@@ -201,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.edit,
                             iconColor: Color(0xFF6A11CB),
-                            title: 'edit_profile'.tr,
+                            title: 'Edit Profile'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -211,31 +210,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          const Divider(height: 1, indent: 16),
+                          Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.calendar_today,
-                            iconColor: const Color(0xFF2575FC),
-                            title: 'my_bookings'.tr,
-                            onTap: () {
-                              Get.to(const BookingDetailsPage());
-                            },
+                            iconColor: Color(0xFF2575FC),
+                            title: 'My Bookings'.tr,
+                            onTap: () {},
                           ),
-                          const Divider(height: 1, indent: 16),
+                          Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.location_pin,
-                            iconColor: const Color(0xFF4CAF50),
-                            title: 'my_addresses'.tr,
-                            onTap: () {
-
-                            },
+                            iconColor: Color(0xFF4CAF50),
+                            title: 'My Addresses'.tr,
+                            onTap: () {},
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Material(
                       borderRadius: BorderRadius.circular(12),
                       elevation: 2,
@@ -245,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.privacy_tip,
                             iconColor: Color(0xFF9C27B0),
-                            title: 'privacy_policy'.tr,
+                            title: 'Privacy Policy'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -255,11 +250,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          const Divider(height: 1, indent: 16),
+                          Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.description,
                             iconColor: Color(0xFF673AB7),
-                            title: 'terms_conditions'.tr,
+                            title: 'Terms Conditions'.tr,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -269,11 +264,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             },
                           ),
-                          const Divider(height: 1, indent: 16),
+                          Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.support_agent,
                             iconColor: Color(0xFFFF9800),
-                            title: 'customer_support'.tr,
+                            title: 'Customer Support'.tr,
                             onTap: () {},
                           ),
                           Divider(height: 1, indent: 16),
@@ -301,7 +296,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: ElevatedButton.icon(
                       icon: Icon(Icons.logout, color: Colors.white),
                       label: Text(
-                        'logout'.tr,
+                        'Logout'.tr,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
