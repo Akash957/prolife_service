@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
 import '../models/categories_model.dart';
 import '../models/partners_model.dart';
 
@@ -19,9 +18,9 @@ class GetService extends GetxController {
   Future<void> fetchData() async {
     try {
       final categorySnapshot =
-      await FirebaseFirestore.instance.collection('category_item').get();
+          await FirebaseFirestore.instance.collection('category_item').get();
       categories.value = categorySnapshot.docs.map(
-            (doc) {
+        (doc) {
           final data = doc.data();
           return CategoryModel(
             name: data["name"],
@@ -32,15 +31,19 @@ class GetService extends GetxController {
       ).toList();
 
       final partnerSnapshot =
-      await FirebaseFirestore.instance.collection('partners').get();
+          await FirebaseFirestore.instance.collection('partners').get();
       partners.value = partnerSnapshot.docs.map(
-            (doc) {
+        (doc) {
           final data = doc.data();
           return PartnersModel(
-            name: data["name"],
-            imageUrl: data["imageUrl"],
-            workType: data["workType"],
-            workingImageUrl: data["workingImageUrl"],
+            partner_id: data["partner_id"]?.toString() ?? "",
+            price1: data["price1"]?.toString() ?? "",
+            price2: data["price2"]?.toString() ?? "",
+            service_name: data["service_name"]?.toString() ?? "",
+            name: data["name"]?.toString() ?? "",
+            imageUrl: data["imageUrl"]?.toString() ?? "",
+            workType: data["workType"]?.toString() ?? "",
+            workingImageUrl: data["workingImageUrl"]?.toString() ?? "",
           );
         },
       ).toList();
@@ -56,8 +59,7 @@ class GetService extends GetxController {
 
   void filterPartnersByCategory(String categoryName) {
     selectedCategory.value = categoryName;
-    filteredPartners.value = partners
-        .where((partner) => partner.workType == categoryName)
-        .toList();
+    filteredPartners.value =
+        partners.where((partner) => partner.workType == categoryName).toList();
   }
 }

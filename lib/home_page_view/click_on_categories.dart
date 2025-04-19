@@ -22,63 +22,62 @@ class ClickProduct extends StatelessWidget {
         children: [
           Expanded(
             child: Obx(() => ListView.builder(
-              itemCount: categoryController.filteredPartners.length,
-              itemBuilder: (context, index) {
-                final partner = categoryController.filteredPartners[index];
-                return Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GlobalWidget.ReferImage(
-                            context, partner.imageUrl),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: RatingBar.builder(
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 30,
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print('Rating: $rating');
-                            },
-                          ),
-                        ),
-                        GlobalWidget.WorkNameText(
-                            context, partner.name),
-                        Row(
+                  itemCount: categoryController.filteredPartners.length,
+                  itemBuilder: (context, index) {
+                    final partner = categoryController.filteredPartners[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GlobalWidget.BestServicesCircleAvatar(
-                                context, partner.workingImageUrl),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GlobalWidget.workername(
-                                    context, partner.name),
-                                GlobalWidget.serviceType(
-                                    context, partner.workType),
-                              ],
+                            GlobalWidget.ReferImage(context, partner.imageUrl),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: RatingBar.builder(
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 30,
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: Colors.blue,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print('Rating: $rating');
+                                },
+                              ),
                             ),
-                            const Spacer(),
-                            GlobalWidget.ServicesProvideAddButton(
+                            GlobalWidget.WorkNameText(
+                                context, partner.service_name),
+                            Row(
+                              children: [
+                                GlobalWidget.BestServicesCircleAvatar(
+                                    context, partner.workingImageUrl),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GlobalWidget.workername(
+                                        context, partner.name),
+                                    GlobalWidget.serviceType(
+                                        context, partner.workType),
+                                  ],
+                                ),
+                                const Spacer(),
+                                GlobalWidget.ServicesProvideAddButton(
                                   () {
-                                Get.to(ServiceDetailsPage());
-                              },
-                              context,
-                              "Add",
+                                    Get.to(ServiceDetailsPage());
+                                  },
+                                  context,
+                                  "Add",
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            )),
+                      ),
+                    );
+                  },
+                )),
           ),
         ],
       ),
