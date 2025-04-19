@@ -97,57 +97,59 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           SizedBox(
-            height: 260,
+            height: 230,
             child: Expanded(
               child: Obx(
-                () => SizedBox(
-                  height: 350,
-                  child: GridView.builder(
-                    itemCount: categoryController.categories.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 1,
-                      crossAxisSpacing: 1,
-                      childAspectRatio: 0.8,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                    itemBuilder: (context, index) {
-                      final category = categoryController.categories[index];
-                      return InkWell(
-                        onTap: () {
-                          Get.to(ClickProduct());
-                          categoryController.filterProductsByWorkType(
-                            category.name,
-                          );
-                        },
-                        child: Card(
-                          color: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
+                () =>
+                    GridView.builder(
+                  itemCount: categoryController.categories.length,
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 1,
+                    crossAxisSpacing: 0.8,
+                    childAspectRatio: 0.9,
+                  ),
+                  padding:  EdgeInsets.all(5),
+                  itemBuilder: (context, index) {
+                    final category = categoryController.categories[index];
+                    return InkWell(
+                      onTap: () {
+                        Get.to(ClickProduct());
+                        categoryController.filterProductsByWorkType(
+                          category.name,
+                        );
+                      },
+                      child:
+                      Card(
+                        color: Colors.white,
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height:75,
+                              child: Expanded(
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Image.network(category.imageUrl),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 2, right: 2),
-                                child: Text(
-                                  category.name,
-                                  style: const TextStyle(fontSize: 10),
-                                ),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(left: 2, right: 2),
+                              child: Text(
+                                category.name,
+                                style: const TextStyle(fontSize: 10),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -161,67 +163,70 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           SizedBox(
-            height: 230,
+            height: 300,
             child: Expanded(
-              child: Obx(() => ListView.builder(
-                itemCount: categoryController.filteredProducts.length,
-                itemBuilder: (context, index) {
-                  final partner = categoryController.filteredProducts[index];
-                  return ListTile(
-                    title:
-                    Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GlobalWidget.BestServiceImage(
-                              context, partner.imageUrl),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: RatingBar.builder(
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 25,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.blue,
-                              ),
-                              onRatingUpdate: (rating) {
-                                print('Rating: $rating');
-                              },
-                            ),
-                          ),
-                          GlobalWidget.WorkNameText(
-                              context, partner.name),
-                          Row(
-                            children: [
-                              GlobalWidget.BestServicesProfile(
-                                  context, partner.workingImageUrl),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  GlobalWidget.workername(
-                                      context, partner.name),
-                                  GlobalWidget.serviceType(
-                                      context, partner.workType),
-                                ],
-                              ),
-                              GlobalWidget.ServicesProvideAddButton(
-                                    () {
-                                  Get.to(ServiceDetailsPage(product: partner,));
+                child:
+                Obx(() => ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryController.filteredProducts.length,
+                  itemBuilder: (context, index) {
+                    final partner = categoryController.filteredProducts[index];
+                    return Container(
+                      width: 290,
+                      child: Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20,),
+                            GlobalWidget.BestServicesImage1(
+                                context, partner.workingImageUrl),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8),
+                              child: RatingBar.builder(
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 30,
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.star,
+                                  color: Colors.blue,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print('Rating: $rating');
                                 },
-                                context,
-                                "Add",
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            GlobalWidget.WorkNameText(context, partner.serviceName),
+                            // GlobalWidget.TextSpanTextOriginal(context, partner.price1, partner.price2),
+                            SizedBox(width: 50,),
+                            Row(
+                              children: [
+                                GlobalWidget.BestServicesCircleAvatar2(context, partner.profileImage),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GlobalWidget.workername(context, partner.name),
+                                    GlobalWidget.serviceType(context, partner.workType),
+                                  ],
+                                ),
+                                const Spacer(),
+                                GlobalWidget.ServicesProvideAddButton(
+                                      () {
+                                    // Get.to(ServiceDetailsPage(product: partner));
+                                  },
+                                  context,
+                                  "Add",
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              )),
+                    );
+                  },
+                ))
+
             ),
-          )
+          ),
         ],
       ),
     );
