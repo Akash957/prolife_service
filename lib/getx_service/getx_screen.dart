@@ -6,8 +6,9 @@ import '../models/partners_model.dart';
 
 class GetService extends GetxController {
   RxList categories = <CategoryModel>[].obs;
-  RxList partners = <PartnersModel>[].obs;
-  RxList filteredPartners = <PartnersModel>[].obs;
+  RxList partnerList = <PartnersModel>[].obs;
+  RxList filteredProducts = <PartnersModel>[].obs;
+  RxList filteredProductsByType = <PartnersModel>[].obs;
   RxString selectedCategory = ''.obs;
 
   @override
@@ -24,39 +25,60 @@ class GetService extends GetxController {
         (doc) {
           final data = doc.data();
           return CategoryModel(
-            name: data["name"],
-            imageUrl: data["imageUrl"],
-            service: data["service"],
-          );
+              name: data["name"],
+              imageUrl: data["imageUrl"],
+              service: data["service"]);
         },
       ).toList();
 
-      final partnerSnapshot =
+      final productSnapshot =
           await FirebaseFirestore.instance.collection('partners').get();
-      partners.value = partnerSnapshot.docs.map(
+      partnerList.value = productSnapshot.docs.map(
         (doc) {
           final data = doc.data();
           return PartnersModel(
-            name: data["name"],
-            imageUrl: data["imageUrl"],
-            workType: data["workType"],
-            workingImageUrl: data["workingImageUrl"],
+            name: "${data["name"]}",
+            imageUrl: "${data["imageUrl"]}",
+            workType:"${ data["workType"]}",
+            workingImageUrl: "${data["workingImageUrl"]}",
+            service_name: "${data["service_name"]}",
+            price1: "${data["price1"]}",
+            price2: "${data["price2"]}",
           );
         },
       ).toList();
 
       if (categories.isNotEmpty) {
         selectedCategory.value = categories.first.name;
-        filterPartnersByCategory(selectedCategory.value);
+        filterProductsByWorkType(selectedCategory.value);
       }
     } catch (e) {
       print('Error fetching data: $e');
     }
   }
 
-  void filterPartnersByCategory(String categoryName) {
-    selectedCategory.value = categoryName;
-    filteredPartners.value = partners.where((partner) =>
-    partner.workType == categoryName).toList();
+  void filterProductsByWorkType(String workTypes) {
+    selectedCategory.value = workTypes;
+    filteredProducts.value = partnerList.where((product) => product.workType == workTypes).toList();
+    filteredProductsByType.clear();
   }
-}
+
+
+  void searchCategories(String query) {
+    if (query.isEmpty) {
+      // Agar empty search hai toh sab categories dikhao
+      fetchData();
+    } else {
+      // Filter karo categories based on name
+      final filtered = categories.where((category) =>
+          category.name.toLowerCase().contains(query.toLowerCase())).toList();
+
+      // SelectedCategory ko first match bana do agar available ho
+      if (filtered.isNotEmpty) {
+        selectedCategory.value = filtered.first.name;
+        categories.value = filtered;
+      } else {
+        categories.clear();
+      }
+    }
+  }}
