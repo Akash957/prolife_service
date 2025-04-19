@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: Text('English'),
+                title: const Text('English'),
                 leading: Radio(
                   value: 'en',
                   groupValue: languageService.currentLocale,
@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('Español'),
+                title: const Text('Español'),
                 leading: Radio(
                   value: 'es',
                   groupValue: languageService.currentLocale,
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               ListTile(
-                title: Text('हिंदी'),
+                title: const Text('हिंदी'),
                 leading: Radio(
                   value: 'hi',
                   groupValue: languageService.currentLocale,
