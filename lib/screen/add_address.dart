@@ -362,35 +362,144 @@ class _AddAddressState extends State<AddAddress> {
                                                 top: Radius.circular(30),
                                               )),
                                               builder: (context) {
-                                                return Container(
-                                                  height: MediaQuery.of(context).size.height * 0.5,
-                                                  padding: EdgeInsets.all(16.0),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Divider(
-                                                        indent: 150,
-                                                        endIndent: 150,
-                                                        color: Colors.grey,
-                                                        thickness: 6,
-                                                      ),
-                                                      ListTile(leading: Text("Select address",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),trailing: Icon(CupertinoIcons.multiply_circle,color: Colors.red,),
-                                                      )
-                                                      ,
-                                                      SizedBox(height: 10,),
-                                                      Divider(indent: 30,endIndent: 30,color: Colors.grey,thickness: 1,),
-                                                      SizedBox(height: 10,),
-                                                      ListTile(leading: Icon(Icons.radio_button_checked,color: Colors.green,),title: Text("Home",style: TextStyle(fontWeight: FontWeight.w500),),subtitle: Text("4517 Washington Ave.\nManchester, Kentuchy 39495"),),
-                                                      SizedBox(height: 10,),
-                                                      ListTile(leading: Icon(Icons.radio_button_off,color: Colors.green,),title: Text("Work"),subtitle: Text("2118 Thornridge Cir. Syracuse,\nConnecticut 356224"),),
-                                                      SizedBox(height: 10,),
-                                                      ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.add_circle_outline_rounded,color: Colors.white,),style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3 ),),fixedSize: Size(250, 45),backgroundColor: Colors.blue),label: Text("Add New Address"),)
-
-
-
-                                                    ],
-                                                  ),
-                                                );
+                                                String selectedAddress = "Home";
+                                                return StatefulBuilder(builder:
+                                                    (context, setState) {
+                                                  return Container(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.5,
+                                                    padding:
+                                                        EdgeInsets.all(16.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Divider(
+                                                          indent: 150,
+                                                          endIndent: 150,
+                                                          color: Colors.grey,
+                                                          thickness: 6,
+                                                        ),
+                                                        ListTile(
+                                                          leading: Text(
+                                                            "Select address",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20),
+                                                          ),
+                                                          trailing: Icon(
+                                                            CupertinoIcons
+                                                                .multiply_circle,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Divider(
+                                                          indent: 30,
+                                                          endIndent: 30,
+                                                          color: Colors.grey,
+                                                          thickness: 1,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        ListTile(
+                                                          leading:
+                                                              Radio<String>(
+                                                            value: "Home",
+                                                            groupValue:
+                                                                selectedAddress,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                selectedAddress =
+                                                                    value!;
+                                                              });
+                                                            },
+                                                            activeColor:
+                                                                Colors.green,
+                                                          ),
+                                                          // leading: Icon(
+                                                          //   Icons
+                                                          //       .radio_button_checked,
+                                                          //   color: Colors.green,
+                                                          // ),
+                                                          title: Text(
+                                                            "Home",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                          subtitle: Text(
+                                                              "4517 Washington Ave.\nManchester, Kentuchy 39495"),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        ListTile(
+                                                          leading:
+                                                              Radio<String>(
+                                                            value: "Work",
+                                                            groupValue:
+                                                                selectedAddress,
+                                                            onChanged: (value) {
+                                                              selectedAddress =
+                                                                  value!;
+                                                            },
+                                                          ),
+                                                          // leading: Icon(
+                                                          //   Icons
+                                                          //       .radio_button_off,
+                                                          //   color: Colors.green,
+                                                          // ),
+                                                          title: Text("Work"),
+                                                          subtitle: Text(
+                                                              "2118 Thornridge Cir. Syracuse,\nConnecticut 356224"),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Center(
+                                                          child: ElevatedButton
+                                                              .icon(
+                                                            onPressed: () {},
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .add_circle_outline_rounded,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                                    shape:
+                                                                        RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              3),
+                                                                    ),
+                                                                    fixedSize:
+                                                                        Size(
+                                                                            250,
+                                                                            45),
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .blue),
+                                                            label: Text(
+                                                                "Add New Address"),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
                                               });
                                         },
                                         style: ElevatedButton.styleFrom(

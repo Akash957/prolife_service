@@ -6,6 +6,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:prolife_service/profile_screen/app_translations.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';
+import 'package:prolife_service/screen/add_address.dart';
+import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
@@ -48,7 +50,9 @@ class MyApp extends StatelessWidget {
       locale: Locale(LanguageService.to.currentLocale),
       fallbackLocale: const Locale('en'),
       title: 'ProLife Service',
-      home: const SplashScreen(),
+      // home: BookingSuccessScreen(),
+      home: AddAddress(),
+      // home: const SplashScreen(),
     );
   }
 }
