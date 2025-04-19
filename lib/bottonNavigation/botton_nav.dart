@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screens/booking_screen/my_booking_screen.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
 import '../profile_screen/profile_screen.dart';
@@ -15,7 +16,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   List pagecontrooller = [
     HomeScreen(),
     AllCategories(),
-    HomeScreen(),
+    MyBookingScreen(),
     ProfilePage(),
   ];
 
