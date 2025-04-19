@@ -17,8 +17,7 @@ class ClickProduct extends StatelessWidget {
         title: const Center(child: Text('Click on Categories')),
         backgroundColor: Colors.blue,
       ),
-      body:
-      Column(
+      body: Column(
         children: [
           Expanded(
             child:
