@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:prolife_service/provider/location_provider.dart';
+import 'package:prolife_service/provider/profile_provider.dart';
 import 'package:prolife_service/screen/add_address.dart';
 import 'package:prolife_service/screen/select_booking_slot.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: const MyApp(),
     ),
@@ -35,11 +39,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ProLife Service',
       // home: SelectBookingSlot(),
-      home: AddAddress(),
+      home: SplashScreen(),
     );
   }
 }
