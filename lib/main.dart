@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/app_translations.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';
-import 'package:provider/provider.dart';
+ import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
 import 'firebase_options.dart';
 import 'getx_service/language_service.dart';
+import 'notification_screen/review_provider.dart';
+import 'notification_screen/write_a_review.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => ReviewProvider()),
+
       ],
       child: const MyApp(),
     ),
