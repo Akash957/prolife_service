@@ -21,9 +21,7 @@ class _AllCategoriesState extends State<AllCategories> {
     var widthScreen = MediaQuery.of(context).size.width * 2;
     var heightScreen = MediaQuery.of(context).size.height * 1;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: const Text("All Categories"),
         actions: [
           IconButton(
@@ -64,12 +62,9 @@ class _AllCategoriesState extends State<AllCategories> {
                 title: InkWell(
                   onTap: () {
                     Get.to(ClickProduct());
-                    categoryController.filterPartnersByCategory(
-                      category.name,
-                    );
+                    // categoryController.filterPartnersBy(category.name,);
                   },
                   child: Card(
-                    color: Colors.white,
                     child: Row(
                       children: [
                         const SizedBox(width: 10),
@@ -86,7 +81,7 @@ class _AllCategoriesState extends State<AllCategories> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(" ${category.name}"),
+                            Text("${category.name}"),
                             Text("${category.service}"),
                           ],
                         ),

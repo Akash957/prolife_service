@@ -1,20 +1,31 @@
 class PartnersModel {
-  final String partner_id;
+  final String serviceName;
+  final String originalPrice;
+  final String discountPrice;
+  final String? workingImageUrl;
+  final String? profileImage;
   final String name;
-  final String imageUrl;
   final String workType;
-  final String workingImageUrl;
-  final String service_name;
-  final String price1;
-  final String price2;
 
-  PartnersModel(
-      {required this.partner_id,
-      required this.name,
-      required this.imageUrl,
-      required this.workType,
-      required this.workingImageUrl,
-      required this.service_name,
-      required this.price1,
-      required this.price2});
+  PartnersModel({
+    required this.serviceName,
+    required this.originalPrice,
+    required this.discountPrice,
+    this.workingImageUrl,
+    this.profileImage,
+    required this.name,
+    required this.workType,
+  });
+
+  factory PartnersModel.fromMap(Map<String, dynamic> data) {
+    return PartnersModel(
+      serviceName: data['serviceName'] ?? '',
+      originalPrice: data['originalPrice'] ?? '0',
+      discountPrice: data['discountPrice'] ?? '0',
+      workingImageUrl: data['workingImageUrl'] ?? '',
+      profileImage: data['profileImage'] ?? '',
+      name: data['name'] ?? '',
+      workType: data['workType'] ?? '',
+    );
+  }
 }
