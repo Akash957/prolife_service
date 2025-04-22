@@ -129,8 +129,8 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GlobalWidget.ServiceDateilImage(
-                    context, widget.product.workingImageUrl),
+                GlobalWidget.ServiceDateilImage(context, widget.product.workingImageUrl),
+
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: RatingBar.builder(
@@ -144,12 +144,15 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     },
                   ),
                 ),
-                GlobalWidget.WorkNameText(context, widget.product.name,),
-                GlobalWidget.TextSpanTextOriginal(
-                    context, widget.product.originalPrice, widget.product.discountPrice),
+                GlobalWidget.WorkNameText(
+                  context,
+                  widget.product.workType,
+                ),
+                GlobalWidget.TextSpanTextOriginal(context,
+                    widget.product.originalPrice, widget.product.discountPrice),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
                   child: Text(
                     "I am a complete fully cleaning work",
                     style: TextStyle(fontSize: 18),

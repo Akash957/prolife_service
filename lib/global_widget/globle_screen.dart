@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
 class GlobalWidget {
-  static BookingImage(
-    BuildContext context,
-    image,
-  ) {
+  static const String placeholderImage = 'https://via.placeholder.com/150';
+
+  static Widget BookingImage(BuildContext context, String? image) {
     return Row(
       children: [
-        SizedBox(
-          width: 20,
-        ),
+        const SizedBox(width: 20),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image(
-              image: NetworkImage(image),
+            child: Image.network(
+              (image != null && image.isNotEmpty) ? image : placeholderImage,
               height: 120,
               width: 120,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.broken_image, size: 120),
             ),
           ),
         ),
@@ -26,52 +25,44 @@ class GlobalWidget {
     );
   }
 
-  static AllCategoryImage(BuildContext context, String text1, String text2,
-      image, VoidCallback onPressed) {
+  static Widget AllCategoryImage(BuildContext context, String text1, String text2,
+      String? image, VoidCallback onPressed) {
     var widthScreen = MediaQuery.of(context).size.width * 2;
     var heightScreen = MediaQuery.of(context).size.height * 1;
     return InkWell(
       onTap: onPressed,
       child: Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Card(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(
-                color: Colors.grey.shade400,
-              )),
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: Colors.grey.shade400),
+          ),
           child: Row(
             children: [
-              SizedBox(
-                width: 20,
-              ),
+              const SizedBox(width: 20),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image(
-                  image: NetworkImage(image),
+                child: Image.network(
+                  (image != null && image.isNotEmpty) ? image : placeholderImage,
                   height: heightScreen * 0.1,
                   width: widthScreen * 0.1,
                   fit: BoxFit.fitWidth,
+                  errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.broken_image),
                 ),
               ),
-              SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    text1,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  Text(
-                    text2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.grey.shade500),
-                  )
+                  Text(text1, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  Text(text2,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.grey.shade500)),
                 ],
               ),
             ],
@@ -81,40 +72,8 @@ class GlobalWidget {
     );
   }
 
-  // static AllCategory(
-  //     BuildContext context, String text, image, VoidCallback onPressed) {
-  //   return InkWell(
-  //     onTap: onPressed,
-  //     child: Card(
-  //       elevation: 0,
-  //       color: Colors.white,
-  //       child: Column(
-  //         children: [
-  //           ClipRRect(
-  //             borderRadius: BorderRadius.circular(10),
-  //             child: Image(
-  //               image: NetworkImage(image),
-  //               height: 120,
-  //               width: 120,
-  //               fit: BoxFit.fitWidth,
-  //             ),
-  //           ),
-  //           Text(
-  //             text,
-  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  static BestServicesImage1(
-    BuildContext context,
-    String image,
-  ) {
+  static Widget BestServicesImage1(BuildContext context, String? image) {
     var widthScreen = MediaQuery.of(context).size.width * 0.7;
-    // var heightScreen = MediaQuery.of(context).size;
     return InkWell(
       child: Card(
         color: Colors.white,
@@ -125,8 +84,9 @@ class GlobalWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: NetworkImage(image),
+              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
               fit: BoxFit.cover,
+              onError: (_, __) {},
             ),
           ),
         ),
@@ -134,11 +94,8 @@ class GlobalWidget {
     );
   }
 
-  static ReferImage(
-    BuildContext context,
-    String image,
-  ) {
-    var widthScreen = MediaQuery.of(context).size.width * 1.0;
+  static Widget ReferImage(BuildContext context, String? image) {
+    var widthScreen = MediaQuery.of(context).size.width;
     var heightScreen = MediaQuery.of(context).size.height * 0.2;
     return InkWell(
       child: Container(
@@ -147,19 +104,18 @@ class GlobalWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.fill,
-              alignment: Alignment.center),
+            image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+            fit: BoxFit.fill,
+            alignment: Alignment.center,
+            onError: (_, __) {},
+          ),
         ),
       ),
     );
   }
 
-  static ServiceDateilImage(
-    BuildContext context,
-    String image,
-  ) {
-    var widthScreen = MediaQuery.of(context).size.width * 1.0;
+  static Widget ServiceDateilImage(BuildContext context, String? image) {
+    var widthScreen = MediaQuery.of(context).size.width;
     var heightScreen = MediaQuery.of(context).size.height * 0.3;
     return InkWell(
       child: Card(
@@ -171,8 +127,9 @@ class GlobalWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: NetworkImage(image),
+              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
               fit: BoxFit.cover,
+              onError: (_, __) {},
             ),
           ),
         ),
@@ -180,133 +137,61 @@ class GlobalWidget {
     );
   }
 
-  // static ServiceDetailsImage(
-  //   BuildContext context,
-  //   String image,
-  // ) {
-  //   var widthScreen = MediaQuery.of(context).size.width * 0.8;
-  //   var heightScreen = MediaQuery.of(context).size.height * 0.3;
-  //   return InkWell(
-  //     child: Card(
-  //       color: Colors.white,
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //       child: Container(
-  //         height: heightScreen,
-  //         width: widthScreen,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //           image: DecorationImage(
-  //             image: NetworkImage(image),
-  //             fit: BoxFit.cover,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  static Widget BestServicesCircleAvatar(BuildContext context, String? image) {
+    return _circleImage(60, image);
+  }
 
-  static BestServicesCircleAvatar(
-    BuildContext context,
-    String image,
-  ) {return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        child: Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            image: DecorationImage(
-                image: NetworkImage(image),
-                fit: BoxFit.fill,
-                alignment: Alignment.center),
-          ),
-        ),
-      ),
-    );}
-  static BestServicesCircleAvatar2(
-    BuildContext context,
-    String image,
-  ) {
+  static Widget BestServicesCircleAvatar2(BuildContext context, String? image) {
+    return _circleImage(40, image);
+  }
+
+  static Widget BestServicesProfile(BuildContext context, String? image) {
+    return _circleImage(45, image);
+  }
+
+  static Widget _circleImage(double size, String? image) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         child: Container(
-          height: 40,
-          width: 40,
+          height: size,
+          width: size,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             image: DecorationImage(
-                image: NetworkImage(image),
-                fit: BoxFit.fill,
-                alignment: Alignment.center),
-          ),
-        ),
-      ),
-    );}
-  static BestServicesProfile(
-      BuildContext context,
-      String image,
-      ) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        child: Container(
-          height: 45,
-          width: 45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            image: DecorationImage(
-                image: NetworkImage(image),
-                fit: BoxFit.fill,
-                alignment: Alignment.center),
+              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+              fit: BoxFit.fill,
+              alignment: Alignment.center,
+              onError: (_, __) {},
+            ),
           ),
         ),
       ),
     );
   }
 
-  // static ServicesPersonName(
-  //   BuildContext context,
-  //   String text,
-  // ) {
-  //   return Text(text,
-  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
-  // }
-
-  // static ServicesProvide(
-  //   BuildContext context,
-  //   String text,
-  // ) {
-  //   return Text(text,
-  //       style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal));
-  // }
-
-  static WorkNameText(
-    BuildContext context,
-    String text,
-  ) {
+  static Widget WorkNameText(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: SizedBox(
-        width: 160,
-        child: Text(
-          maxLines: 2,
-          text,
-          style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700]),
+      child: Text(
+        text,
+        maxLines: 3,
+        softWrap: true,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey[700],
         ),
       ),
     );
   }
 
-  static SeeAllCategories(
-    VoidCallback onPressed,
-    BuildContext context,
-    String text,
-  ) {
+  static Widget SeeAllCategories(
+      VoidCallback onPressed,
+      BuildContext context,
+      String text,
+      ) {
     return InkWell(
       onTap: onPressed,
       child: Text(
@@ -319,110 +204,108 @@ class GlobalWidget {
     );
   }
 
-  static TextSpanTextOriginal(
-    BuildContext context,
-    String text1,
-    String text2,
-  ) {
+  static Widget TextSpanTextOriginal(
+      BuildContext context, String text1, String text2) {
     return Padding(
-      padding: EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: 10),
       child: Text.rich(TextSpan(children: [
         TextSpan(
-          // text: "₹150 \u00A0",
           text: "₹${text1} \u00A0",
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         TextSpan(
-            // text: "₹50",
-            text: "₹${text2}",
-            style: TextStyle(
+            text: text2,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.grey,
+              decoration: TextDecoration.lineThrough,
               decorationColor: Colors.red,
               decorationThickness: 2,
-              decoration: TextDecoration.lineThrough,
             )),
       ])),
     );
   }
-  static ServicesProvideAddButton(
-    VoidCallback onPressed,
-    BuildContext context,
-    String text,
-  ) {
+
+  static Widget ServicesProvideAddButton(
+      VoidCallback onPressed, BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5), // Border radius 5
-            ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
           ),
-          onPressed: onPressed,
-          child: Text(
-            text,
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          )),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
     );
   }
 
-  static IncreaseDecreaseButton(
+  static Widget IncreaseDecreaseButton(
       VoidCallback onPressed, BuildContext context, IconData icon) {
-    return Container(
-      height: 35,
-      width: 35,
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Icon(
-        icon,
-        size: 32,
-        color: Colors.white,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        height: 35,
+        width: 35,
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Icon(
+          icon,
+          size: 32,
+          color: Colors.white,
+        ),
       ),
     );
   }
-
-  // static Widget ClickIcon(
-  //     VoidCallback onPressed, BuildContext context, IconData icon) {
-  //   return InkWell(onTap: onPressed, child: Icon(icon));
-  // }
 
   static Widget workername(BuildContext context, String text) {
     return SizedBox(
       width: 80,
-      child: Text(text,
-          style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 15, fontStyle: FontStyle.italic)),
+      child: Text(
+        text,
+        style: const TextStyle(
+          overflow: TextOverflow.ellipsis,
+          fontSize: 15,
+          fontStyle: FontStyle.italic,
+        ),
+      ),
     );
   }
 
   static Widget serviceType(BuildContext context, String text) {
-    return Text(text,
-        style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic));
+    return Text(
+      text,
+      style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+    );
   }
 
-  static BestServiceImage(
-      BuildContext context,
-      String image,
-      ) {
+  static Widget BestServiceImage(BuildContext context, String? image) {
     var widthScreen = MediaQuery.of(context).size.width;
-    var heightScreen = MediaQuery.of(context).size.height;
     return InkWell(
       child: Container(
         height: 120,
-        width: widthScreen*0.7,
+        width: widthScreen * 0.7,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-              image: NetworkImage(image),
-              fit: BoxFit.fill,
-              alignment: Alignment.center),
+            image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+            fit: BoxFit.fill,
+            alignment: Alignment.center,
+            onError: (_, __) {},
+          ),
         ),
       ),
     );

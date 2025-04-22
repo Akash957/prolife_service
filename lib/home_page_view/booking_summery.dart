@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'package:prolife_service/home_page_view/service_details.dart';
+import 'package:provider/provider.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../models/partners_model.dart';
+import '../provider/cart_provider.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   final PartnersModel product;
@@ -18,11 +19,11 @@ class BookingSummaryScreen extends StatefulWidget {
 
 class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   final categoryController = Get.put(GetService());
-  int addData = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Booking Summary")),
+      appBar: AppBar(title: const Text("Booking Summary")),
       body: Column(
         children: [
           Row(
@@ -33,8 +34,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20),
-                  GlobalWidget.WorkNameText(context, widget.product.name),
+                  const SizedBox(height: 20),
+                  GlobalWidget.WorkNameText(
+                      context, widget.product.serviceName),
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: RatingBar.builder(
@@ -46,56 +48,59 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       onRatingUpdate: (rating) {},
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 5,
-                      ),
+                      const SizedBox(width: 5),
                       Text(
                         "₹${widget.product.originalPrice}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 21),
                       ),
-                      SizedBox(width: 80),
+                      const SizedBox(width: 80),
                       Row(
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .decreaseQuantity();
+                            },
                             child: Container(
                               height: 35,
                               width: 35,
                               decoration: BoxDecoration(
                                 color: Colors.blue,
-                                borderRadius: BorderRadius.circular(
-                                  5,
-                                ), // Border radius yahan set hota hai
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              child: Divider(
-                                color: Colors.white,
-                                endIndent: 8,
-                                thickness: 3,
-                                indent: 8,
-                              ),
+                              child:
+                                  const Icon(Icons.remove, color: Colors.white),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              "1",
-                              style: TextStyle(fontSize: 18),
+                            child: Consumer<CartProvider>(
+                              builder: (context, cart, child) {
+                                return Text(
+                                  cart.quantity.toString(),
+                                  style: const TextStyle(fontSize: 18),
+                                );
+                              },
                             ),
                           ),
-                          GlobalWidget.IncreaseDecreaseButton(
-                            () {
-                              setState(() {
-                                addData++;
-                              });
+                          InkWell(
+                            onTap: () {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .increaseQuantity();
                             },
-                            context,
-                            Icons.add,
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: const Icon(Icons.add, color: Colors.white),
+                            ),
                           ),
                         ],
                       ),
@@ -112,87 +117,72 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 children: [
                   SizedBox(
                     height: 350,
-                    child: Expanded(
-                        child: Obx(() => ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  categoryController.filteredProducts.length,
-                              itemBuilder: (context, index) {
-                                final partner =
-                                    categoryController.filteredProducts[index];
-                                return Container(
-                                  width: 250,
-                                  child: Card(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                    child: Obx(() => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: categoryController.filteredProducts.length,
+                          itemBuilder: (context, index) {
+                            final partner =
+                                categoryController.filteredProducts[index];
+                            return Container(
+                              width: 250,
+                              child: Card(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    GlobalWidget.BestServicesImage1(context,
+                                        widget.product.workingImageUrl),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: RatingBar.builder(
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemSize: 30,
+                                        itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.blue),
+                                        onRatingUpdate: (rating) {
+                                          print('Rating: $rating');
+                                        },
+                                      ),
+                                    ),
+                                    GlobalWidget.WorkNameText(
+                                        context, partner.serviceName),
+                                    GlobalWidget.TextSpanTextOriginal(
+                                        context,
+                                        partner.originalPrice,
+                                        partner.discountPrice),
+                                    const SizedBox(width: 50),
+                                    Row(
                                       children: [
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        GlobalWidget.BestServicesImage1(context,
-                                            widget.product.workingImageUrl),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8),
-                                          child: RatingBar.builder(
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 30,
-                                            itemBuilder: (context, _) =>
-                                                const Icon(
-                                              Icons.star,
-                                              color: Colors.blue,
-                                            ),
-                                            onRatingUpdate: (rating) {
-                                              print('Rating: $rating');
-                                            },
-                                          ),
-                                        ),
-                                        GlobalWidget.WorkNameText(
-                                            context, partner.serviceName),
-                                        GlobalWidget.TextSpanTextOriginal(
-                                            context,
-                                            partner.originalPrice,
-                                            partner.discountPrice),
-                                        SizedBox(
-                                          width: 50,
-                                        ),
-                                        Row(
+                                        GlobalWidget.BestServicesCircleAvatar2(
+                                            context, partner.profileImage),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            GlobalWidget
-                                                .BestServicesCircleAvatar2(
-                                                    context,
-                                                    partner.profileImage),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                GlobalWidget.workername(
-                                                    context, partner.name),
-                                                GlobalWidget.serviceType(
-                                                    context, partner.workType),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            GlobalWidget
-                                                .ServicesProvideAddButton(
-                                              () {
-                                                // Get.to(ServiceDetailsPage(product: partner));
-                                              },
-                                              context,
-                                              "Add",
-                                            ),
+                                            GlobalWidget.workername(
+                                                context, partner.name),
+                                            GlobalWidget.serviceType(
+                                                context, partner.workType),
                                           ],
                                         ),
+                                        const Spacer(),
+                                        GlobalWidget.ServicesProvideAddButton(
+                                            () {
+                                          Get.to(ServiceDetailsPage(
+                                              product: partner));
+                                        }, context, "Add"),
                                       ],
                                     ),
-                                  ),
-                                );
-                              },
-                            ))),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        )),
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -200,12 +190,10 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       InkWell(
                           onTap: () {},
-                          child: Image(
+                          child: const Image(
                             image: AssetImage(
                               "assets/image/discount.png",
                             ),
@@ -213,83 +201,73 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             height: 50,
                           )),
                       GlobalWidget.WorkNameText(context, "Apply Coupon"),
-                      Spacer(),
+                      const Spacer(),
                       InkWell(
                         onTap: () {},
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_right,
                           color: Colors.grey,
                           size: 35,
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
+                      const SizedBox(width: 20),
+                      const Text(
                         "Item Total",
                         style: TextStyle(fontSize: 20),
                       ),
-                      Spacer(),
-                      Text(
-                        widget.product.originalPrice,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 21),
+                      const Spacer(),
+                      Consumer<CartProvider>(
+                        builder: (context, cart, child) {
+                          return Text(
+                            "₹${(int.parse(widget.product.originalPrice) * cart.quantity).toString()}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 21),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
+                      const SizedBox(width: 20),
+                      const Text(
                         "Discount",
                         style: TextStyle(fontSize: 20),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        "₹20",
-                        style: TextStyle(
+                        widget.product.discountPrice,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 21),
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
+                      const SizedBox(width: 20),
+                      const Text(
                         "Service Fee",
                         style: TextStyle(fontSize: 20, color: Colors.blue),
                       ),
-                      Spacer(),
-                      Text(
+                      const Spacer(),
+                      const Text(
                         "Free",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 23,
                             color: Colors.blue),
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -297,57 +275,51 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       GlobalWidget.WorkNameText(context, "Grand Total"),
-                      Spacer(),
-                      Text(
-                        widget.product.originalPrice,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 23,
-                        ),
+                      const Spacer(),
+                      Consumer<CartProvider>(
+                        builder: (context, cart, child) {
+                          return Text(
+                            "₹${(int.parse(widget.product.originalPrice) * cart.quantity).toString()}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                            ),
+                          );
+                        },
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       Container(
                         height: 60,
                         width: 60,
                         decoration: BoxDecoration(
                           color: Colors.blueGrey.shade200,
-                          borderRadius: BorderRadius.circular(
-                            5,
-                          ), // Border radius yahan set hota hai
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.location_on_outlined,
                           size: 25,
                         ),
                       ),
-                      Text("Address"),
-                      Spacer(),
-                      Text(
+                      const Text("Address"),
+                      const Spacer(),
+                      const Text(
                         "Change",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 23,
-                            color: Colors.grey.shade500),
+                            color: Colors.grey),
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -355,42 +327,34 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 10,
-                      ),
+                      const SizedBox(width: 10),
                       Column(
                         children: [
                           GlobalWidget.WorkNameText(context, "Price"),
-                          GlobalWidget.WorkNameText(context, "Price"),
-                          // GlobalWidget.TextSpanTextOriginal(context, widget.product.price1,''),
+                          GlobalWidget.TextSpanTextOriginal(
+                              context, widget.product.originalPrice, ''),
                         ],
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
+                      const SizedBox(width: 20),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                5,
-                              ), // Border radius 5
+                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                           onPressed: () {
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => BookingSummaryScreen(),));
                           },
-                          child: Text(
+                          child: const Text(
                             "Booking Now",
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      )
+                      const SizedBox(width: 20)
                     ],
                   ),
                 ],

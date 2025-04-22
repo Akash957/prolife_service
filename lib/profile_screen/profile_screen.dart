@@ -140,24 +140,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: CircleAvatar(
                                   radius: 50,
                                   backgroundColor:
-                                      Colors.white.withOpacity(0.2),
+                                  Colors.white.withOpacity(0.2),
                                   child: ClipOval(
                                     child: imageUrl != null &&
-                                            imageUrl.isNotEmpty
+                                        imageUrl.isNotEmpty
                                         ? Image.network(
-                                            imageUrl,
-                                            width: 96,
-                                            height: 96,
-                                            fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return const Icon(Icons.person,
-                                                  size: 50,
-                                                  color: Colors.white);
-                                            },
-                                          )
+                                      imageUrl,
+                                      width: 96,
+                                      height: 96,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Icon(Icons.person,
+                                            size: 50,
+                                            color: Colors.white);
+                                      },
+                                    )
                                         : const Icon(Icons.person,
-                                            size: 50, color: Colors.white),
+                                        size: 50, color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -277,7 +277,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconColor: Color(0xFF2196F3),
                             title: 'language'.tr,
                             trailing: Text(
-                              Get.find<LanguageService>().currentLocale == 'en'
+                              Get
+                                  .find<LanguageService>()
+                                  .currentLocale == 'en'
                                   ? 'English'
                                   : 'Hindi',
                               style: TextStyle(
