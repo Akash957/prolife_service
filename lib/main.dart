@@ -51,8 +51,8 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       title: 'ProLife Service',
       // home: BookingSuccessScreen(),
-      home: AddAddress(),
-      // home: const SplashScreen(),
+      // home: AddAddress(),
+      home: const SplashScreen(),
     );
   }
 }

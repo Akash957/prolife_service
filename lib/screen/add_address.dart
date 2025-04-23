@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/add_address_provider.dart';
 import 'package:prolife_service/global_widget/globle_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'helper_widget.dart';
 
@@ -24,6 +26,14 @@ class _AddAddressState extends State<AddAddress> {
   TextEditingController cityNameController = TextEditingController();
   TextEditingController stateNameController = TextEditingController();
 
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<AddAddressProvider>(context,listen: false);
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +49,7 @@ class _AddAddressState extends State<AddAddress> {
         child: Column(
           children: [
             TextField(
-              controller: nameController,
+              controller:nameController,
               decoration: InputDecoration(
                   labelText: "Full Name(Required)*",
                   hintText: "Enter your name",
@@ -193,45 +203,6 @@ class _AddAddressState extends State<AddAddress> {
               height: 15,
             ),
 
-            // ClipRRect(child: Text("+    Add Nearby Famous Shop/Mall/Landmark",style: TextStyle(fontWeight: FontWeight.bold),)),
-            // Text(
-            //   "Type of address",
-            //   style: TextStyle(
-            //       fontWeight: FontWeight.bold,
-            //       fontSize: 20,
-            //       color: Colors.black),
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     SizedBox(width: 15,),
-            //     ElevatedButton.icon(
-            //       onPressed: () {},
-            //       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-            //       icon: Icon(
-            //         Icons.home,
-            //         color: Colors.black,
-            //       ),
-            //       label: Text(
-            //         "Home",
-            //         style: TextStyle(fontWeight: FontWeight.bold),
-            //       ),
-            //     ),
-            //     ElevatedButton.icon(
-            //       onPressed: () {},
-            //       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-            //       icon: Icon(
-            //         Icons.apartment_outlined,
-            //         color: Colors.black,
-            //       ),
-            //       label: Text(
-            //         "work",
-            //         style: TextStyle(fontWeight: FontWeight.bold),
-            //       ),
-            //     ),
-            //     SizedBox(width: 15,),
-            //   ],
-            // ),
             SizedBox(
               height: 20,
             ),
@@ -310,43 +281,6 @@ class _AddAddressState extends State<AddAddress> {
                                     ],
                                   ),
 
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  //   children: [
-                                  //     SizedBox(width: 20,),
-                                  //     Container(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       color: CupertinoColors.opaqueSeparator,
-                                  //       child: Center(child: Text("Tue\n29")),
-                                  //     ),
-                                  //     Container(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       color: CupertinoColors.opaqueSeparator,
-                                  //       child: Center(child: Text("Tue\n29")),
-                                  //     ),
-                                  //     Container(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       color: CupertinoColors.opaqueSeparator,
-                                  //       child: Center(child: Text("Thu\n30")),
-                                  //     ),
-                                  //     Container(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       color: CupertinoColors.opaqueSeparator,
-                                  //       child: Center(child: Text("Fri\n01")),
-                                  //     ),
-                                  //     Container(
-                                  //       width: 50,
-                                  //       height: 50,
-                                  //       color: CupertinoColors.opaqueSeparator,
-                                  //       child: Center(child: Text("Tue\n02",)),
-                                  //     ),
-                                  //     SizedBox(width: 20,)
-                                  //   ],
-                                  // ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -426,11 +360,6 @@ class _AddAddressState extends State<AddAddress> {
                                                             activeColor:
                                                                 Colors.green,
                                                           ),
-                                                          // leading: Icon(
-                                                          //   Icons
-                                                          //       .radio_button_checked,
-                                                          //   color: Colors.green,
-                                                          // ),
                                                           title: Text(
                                                             "Home",
                                                             style: TextStyle(
@@ -446,7 +375,9 @@ class _AddAddressState extends State<AddAddress> {
                                                         ),
                                                         ListTile(
                                                           leading:
+
                                                               Radio<String>(
+
                                                             value: "Work",
                                                             groupValue:
                                                                 selectedAddress,
@@ -455,11 +386,7 @@ class _AddAddressState extends State<AddAddress> {
                                                                   value!;
                                                             },
                                                           ),
-                                                          // leading: Icon(
-                                                          //   Icons
-                                                          //       .radio_button_off,
-                                                          //   color: Colors.green,
-                                                          // ),
+
                                                           title: Text("Work"),
                                                           subtitle: Text(
                                                               "2118 Thornridge Cir. Syracuse,\nConnecticut 356224"),
@@ -521,25 +448,6 @@ class _AddAddressState extends State<AddAddress> {
                               ),
                             );
                           });
-                      // showModalBottomSheet(
-                      //     context: context,
-                      //     isScrollControlled: true,
-                      //     shape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.vertical(
-                      //             top: Radius.circular(30))),
-                      //     builder: (context) {
-                      //       return Container(
-                      //         height: MediaQuery.of(context).size.height * 0.5,
-                      //         padding: EdgeInsets.all(16),
-                      //         child: Center(
-                      //           child: Text(
-                      //             "Bottom Sheet Content",
-                      //             style: TextStyle(fontSize: 20),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }
-                      //     );
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
