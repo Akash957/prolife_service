@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
+import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
+import 'package:prolife_service/screens/booking_screen/my_booking_screen.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/language_service.dart';
 import '../provider/auth_provider.dart';
@@ -215,7 +217,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             icon: Icons.calendar_today,
                             iconColor: Color(0xFF2575FC),
                             title: 'My Bookings'.tr,
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(BookingDetailsPage());
+                            },
                           ),
                           Divider(height: 1, indent: 16),
                           ProfileMenuItem(
