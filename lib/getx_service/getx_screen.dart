@@ -39,7 +39,7 @@ class GetService extends GetxController {
           return PartnersModel(
             name: "${data["name"]}",
             profileImage: "${data["profileImage"]}",
-            workType:"${ data["workType"]}",
+            workType: "${data["workType"]}",
             workingImageUrl: "${data["workingImageUrl"]}",
             serviceName: "${data["serviceName"]}",
             originalPrice: "${data["originalPrice"]}",
@@ -59,21 +59,20 @@ class GetService extends GetxController {
 
   void filterProductsByWorkType(String workTypes) {
     selectedCategory.value = workTypes;
-    filteredProducts.value = partnerList.where((product) => product.workType == workTypes).toList();
+    filteredProducts.value =
+        partnerList.where((product) => product.workType == workTypes).toList();
     filteredProductsByType.clear();
   }
 
-
   void searchCategories(String query) {
     if (query.isEmpty) {
-      // Agar empty search hai toh sab categories dikhao
       fetchData();
     } else {
-      // Filter karo categories based on name
-      final filtered = categories.where((category) =>
-          category.name.toLowerCase().contains(query.toLowerCase())).toList();
+      final filtered = categories
+          .where((category) =>
+              category.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
 
-      // SelectedCategory ko first match bana do agar available ho
       if (filtered.isNotEmpty) {
         selectedCategory.value = filtered.first.name;
         categories.value = filtered;
@@ -81,4 +80,5 @@ class GetService extends GetxController {
         categories.clear();
       }
     }
-  }}
+  }
+}
