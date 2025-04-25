@@ -142,11 +142,25 @@ class WriteReviewPage extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 25)),
                     const SizedBox(height: 10),
                     ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey[300],
-                        child: const Icon(Icons.person),
-                        maxRadius: 25,
-                        minRadius: 25,
+                      leading: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.grey[300],
+                            backgroundImage: provider.image != null
+                                ? FileImage(provider.image!)
+                                : null,
+                            child: provider.image == null
+                                ? const Icon(Icons.person)
+                                : null,
+                            maxRadius: 25,
+                            minRadius: 25,
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add_a_photo, size: 20),
+                            onPressed: provider.pickImage,
+                          )
+                        ],
                       ),
                       title: const Text('John Williams',
                           style: TextStyle(fontSize: 25)),

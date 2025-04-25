@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ReviewProvider extends ChangeNotifier {
   int serviceRating = 5;
@@ -7,6 +9,7 @@ class ReviewProvider extends ChangeNotifier {
   bool recommended = true;
   String comment = '';
   String selectedTag = 'Service Quality';
+  File? image;
 
   final Map<String, Color> tags = {
     'Service Quality': Colors.blue,
@@ -38,6 +41,15 @@ class ReviewProvider extends ChangeNotifier {
   void updateSelectedTag(String tag) {
     selectedTag = tag;
     notifyListeners();
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      notifyListeners();
+    }
   }
 
   Future<void> submitReview() async {
