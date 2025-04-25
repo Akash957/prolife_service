@@ -6,7 +6,9 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:prolife_service/profile_screen/app_translations.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';
-import 'package:prolife_service/screen/add_address.dart';
+import 'package:prolife_service/screen/add_edit_address.dart';
+import 'package:prolife_service/screen/cart_page.dart';
+import 'package:prolife_service/screen/select_booking_slot.dart';
 import 'package:prolife_service/screens/booking_screen/booking_success.dart';
 import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
@@ -34,7 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
-      child: const MyApp(),
+      child:  MyApp(),
     ),
   );
 }
@@ -48,11 +50,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translationsKeys: AppTranslations.translations,
       locale: Locale(LanguageService.to.currentLocale),
-      fallbackLocale: const Locale('en'),
+      fallbackLocale:  Locale('en'),
       title: 'ProLife Service',
       // home: BookingSuccessScreen(),
       // home: AddAddress(),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
+      // home: SelectBookingSlot(),
+      home: CartPage(),
     );
   }
 }
