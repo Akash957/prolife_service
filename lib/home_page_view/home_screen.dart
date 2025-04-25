@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 75,
+                             height: 75,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
                               child: Image.network(category.imageUrl),

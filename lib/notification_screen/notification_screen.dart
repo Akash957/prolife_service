@@ -5,7 +5,6 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Widget notificationSectionTitle(String title) {
       return Text(
         title,
@@ -28,7 +27,8 @@ class NotificationScreen extends StatelessWidget {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           leading: CircleAvatar(
             radius: 24,
             backgroundColor: color.withOpacity(0.15),

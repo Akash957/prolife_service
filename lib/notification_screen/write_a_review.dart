@@ -42,18 +42,21 @@ class WriteReviewPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            // Service Rating
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('My Service was Excellent', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                    const Text('My Service was Excellent',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25)),
                     const SizedBox(height: 10),
-                    buildStarRow(provider.serviceRating, provider.updateServiceRating),
+                    buildStarRow(
+                        provider.serviceRating, provider.updateServiceRating),
                     const SizedBox(height: 10),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +66,8 @@ class WriteReviewPage extends StatelessWidget {
                           height: 60,
                           child: Checkbox(
                             value: provider.recommended,
-                            onChanged: (val) => provider.updateRecommended(val ?? true),
+                            onChanged: (val) =>
+                                provider.updateRecommended(val ?? true),
                           ),
                         ),
                         const Expanded(
@@ -71,7 +75,8 @@ class WriteReviewPage extends StatelessWidget {
                             padding: EdgeInsets.only(top: 15),
                             child: Text(
                               'I recommended this service provider to my friends',
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 23),
                             ),
                           ),
                         ),
@@ -81,19 +86,19 @@ class WriteReviewPage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
-
-            // Tags
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('What impressed you?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                    const Text('What impressed you?',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25)),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 9,
@@ -112,7 +117,8 @@ class WriteReviewPage extends StatelessWidget {
                           selected: selected,
                           selectedColor: color,
                           backgroundColor: Colors.grey[200],
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                           onSelected: (_) => provider.updateSelectedTag(tag),
                         );
                       }).toList(),
@@ -121,19 +127,19 @@ class WriteReviewPage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 25),
-
-            // Technician Rating
             Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Rate Technician', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                    const Text('Rate Technician',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25)),
                     const SizedBox(height: 10),
                     ListTile(
                       leading: CircleAvatar(
@@ -142,8 +148,10 @@ class WriteReviewPage extends StatelessWidget {
                         maxRadius: 25,
                         minRadius: 25,
                       ),
-                      title: const Text('John Williams', style: TextStyle(fontSize: 25)),
-                      subtitle: buildStarRow(provider.technicianRating, provider.updateTechnicianRating),
+                      title: const Text('John Williams',
+                          style: TextStyle(fontSize: 25)),
+                      subtitle: buildStarRow(provider.technicianRating,
+                          provider.updateTechnicianRating),
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -159,21 +167,21 @@ class WriteReviewPage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 30),
-
-            // Submit Button
             ElevatedButton(
               onPressed: () async {
                 await provider.submitReview();
-                Navigator.push(context, MaterialPageRoute(builder: (_) => FeedbackScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => FeedbackScreen()));
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 48),
                 backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
               ),
-              child: const Text('Submit Review', style: TextStyle(fontSize: 20, color: Colors.white)),
+              child: const Text('Submit Review',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
             ),
           ],
         ),

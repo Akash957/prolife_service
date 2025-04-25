@@ -10,6 +10,7 @@ import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
 import 'firebase_options.dart';
 import 'getx_service/language_service.dart';
+import 'notification_screen/review_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-
+        ChangeNotifierProvider(create: (_) => ReviewProvider()),
       ],
       child: const MyApp(),
     ),
@@ -45,7 +46,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-
       translationsKeys: AppTranslations.translations,
       locale: Locale(LanguageService.to.currentLocale),
       fallbackLocale: const Locale('en'),
