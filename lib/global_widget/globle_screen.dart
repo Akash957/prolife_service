@@ -17,7 +17,7 @@ class GlobalWidget {
               width: 120,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.broken_image, size: 120),
+                  const Icon(Icons.broken_image, size: 120),
             ),
           ),
         ),
@@ -25,8 +25,8 @@ class GlobalWidget {
     );
   }
 
-  static Widget AllCategoryImage(BuildContext context, String text1, String text2,
-      String? image, VoidCallback onPressed) {
+  static Widget AllCategoryImage(BuildContext context, String text1,
+      String text2, String? image, VoidCallback onPressed) {
     var widthScreen = MediaQuery.of(context).size.width * 2;
     var heightScreen = MediaQuery.of(context).size.height * 1;
     return InkWell(
@@ -45,19 +45,23 @@ class GlobalWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  (image != null && image.isNotEmpty) ? image : placeholderImage,
+                  (image != null && image.isNotEmpty)
+                      ? image
+                      : placeholderImage,
                   height: heightScreen * 0.1,
                   width: widthScreen * 0.1,
                   fit: BoxFit.fitWidth,
                   errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.broken_image),
+                      const Icon(Icons.broken_image),
                 ),
               ),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(text1, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  Text(text1,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
                   Text(text2,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -84,7 +88,9 @@ class GlobalWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+              image: NetworkImage((image != null && image.isNotEmpty)
+                  ? image
+                  : placeholderImage),
               fit: BoxFit.cover,
               onError: (_, __) {},
             ),
@@ -104,7 +110,8 @@ class GlobalWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+            image: NetworkImage(
+                (image != null && image.isNotEmpty) ? image : placeholderImage),
             fit: BoxFit.fill,
             alignment: Alignment.center,
             onError: (_, __) {},
@@ -127,7 +134,9 @@ class GlobalWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+              image: NetworkImage((image != null && image.isNotEmpty)
+                  ? image
+                  : placeholderImage),
               fit: BoxFit.cover,
               onError: (_, __) {},
             ),
@@ -159,7 +168,9 @@ class GlobalWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             image: DecorationImage(
-              image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+              image: NetworkImage((image != null && image.isNotEmpty)
+                  ? image
+                  : placeholderImage),
               fit: BoxFit.fill,
               alignment: Alignment.center,
               onError: (_, __) {},
@@ -188,10 +199,10 @@ class GlobalWidget {
   }
 
   static Widget SeeAllCategories(
-      VoidCallback onPressed,
-      BuildContext context,
-      String text,
-      ) {
+    VoidCallback onPressed,
+    BuildContext context,
+    String text,
+  ) {
     return InkWell(
       onTap: onPressed,
       child: Text(
@@ -301,7 +312,8 @@ class GlobalWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: NetworkImage((image != null && image.isNotEmpty) ? image : placeholderImage),
+            image: NetworkImage(
+                (image != null && image.isNotEmpty) ? image : placeholderImage),
             fit: BoxFit.fill,
             alignment: Alignment.center,
             onError: (_, __) {},
