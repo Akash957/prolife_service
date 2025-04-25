@@ -15,6 +15,7 @@ class GetService extends GetxController {
   void onInit() {
     super.onInit();
     fetchData();
+
   }
 
   Future<void> fetchData() async {
@@ -43,7 +44,7 @@ class GetService extends GetxController {
             workingImageUrl: "${data["workingImageUrl"]}",
             serviceName: "${data["serviceName"]}",
             originalPrice: "${data["originalPrice"]}",
-            discountPrice: "${data["discountPrice"]}",
+            discountPrice: '${data["discountPrice"]}',
           );
         },
       ).toList();
@@ -62,8 +63,6 @@ class GetService extends GetxController {
     filteredProducts.value = partnerList.where((product) => product.workType == workTypes).toList();
     filteredProductsByType.clear();
   }
-
-
   void searchCategories(String query) {
     if (query.isEmpty) {
       // Agar empty search hai toh sab categories dikhao
@@ -81,4 +80,28 @@ class GetService extends GetxController {
         categories.clear();
       }
     }
-  }}
+  }
+
+  // Add new cartItems list
+  RxList<PartnersModel> cartItems = <PartnersModel>[].obs;
+
+  // Existing methods
+  Future<void> getCategory(String category) async {
+    // ... (your existing getCategory logic)
+  }
+
+  // New method to add to cart
+  // void addToCart(PartnersModel partner) {
+  //   cartItems.add(partner);
+  // }
+  void addToCart(PartnersModel partner) {
+    if (!cartItems.contains(partner)) {
+      cartItems.add(partner);
+
+    }
+  }
+
+}
+
+
+

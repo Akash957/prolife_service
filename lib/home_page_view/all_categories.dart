@@ -41,7 +41,7 @@ class _AllCategoriesState extends State<AllCategories> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     onChanged: (value) {
-                      // getController.updateSearch(value);
+                      categoryController.searchCategories(value);
                     },
                     decoration: InputDecoration(
                       hintText: "Search image...",
@@ -63,7 +63,7 @@ class _AllCategoriesState extends State<AllCategories> {
             title: InkWell(
               onTap: () {
                 Get.to(ClickProduct());
-                // categoryController.filterPartnersBy(category.name,);
+                categoryController.filterProductsByWorkType(category.name,);
               },
               child: Card(
                 child: Row(

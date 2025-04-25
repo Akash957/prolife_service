@@ -265,13 +265,70 @@ class GlobalWidget {
       ),
     );
   }
-
-  // static ServicesPersonName(
+  //
+  // static ButtosheetFunction(
   //   BuildContext context,
-  //   String text,
   // ) {
-  //   return Text(text,
-  //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+  //   return
+  //     showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         height: 80,
+  //         color: Colors.white,
+  //         child: Center(
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Row(
+  //               children: [
+  //                 Expanded(
+  //                   child:
+  //                   SizedBox(
+  //                     height: 55,
+  //                     width: double.infinity,
+  //                     child: ElevatedButton(
+  //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow,
+  //                         shape: RoundedRectangleBorder(
+  //                         borderRadius: BorderRadius.circular(5),
+  //                       ),),
+  //                       onPressed: () {
+  //                         Get.to(ServiceDetailsPage(product: partner,));
+  //                       },
+  //                       child: Text(
+  //                         'add',
+  //                         style: TextStyle(fontSize: 20),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 SizedBox(width: 2,),
+  //                 Expanded(
+  //                   child:
+  //                   SizedBox(
+  //                     height: 55,
+  //                     width: double.infinity,
+  //                     child: ElevatedButton(
+  //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,
+  //                         shape: RoundedRectangleBorder(
+  //                           borderRadius: BorderRadius.circular(5),
+  //                         ),),
+  //                       onPressed: () {
+  //
+  //                       },
+  //                       child: Text(
+  //                         'add',
+  //                         style: TextStyle(fontSize: 20),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
   // }
 
   // static ServicesProvide(
@@ -289,7 +346,7 @@ class GlobalWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: SizedBox(
-        width: 160,
+        width: 180,
         child: Text(
           maxLines: 2,
           text,

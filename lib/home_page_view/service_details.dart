@@ -146,7 +146,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                 ),
                 GlobalWidget.WorkNameText(context, widget.product.name,),
                 GlobalWidget.TextSpanTextOriginal(
-                    context, widget.product.originalPrice, widget.product.discountPrice),
+                    context, widget.product.originalPrice as String, widget.product.discountPrice as String),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
