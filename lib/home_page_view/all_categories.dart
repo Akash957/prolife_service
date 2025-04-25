@@ -15,9 +15,10 @@ class _AllCategoriesState extends State<AllCategories> {
   final getController = Get.put(GetService());
   bool showSearch = false;
 
+
   @override
   Widget build(BuildContext context) {
-    final categoryController = Get.put(GetService());
+    final  categoryController = Get.put(GetService());
     var widthScreen = MediaQuery.of(context).size.width * 2;
     var heightScreen = MediaQuery.of(context).size.height * 1;
     return Scaffold(
@@ -40,7 +41,7 @@ class _AllCategoriesState extends State<AllCategories> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     onChanged: (value) {
-                      // getController.updateSearch(value);
+                      categoryController.searchCategories(value);
                     },
                     decoration: InputDecoration(
                       hintText: "Search image...",
@@ -55,43 +56,43 @@ class _AllCategoriesState extends State<AllCategories> {
             : null,
       ),
       body: Obx(() => ListView.builder(
-            itemCount: categoryController.categories.length,
-            itemBuilder: (context, index) {
-              final category = categoryController.categories[index];
-              return ListTile(
-                title: InkWell(
-                  onTap: () {
-                    Get.to(ClickProduct());
-                    // categoryController.filterPartnersBy(category.name,);
-                  },
-                  child: Card(
-                    child: Row(
+        itemCount: categoryController.categories.length,
+        itemBuilder: (context, index) {
+          final category = categoryController.categories[index];
+          return ListTile(
+            title: InkWell(
+              onTap: () {
+                Get.to(ClickProduct());
+                categoryController.filterProductsByWorkType(category.name,);
+              },
+              child: Card(
+                child: Row(
+                  children: [
+                    const SizedBox(width: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        category.imageUrl,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(width: 10),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image.network(
-                            category.imageUrl,
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("${category.name}"),
-                            Text("${category.service}"),
-                          ],
-                        ),
+                        Text("Name: ${category.name}"),
+                        Text("${category.service}"),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              );
-            },
-          )),
+              ),
+            ),
+          );
+        },
+      )),
     );
   }
 }
