@@ -1,84 +1,133 @@
-import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screen/select_address.dart';
+import 'select_booking_slot_widget.dart';
 
-class SelectBookingSlot extends StatelessWidget {
+class SelectBookingSlot extends StatefulWidget {
+  const SelectBookingSlot({super.key});
+
+  @override
+  State<SelectBookingSlot> createState() => _SelectBookingSlotState();
+}
+
+class _SelectBookingSlotState extends State<SelectBookingSlot> {
+  String selectedTime = "";
+  String selectedDate = "";
+  final List<String> availableTimes = [
+    "10:00 AM",
+    "11:00 AM",
+    "12:30 PM",
+    "01:30 PM",
+    "02:30 PM"
+  ];
+final List<Map<String, String>>dates = [
+  {"day":"tue","date":"29"},
+  {"day":"wed","date":"30"},
+  {"day":"thu","date":"31"},
+  {"day":"fri","date":"01"},
+  {"day":"sat","date":"02"},
+  {"day":"sun","date":"03"},
+];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Column(
-          //   children: [
-          //     Expanded(
-          //       child: Container(
-          //         color: Colors.blue[300],
-          //         child: Center(child: Text("This is the background")),
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          Divider(
+            indent: 120,
+            endIndent: 120,
+            color: Colors.grey,
+            thickness: 4,
+          ),
+          Text(
+            "Select Date",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children:dates.map((d){
+                  final displayDate = "${d['day']}${d['date']}";
+                  return dateBox(d['day']!, d['date']!, selectedDate==displayDate, (){
+                    setState(() {
+                      if(selectedDate==displayDate){
+                        selectedDate="";
 
-          // Blur effect for upper half
-          Align(
-            alignment: Alignment.topCenter,
-
-            child: Stack(
-              children: [
-                Image.network(
-                  "https://media.istockphoto.com/id/911703434/photo/hands-of-plumber-with-a-wrench.jpg?s=612x612&w=0&k=20&c=vUroIJBzae0CbrcGe_ut2_CJSvBu4owfaYcP6ZC23DI=",
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 2,
-                      width: double.infinity,
-                      color: Colors.black.withOpacity(0.1),
+                      }else{
+                        selectedDate=displayDate;
+                      }
+                      // selectedDate=displayDate;
+                    });
+                  });
+                }).toList(),
+              // [
+              //   SizedBox(width: 10),
+              //   dateBox("Tue", "29"),
+              //   dateBox("Wed", "30"),
+              //   dateBox("Thu", "31"),
+              //   dateBox("Fri", "01"),
+              //   dateBox("Sat", "02"),
+              //   dateBox("Sun", "03"),
+              // ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            "Select Time",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Wrap(
+            runSpacing: 10,
+            children: availableTimes.map((time) {
+              return timeBox(time, selectedTime == time, () {
+                setState(() {
+                  selectedTime = time;
+                });
+              });
+            }).toList(),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(30))),
+                    builder: (context) => SelectAddress(),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
                     ),
+                    backgroundColor: Colors.blue,
+                    fixedSize: Size(250, 45)),
+                child: Text(
+                  "Proceed to checkout",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                ),
-              ],
-            ),
-
-            // child: ClipRect(
-            //   child: BackdropFilter(
-            //     filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-            //     child: Container(
-            //       height: MediaQuery.of(context).size.height / 2,
-            //     ),
-            //   ),
-            // ),
-          ),
-
-          // Foreground content (optional)
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-
-                  topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-              child: Container(
-
-                height: MediaQuery.of(context).size.height / 2,
-                // decoration: BoxDecoration(
-                     color: Colors.white,
-                //     borderRadius: BorderRadius.only(
-                //         topLeft: Radius.circular(30),
-                //         topRight: Radius.circular(30))),
-                child: Center(
-
-                  child: Text(
-                    "Bottom half is clear",
-
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-          ),
+                )),
+          )
         ],
       ),
     );
