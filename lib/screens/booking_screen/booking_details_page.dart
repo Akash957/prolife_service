@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'write_a_review.dart';
+import 'package:get/get.dart';
+import 'package:prolife_service/notification_screen/write_a_review.dart';
 
 class BookingDetailsPage extends StatelessWidget {
   const BookingDetailsPage({super.key});
@@ -61,7 +61,7 @@ class BookingDetailsPage extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> WriteReviewPage()));
+                      Get.to(WriteReviewPage());
                     },
                     child: const Text("Write a Review"),
                   ),
