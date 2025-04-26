@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
 import 'package:prolife_service/screen/address_screen.dart';
+import 'package:prolife_service/screen/shaved_address_screen.dart';
 import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/language_service.dart';
@@ -227,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 iconColor: const Color(0xFF4CAF50),
                                 title: 'My Addresses'.tr,
                                 onTap: () {
-                                  Get.to(const AddressScreen());
+                                  Get.to(const ShavedAddressScreen());
                                 },
                               ),
                             ],
@@ -275,7 +276,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 icon: Icons.support_agent,
                                 iconColor: const Color(0xFFFF9800),
                                 title: 'Customer Support'.tr,
-                                onTap: () {},
+                                onTap: () {
+
+                                },
                               ),
                               const Divider(height: 1, indent: 16),
                               ProfileMenuItem(
