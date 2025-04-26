@@ -382,12 +382,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                       Column(
                         children: [
-                          GlobalWidget.WorkNameText(context, "Price"),
-                          GlobalWidget.WorkNameText(context, "Price"),
+                          GlobalWidget.WorkNameText(context,"Price"),
+                          GlobalWidget.WorkNameText(context, "₹ ${widget.product.originalPrice}"),
                         ],
-                      ),
-                      SizedBox(
-                        width: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

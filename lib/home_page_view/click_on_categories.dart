@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -69,9 +68,11 @@ class ClickProduct extends StatelessWidget {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        // Add the selected partner to the cart
-                                        categoryController.addToCart(partner);
-                                        Get.to(CartScreen());
+                                        categoryController.addToCart(partner,context);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('AddToCart Success',style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
+                                        );
+                                        Get.back();
                                       },
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.yellow),
