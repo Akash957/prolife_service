@@ -1,15 +1,248 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
- import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:prolife_service/screens/profile_screen.dart';
-import '../globle_widget/globle_screen.dart';
- import 'package:get/get.dart';
-import 'package:prolife_service/globle_widget/globle_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+// import 'package:get/get.dart';
+// import 'package:prolife_service/home_page_view/service_details.dart';
+// import 'package:provider/provider.dart';
+// import '../getx_service/getx_screen.dart';
+// import '../global_widget/globle_screen.dart';
+// import '../provider/location_provider.dart';
+// import '../screens/location_screen/location_screen.dart';
+// import 'all_categories.dart';
+// import 'click_on_categories.dart';
+//
+// class HomeScreen extends StatefulWidget {
+//   const HomeScreen({super.key});
+//
+//   @override
+//   State<HomeScreen> createState() => _HomeScreenState();
+// }
+//
+// class _HomeScreenState extends State<HomeScreen> {
+//   final TextEditingController searchController = TextEditingController();
+//   final getController = Get.put(GetService());
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     var widthScreen = MediaQuery.of(context).size.width * 0.7;
+//     final locationProvider = Provider.of<LocationProvider>(context);
+//     final categoryController = Get.put(GetService());
+//
+//     return Scaffold(
+//         backgroundColor: Colors.white,
+//         appBar: AppBar(
+//           backgroundColor: Colors.white,
+//           automaticallyImplyLeading: false,
+//           title: InkWell(
+//             onTap: () => Get.to(() => const LocationScreen()),
+//             child: Row(
+//               children: [
+//                 const Icon(Icons.location_on, color: Colors.orange),
+//                 const SizedBox(width: 10),
+//                 Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     if (locationProvider.currentAddress != null)
+//                       Text(
+//                         locationProvider.currentAddress!,
+//                         style: const TextStyle(fontSize: 14),
+//                       )
+//                     else
+//                       const Text(
+//                         overflow: TextOverflow.ellipsis,
+//                         "Tap to select location",
+//                         style: TextStyle(fontSize: 14),
+//                       ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+//           bottom: PreferredSize(
+//             preferredSize: const Size.fromHeight(60),
+//             child: Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: TextField(
+//                 onChanged: (value) {
+//                   categoryController.searchCategories(value);
+//                 },
+//                 decoration: InputDecoration(
+//                   hintText: "Search image...",
+//                   prefixIcon: Icon(Icons.search),
+//                   border: OutlineInputBorder(
+//                     borderRadius: BorderRadius.circular(10),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//           actions: const [
+//             InkWell(
+//               child: Icon(Icons.notifications, size: 30),
+//             ),
+//             SizedBox(width: 15),
+//             InkWell(
+//               child: Icon(Icons.shopping_cart_outlined, size: 30),
+//             ),
+//             SizedBox(width: 15),
+//           ],
+//         ),
+//         body: Column(
+//             children: [
+//               Row(
+//                 children: [
+//                   GlobalWidget.WorkNameText(context, "All Categories"),
+//                   Spacer(),
+//                   GlobalWidget.SeeAllCategories(() {
+//                     Get.to(AllCategories());
+//                   }, context, "See All"),
+//                   SizedBox(width: 20),
+//                 ],
+//               ),
+//               SizedBox(
+//                 height: 230,
+//                 child: Obx(
+//                       () => GridView.builder(
+//                     itemCount: categoryController.categories.length,
+//                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                       crossAxisCount: 4,
+//                       mainAxisSpacing: 1,
+//                       crossAxisSpacing: 0.8,
+//                       childAspectRatio: 0.9,
+//                     ),
+//                     padding: EdgeInsets.all(5),
+//                     itemBuilder: (context, index) {
+//                       final category = categoryController.categories[index];
+//                       return InkWell(
+//                         onTap: () {
+//                           Get.to(ClickProduct());
+//                           categoryController.filterProductsByWorkType(
+//                             category.name,
+//                           );
+//                         },
+//                         child: Card(
+//                           color: Colors.white,
+//                           elevation: 2,
+//                           shape: RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(10),
+//                           ),
+//                           child: Column(
+//                             mainAxisAlignment: MainAxisAlignment.center,
+//                             children: [
+//                               SizedBox(
+//                                 height: 75,
+//                                 child: ClipRRect(
+//                                   borderRadius: BorderRadius.circular(5),
+//                                   child: Image.network(category.imageUrl),
+//                                 ),
+//                               ),
+//                               Padding(
+//                                 padding: EdgeInsets.symmetric(horizontal: 2),
+//                                 child: Text(
+//                                   category.name,
+//                                   style: const TextStyle(fontSize: 10),
+//                                 ),
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                   ),
+//                 ),
+//               ),
+//               Row(
+//                 children: [
+//                   GlobalWidget.WorkNameText(context, "Best Services"),
+//                   Spacer(),
+//                   GlobalWidget.SeeAllCategories(() {}, context, "See All"),
+//                   SizedBox(width: 20),
+//                 ],
+//               ),
+//               SizedBox(
+//                 height: 310,
+//                 child: Obx(() => ListView.builder(
+//                   scrollDirection: Axis.horizontal,
+//                   itemCount: categoryController.filteredProducts.length,
+//                   itemBuilder: (context, index) {
+//                     final partner = categoryController.filteredProducts[index];
+//                     return Container(
+//                       width: 290,
+//                       child: Card(
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             SizedBox(height: 20),
+//                             GlobalWidget.BestServicesImage1(
+//                                 context, partner.workingImageUrl),
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 8),
+//                               child: RatingBar.builder(
+//                                 allowHalfRating: true,
+//                                 itemCount: 5,
+//                                 itemSize: 30,
+//                                 itemBuilder: (context, _) => const Icon(
+//                                   Icons.star,
+//                                   color: Colors.blue,
+//                                 ),
+//                                 onRatingUpdate: (rating) {
+//                                   print('Rating: \$rating');
+//                                 },
+//                               ),
+//                             ),
+//                             Flexible(
+//                               child: GlobalWidget.WorkNameText(
+//                                   context, partner.serviceName),
+//                             ),
+//                             SizedBox(width: 50),
+//                             Row(
+//                               children: [
+//                                 GlobalWidget.BestServicesCircleAvatar2(
+//                                     context, partner.profileImage),
+//                                 Column(
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+//                                     GlobalWidget.workername(
+//                                         context, partner.name),
+//                                     GlobalWidget.serviceType(
+//                                         context, partner.workType),
+//                                   ],
+//                                 ),
+//                                 const Spacer(),
+//                                 GlobalWidget.ServicesProvideAddButton(
+//                                       () {
+//                                     Get.to(
+//                                         ServiceDetailsPage(product: partner));
+//                                   },
+//                                   context,
+//                                   "Add",
+//                                 ),
+//                               ],
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 )),
+//               ),
+//             ],
+//             ),
+//         );
+//     }
+// }
 
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import '../getx_service/getx_screen.dart';
+import '../global_widget/globle_screen.dart';
+import '../provider/location_provider.dart';
+import '../screens/location_screen/location_screen.dart';
+import 'add_to_cart.dart';
 import 'all_categories.dart';
 import 'click_on_categories.dart';
- 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,189 +251,52 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
   final getController = Get.put(GetService());
 
   @override
-  void initState() {
-    super.initState();
-    getController.allCategories(); // Store data one time
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
+    final locationProvider = Provider.of<LocationProvider>(context);
+    final categoryController = Get.put(GetService());
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Store"),
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+        title: InkWell(
+          onTap: () => Get.to(() => const LocationScreen()),
+          child: Row(
+            children: [
+              const Icon(Icons.location_on, color: Colors.orange),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (locationProvider.currentAddress != null)
+                    Text(
+                      locationProvider.currentAddress!,
+                      style: const TextStyle(fontSize: 14),
+                    )
+                  else
+                    const Text(
+                      overflow: TextOverflow.ellipsis,
+                      "Tap to select location",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-             child: Row(
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  size: 40,
-                ),
-                const Text(
-                  "Service Address",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
-                    },
-                    icon: const Icon(
-                      Icons.notifications_none_outlined,
-                      size: 40,
-                    ))
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.blue.shade100),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Search",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10),
-                    )),
-              ),
-            ),
-          ),
-          Expanded(
-              child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    GlobleWidget.WorkNameText(context, "All Category"),
-                    Spacer(),
-                    GlobleWidget.SeeAllCategories(() {}, context, "See All"),
-                    SizedBox(
-                      width: 20,
-                    )
-                  ],
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Carpenter",
-                          "assets/image/carpernter_bc.png",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Cleaner",
-                          "assets/image/cliner.png",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Painter",
-                          "assets/image/painter_bc.png",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Electrician",
-                          "assets/image/electric_bc.png",
-                          () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Ac Repair",
-                          "assets/image/ac_repairing_bc.png",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Plumber",
-                          "assets/image/plumber.png",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Men's Salon",
-                          "assets/image/salon.jpeg",
-                          () {},
-                        ),
-                        GlobleWidget.AllCategory(
-                          context,
-                          "Beauty",
-                          "assets/image/beauty_bc.png",
-                          () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 20),
-                  child: Row(
-                    children: [
-                      GlobleWidget.WorkNameText(context, "Best Service"),
-                      Spacer(),
-                      GlobleWidget.SeeAllCategories(() {}, context, "See All")
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        height: heightScreen * 0.4,
-                        child: Card(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              GlobleWidget.BestServicesImage1(
-                                context,
-                                "assets/image/kitchen.jpeg",
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: RatingBar.builder(
-                                  // minRating: 0,
-                                  // direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: 30,
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.blue,
-             child: TextField(
+            child: TextField(
               onChanged: (value) {
-                getController.updateSearch(value);
+                categoryController.searchCategories(value);
               },
               decoration: InputDecoration(
                 hintText: "Search image...",
@@ -212,125 +308,163 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        actions: [
+          const InkWell(child: Icon(Icons.notifications,size: 30,),),
+          SizedBox(width: 15,),
+          InkWell(onTap:() {
+            Get.to(CartScreen());
+          },child: Icon(Icons.shopping_cart_outlined,size: 30),),
+          SizedBox(width: 15,)
+        ],
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              GlobalWidget.WorkNameText(context, "All Categories"),
-              Spacer(),
-              GlobalWidget.SeeAllCategories(() {
-                Get.to(AllCategories());
-              }, context, "See All"),
-              SizedBox(width: 20,)
-            ],
-          ),
-          SizedBox(
-            height: 250,
-            child: Expanded(
-              child: Obx(() {
-                return StreamBuilder<QuerySnapshot>(
-                  stream: getController.filteredImages,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    final docs = snapshot.data!.docs;
-                    if (docs.isEmpty) {
-                      return Center(child: Text("No matching results"));
-                    }
-                    return GridView.builder(
-                      itemCount: docs.length,
-                      gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 1,
-                        crossAxisSpacing: 1,
-                        childAspectRatio: 0.8,
-                      ),
-                      padding: const EdgeInsets.all(5),
-                      itemBuilder: (context, index) {
-                        var data = docs[index];
-                        return InkWell(
-                          onTap: () {
-                            Get.to(ClickOnCategories());
-                          },
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 1,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                GlobalWidget.WorkNameText(context, "All Categories"),
+                Spacer(),
+                GlobalWidget.SeeAllCategories(() {
+                  Get.to(AllCategories());
+                }, context, "See All"),
+                SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+            SizedBox(
+              height: heightScreen*0.3,
+              child: Expanded(
+                child: Obx(
+                      () => GridView.builder(
+                    itemCount: categoryController.categories.length,
+                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 1,
+                      crossAxisSpacing: 0.8,
+                      childAspectRatio: 0.9,
+                    ),
+                    padding:  EdgeInsets.all(5),
+                    itemBuilder: (context, index) {
+                      final category = categoryController.categories[index];
+                      return InkWell(
+                        onTap: () {
+                          Get.to(ClickProduct());
+                          categoryController.filterProductsByWorkType(
+                            category.name,
+                          );
+                        },
+                        child:
+                        Card(
+                          color: Colors.white,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height:75,
+                                child: Expanded(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
-                                    child: Image.network(data['url']),
-                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 2,
-                                    right: 2,
+                                    child: Image.network(category.imageUrl),
                                   ),
-                                   GlobleWidget.ServicesProvideAddButton(
-                                      () {}, context, "Add")
-                                ],
-                              )
+                                ),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.only(left: 2, right: 2),
+                                child: Text(
+                                  category.name,
+                                  style: const TextStyle(fontSize: 10),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: heightScreen * 0.4,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                GlobalWidget.WorkNameText(context, "Best Services"),
+                Spacer(),
+                GlobalWidget.SeeAllCategories(() {}, context, "See All"),
+                SizedBox(width: 20),
+              ],
+            ),
+            SizedBox(
+              height:heightScreen*0.4,
+              child: Expanded(
+                  child:
+                  Obx(() => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryController.filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      final partner = categoryController.filteredProducts[index];
+                      return Container(
+                        width: widthScreen*0.7,
                         child: Card(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              GlobleWidget.BestServicesImage1(
-                                context,
-                                "assets/image/kitchen.jpeg",
-                              ),
+                              SizedBox(height: 20,),
+                              GlobalWidget.BestServicesImage1(
+                                  context, partner.workingImageUrl),
                               Padding(
                                 padding: const EdgeInsets.only(left: 8),
                                 child: RatingBar.builder(
-                                  // minRating: 0,
-                                  // direction: Axis.horizontal,
                                   allowHalfRating: true,
                                   itemCount: 5,
                                   itemSize: 30,
                                   itemBuilder: (context, _) => const Icon(
                                     Icons.star,
                                     color: Colors.blue,
-                                   child: Text(
-                                    data['name'],
-                                    style: TextStyle(fontSize: 10),
-                                   ),
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print('Rating: $rating');
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                              GlobalWidget.WorkNameText(context, partner.serviceName),
+                              // GlobalWidget.TextSpanTextOriginal(context, partner.price1, partner.price2),
+                              SizedBox(width: 50,),
+                              Row(
+                                children: [
+                                  GlobalWidget.BestServicesCircleAvatar2(context, partner.profileImage),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      GlobalWidget.workername(context, partner.name),
+                                      GlobalWidget.serviceType(context, partner.workType),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  GlobalWidget.ServicesProvideAddButton(
+                                        () {
+                                      // Get.to(ServiceDetailsPage(product: partner));
+                                    },
+                                    context,
+                                    "Add",
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    );
-                  },
-                );
-              }),
+                        ),
+                      );
+                    },
+                  ))
+
+              ),
             ),
-          ),
-          Row(
-            children: [
-              GlobalWidget.WorkNameText(context, "Best Services"),
-              Spacer(),
-              GlobalWidget.SeeAllCategories(() {
-              }, context, "See All"),
-              SizedBox(width: 20),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screens/booking_screen/my_booking_screen.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
+import '../profile_screen/profile_screen.dart';
+
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
 
@@ -14,8 +16,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   List pagecontrooller = [
     HomeScreen(),
     AllCategories(),
-    HomeScreen(),
-    HomeScreen(),
+    MyBookingScreen(),
+    ProfilePage(),
   ];
 
   @override
@@ -23,7 +25,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     return Scaffold(
       body: pagecontrooller[index],
       bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 15,
+          selectedFontSize: 15,
+          backgroundColor: Colors.white,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           currentIndex: index,
           type: BottomNavigationBarType.fixed,
@@ -34,13 +37,29 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           },
           items: const [
             BottomNavigationBarItem(
-                label: 'Home', icon: Icon(Icons.home,size: 30,)),
+                label: 'Home',
+                icon: Icon(
+                  Icons.home,
+                  size: 30,
+                )),
             BottomNavigationBarItem(
-                label: 'Category', icon: Icon(Icons.dashboard_customize_outlined,size: 30,)),
+                label: 'Category',
+                icon: Icon(
+                  Icons.dashboard_customize_outlined,
+                  size: 30,
+                )),
             BottomNavigationBarItem(
-                label: 'Booking', icon: Icon(Icons.backpack,size: 30,)),
+                label: 'Booking',
+                icon: Icon(
+                  Icons.backpack,
+                  size: 30,
+                )),
             BottomNavigationBarItem(
-                label: 'Profile', icon: Icon(Icons.person,size: 30,)),
+                label: 'Profile',
+                icon: Icon(
+                  Icons.person,
+                  size: 30,
+                )),
           ]),
     );
   }

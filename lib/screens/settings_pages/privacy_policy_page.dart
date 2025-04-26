@@ -54,9 +54,9 @@ class PrivacyPolicyPage extends StatelessWidget {
               SizedBox(height: 10),
               Text(
                 "There are many variations of passages of Lorem Ipsum available, but the majority \nhave suffered alteration in some form, by \ninjected humour, or randomised words \nwhich don’t look even slightly believable."
-                    "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t \nanything embarrassing hidden in the middle \nof text.\n"
-                    "   All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks \nas necessary, making this the first true \ngenerator on the Internet. It uses a \ndictionary of over 200 Latin words, \ncombined with a handful of model sentence \nstructures, to generate Lorem Ipsum which \nlooks reasonable.\n"
-                    "The generated Lorem Ipsum is therefore always free from repetition, injected \nhumour, or non-characteristic words etc.",
+                "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t \nanything embarrassing hidden in the middle \nof text.\n"
+                "   All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks \nas necessary, making this the first true \ngenerator on the Internet. It uses a \ndictionary of over 200 Latin words, \ncombined with a handful of model sentence \nstructures, to generate Lorem Ipsum which \nlooks reasonable.\n"
+                "The generated Lorem Ipsum is therefore always free from repetition, injected \nhumour, or non-characteristic words etc.",
                 style: TextStyle(fontSize: 16.5, height: 1.6),
               ),
             ],

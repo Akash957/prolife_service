@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prolife_service/screens/home_page.dart';
+import '../../home_page_view/home_screen.dart';
 
 class FeedbackScreen extends StatelessWidget {
   const FeedbackScreen({super.key});
@@ -52,6 +52,7 @@ class FeedbackScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
               onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
               },
               child: const Text(
                 'Done',

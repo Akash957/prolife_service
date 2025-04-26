@@ -1,13 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'notification_screen.dart';
-
-void main() {
-  runApp(const MyApp());
-
-import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get.dart';
+import 'package:prolife_service/profile_screen/app_translations.dart';
+import 'package:prolife_service/provider/address_provider.dart';
+import 'package:prolife_service/provider/cart_provider.dart';
+import 'package:prolife_service/provider/location_provider.dart';
+import 'package:prolife_service/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
@@ -19,10 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color(0x00ffffff),
-    statusBarBrightness: Brightness.dark,
-  ));
+
   await Firebase.initializeApp(
     name: 'image-uplode-4d545',
     options: DefaultFirebaseOptions.currentPlatform,
@@ -32,38 +27,30 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => AddressProvider(),),
+        ChangeNotifierProvider(create: (_) => CartProvider(),)
+
+
       ],
       child: const MyApp(),
     ),
   );
-
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+
+      translationsKeys: AppTranslations.translations,
+      fallbackLocale: const Locale('en'),
       title: 'ProLife Service',
-
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-
-      home: NotificationScreen(),
-    );
-  }
-}
-
       home: const SplashScreen(),
     );
   }
 }
-
