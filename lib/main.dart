@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/app_translations.dart';
+import 'package:prolife_service/provider/address_provider.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => AddressProvider(),)
       ],
       child: const MyApp(),
     ),
