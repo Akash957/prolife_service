@@ -36,5 +36,5 @@ class LanguageService extends GetxService {
     await prefs.setString('language', languageCode);
     _locale.value = languageCode;
     Get.updateLocale(Locale(languageCode));
-  }
+    }
 }
