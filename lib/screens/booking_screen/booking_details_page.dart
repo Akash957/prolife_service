@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../notification_screen/write_a_review.dart';
+import 'write_a_review.dart';
 
 class BookingDetailsPage extends StatelessWidget {
   const BookingDetailsPage({super.key});
