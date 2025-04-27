@@ -14,11 +14,12 @@ class Onboarding1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              left: 290,
+              left: 200,
             ),
             child: TextButton(
                 onPressed: () {
@@ -30,7 +31,7 @@ class Onboarding1 extends StatelessWidget {
                 child: const Text("Skip",
                     style: TextStyle(color: Colors.grey, fontSize: 20))),
           ),
-          Image.asset(data.image, width: 500, height: 500),
+          Image.asset(data.image, width: 500, height: 450),
           const SizedBox(height: 20),
           Text(
             data.title,

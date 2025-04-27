@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/screen/select_booking_slot.dart';
 
 import '../global_widget.dart';
 
@@ -193,7 +194,15 @@ class _CartPageState extends State<CartPage> {
                           borderRadius: BorderRadius.circular(3))),
                   child: Text("Add service")),
               FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30))),
+                        builder: (context) => SelectBookingSlot());
+                  },
                   style: FilledButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3))),
