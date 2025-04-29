@@ -20,18 +20,22 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
     "01:30 PM",
     "02:30 PM"
   ];
-final List<Map<String, String>>dates = [
-  {"day":"tue","date":"29"},
-  {"day":"wed","date":"30"},
-  {"day":"thu","date":"31"},
-  {"day":"fri","date":"01"},
-  {"day":"sat","date":"02"},
-  {"day":"sun","date":"03"},
-];
+  final List<Map<String, String>>dates = [
+    {"day": "tue", "date": "29"},
+    {"day": "wed", "date": "30"},
+    {"day": "thu", "date": "31"},
+    {"day": "fri", "date": "01"},
+    {"day": "sat", "date": "02"},
+    {"day": "sun", "date": "03"},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.5,
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,20 +57,20 @@ final List<Map<String, String>>dates = [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children:dates.map((d){
-                  final displayDate = "${d['day']}${d['date']}";
-                  return dateBox(d['day']!, d['date']!, selectedDate==displayDate, (){
-                    setState(() {
-                      if(selectedDate==displayDate){
-                        selectedDate="";
-
-                      }else{
-                        selectedDate=displayDate;
-                      }
-                      // selectedDate=displayDate;
-                    });
+              children: dates.map((d) {
+                final displayDate = "${d['day']}${d['date']}";
+                return dateBox(
+                    d['day']!, d['date']!, selectedDate == displayDate, () {
+                  setState(() {
+                    if (selectedDate == displayDate) {
+                      selectedDate = "";
+                    } else {
+                      selectedDate = displayDate;
+                    }
+                    // selectedDate=displayDate;
                   });
-                }).toList(),
+                });
+              }).toList(),
               // [
               //   SizedBox(width: 10),
               //   dateBox("Tue", "29"),
@@ -94,7 +98,12 @@ final List<Map<String, String>>dates = [
             children: availableTimes.map((time) {
               return timeBox(time, selectedTime == time, () {
                 setState(() {
-                  selectedTime = time;
+                  if (selectedTime == time) {
+                    selectedTime = "";
+                  }
+                  else {
+                    selectedTime = time;
+                  }
                 });
               });
             }).toList(),
@@ -104,21 +113,29 @@ final List<Map<String, String>>dates = [
           ),
           Center(
             child: ElevatedButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
+                onPressed: (selectedDate.isNotEmpty && selectedTime.isNotEmpty)
+                    ? () {
+                  showModalBottomSheet(context: context,
                     isScrollControlled: true,
                     shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(30))),
-                    builder: (context) => SelectAddress(),
-                  );
-                },
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(30))),
+                    builder: (context) => SelectAddress(),);
+                }:null,                // onPressed: () {
+                //   showModalBottomSheet(
+                //     context: context,
+                //     isScrollControlled: true,
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius:
+                //             BorderRadius.vertical(top: Radius.circular(30))),
+                //     builder: (context) => SelectAddress(),
+                //   );
+                // },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(3),
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: (selectedDate.isNotEmpty&&selectedTime.isNotEmpty)? Colors.blue:Colors.grey,
                     fixedSize: Size(250, 45)),
                 child: Text(
                   "Proceed to checkout",

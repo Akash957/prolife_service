@@ -54,9 +54,9 @@ class MyApp extends StatelessWidget {
       title: 'ProLife Service',
       // home: BookingSuccessScreen(),
       // home: AddAddress(),
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
       // home: SelectBookingSlot(),
-      home: CartPage(),
+      // home: CartPage(),
     );
   }
 }

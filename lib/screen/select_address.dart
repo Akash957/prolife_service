@@ -35,6 +35,7 @@ class _SelectAddressState extends State<SelectAddress> {
               onTap:(){
                 Navigator.pop(context);
               },
+
               child: Icon(
                 CupertinoIcons.multiply_circle,
                 color: Colors.red,
@@ -59,7 +60,11 @@ class _SelectAddressState extends State<SelectAddress> {
               groupValue: selectedAddress,
               onChanged: (value) {
                 setState(() {
-                  selectedAddress = value!;
+                  if(selectedAddress==value){
+                    selectedAddress=null;
+                  }else{
+                    selectedAddress=value!;
+                  }
                 });
               },
               activeColor: Colors.green,
@@ -79,7 +84,13 @@ class _SelectAddressState extends State<SelectAddress> {
               groupValue: selectedAddress,
               onChanged: (value) {
                 setState(() {
-                  selectedAddress = value!;
+                  if(selectedAddress==value){
+                    selectedAddress=null;
+                  }
+                  else{
+                    selectedAddress=value!;
+                  }
+                  // selectedAddress = value!;
 
                 });
 
