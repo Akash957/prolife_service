@@ -103,7 +103,7 @@ class _LocationScreenState extends State<LocationScreen> {
                             if (address != null) {
                               locationProvider.setAddress(address);
                               locationProvider.clearSearch();
-                              Get.to(() => const HomeScreen());
+                              Get.to(() => const BottomNavScreen());
                             }
                           });
                     },

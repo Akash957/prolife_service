@@ -1,215 +1,107 @@
-
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
+import 'package:get/get.dart';
+import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
+import 'service_details.dart';
 
-class ClickOnCategories extends StatefulWidget {
-  const ClickOnCategories({super.key});
+class ClickProduct extends StatelessWidget {
+  final categoryController = Get.put(GetService());
 
-  @override
-  State<ClickOnCategories> createState() => _ClickOnCategoriesState();
-}
+  ClickProduct({super.key});
 
-class _ClickOnCategoriesState extends State<ClickOnCategories> {
   @override
   Widget build(BuildContext context) {
-    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(actionsIconTheme: IconThemeData(size: 30),toolbarHeight: 45,title:Center(child: Text("Cleaner",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),)),actions: [
-        GlobalWidget.ClickIcon(() {
-        }, context,Icons.search),
-        SizedBox(width: 25,)
-
-      ],),
-      body: Column(
-        children: [
-          Expanded(child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
+      appBar: AppBar(
+        title: const Center(child: Text('Click on Categories')),
+        backgroundColor: Colors.blue,
+      ),
+      body: Obx(() => ListView.builder(
+        itemCount: categoryController.filteredProducts.length,
+        itemBuilder: (context, index) {
+          final partner = categoryController.filteredProducts[index];
+          return Card(
+            margin: const EdgeInsets.all(8),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: heightScreen * 0.4,
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GlobalWidget.ReferImage(
-                          context,
-                          "https://wpblogassets.paytm.com/paytmblog/uploads/2021/12/25_Refer_Win_Paytms-Refer-_-Earn-Refer-a-friend-and-earn-guaranteed-cashback.jpg",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: RatingBar.builder(
-                            // minRating: 0,
-                            // direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 30,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print('User selected rating: $rating');
-                            },
-                          ),
-                        ),
-                        GlobalWidget.WorkNameText(
-                            context, "Complete Kitchen Cleaning"),
-                        Row(
-                          children: [
-                            GlobalWidget.TextSpanTextOriginal(
-                                context, "150", "50"),
-                            Spacer(),
-                            GlobalWidget.ServicesProvideAddButton(
-                                    () {
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceDetailsPage(),));
-                                }, context, "Add")
-                          ],
-                        )
-                      ],
+                GlobalWidget.ReferImage(context, partner.workingImageUrl),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: RatingBar.builder(
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemSize: 30,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.blue,
                     ),
+                    onRatingUpdate: (rating) {},
                   ),
                 ),
-                SizedBox(
-                  height: heightScreen * 0.4,
-                  child: Card(
-                    child: Column(
+                GlobalWidget.WorkNameText(context, partner.serviceName),
+                GlobalWidget.TextSpanTextOriginal(
+                    context, partner.originalPrice, partner.discountPrice),
+                Row(
+                  children: [
+                    GlobalWidget.BestServicesCircleAvatar(
+                        context, partner.profileImage),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        GlobalWidget.ReferImage(
-                          context,
-                          "https://wpblogassets.paytm.com/paytmblog/uploads/2021/12/25_Refer_Win_Paytms-Refer-_-Earn-Refer-a-friend-and-earn-guaranteed-cashback.jpg",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: RatingBar.builder(
-                            // minRating: 0,
-                            // direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 30,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print('User selected rating: $rating');
-                            },
-                          ),
-                        ),
-                        GlobalWidget.WorkNameText(
-                            context, "Complete Kitchen Clinaning"),
-                        Row(
-                          children: [
-                            GlobalWidget.TextSpanTextOriginal(
-                                context, "150", "50"),
-                            Spacer(),
-                            GlobalWidget.ServicesProvideAddButton(
-                                    () {}, context, "Add")
-                          ],
-                        )
+                        GlobalWidget.workername(context, partner.name),
+                        GlobalWidget.serviceType(context, partner.workType),
                       ],
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: heightScreen * 0.4,
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GlobalWidget.ReferImage(
-                          context,
-                          "https://wpblogassets.paytm.com/paytmblog/uploads/2021/12/25_Refer_Win_Paytms-Refer-_-Earn-Refer-a-friend-and-earn-guaranteed-cashback.jpg",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: RatingBar.builder(
-                            // minRating: 0,
-                            // direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 30,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print('User selected rating: $rating');
-                            },
-                          ),
-                        ),
-                        GlobalWidget.WorkNameText(
-                            context, "Complete Kitchen Clinaning"),
-                        Row(
-                          children: [
-                            GlobalWidget.TextSpanTextOriginal(
-                                context, "150", "50"),
-                            Spacer(),
-                            GlobalWidget.ServicesProvideAddButton(
-                                    () {}, context, "Add")
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: heightScreen * 0.4,
-                  child: Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GlobalWidget.ReferImage(
-                          context,
-                          "https://wpblogassets.paytm.com/paytmblog/uploads/2021/12/25_Refer_Win_Paytms-Refer-_-Earn-Refer-a-friend-and-earn-guaranteed-cashback.jpg",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: RatingBar.builder(
-                            // minRating: 0,
-                            // direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemSize: 30,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.blue,
-                            ),
-                            onRatingUpdate: (rating) {
-                              print('User selected rating: $rating');
-                            },
-                          ),
-                        ),
-                        GlobalWidget.WorkNameText(
-                            context, "Complete Kitchen Clinaning"),
-                        Row(
-                          children: [
-                            GlobalWidget.TextSpanTextOriginal(
-                                context, "150", "50"),
-                            Spacer(),
-                            GlobalWidget.ServicesProvideAddButton(
-                                    () {}, context, "Add")
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-
+                    const Spacer(),
+                    GlobalWidget.ServicesProvideAddButton(() {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              height: 100,
+                              padding: const EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        categoryController.addToCart(partner,context);
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('AddToCart Success',style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
+                                        );
+                                        Get.back();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.yellow),
+                                      child: const Text('Add to Cart'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(ServiceDetailsPage(
+                                            product: partner));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.blue),
+                                      child: const Text('Add'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          });
+                    }, context, "Add"),
+                  ],
+                )
               ],
             ),
-          ))
-        ],
-      ),
+          );
+        },
+      )),
     );
   }
 }
