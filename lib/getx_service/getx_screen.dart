@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
 import '../models/categories_model.dart';
 import '../models/partners_model.dart';
 
