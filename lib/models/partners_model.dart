@@ -1,4 +1,5 @@
 class PartnersModel {
+  final String partner_id;
   final String serviceName;
   final String originalPrice;
   final String discountPrice;
@@ -8,6 +9,7 @@ class PartnersModel {
   final String workType;
 
   PartnersModel({
+    required this.partner_id,
     required this.serviceName,
     required this.originalPrice,
     required this.discountPrice,
@@ -19,6 +21,7 @@ class PartnersModel {
 
   factory PartnersModel.fromMap(Map<String, dynamic> data) {
     return PartnersModel(
+      partner_id: data['partner_id'] ?? "",
       serviceName: data['serviceName'] ?? '',
       originalPrice: data['originalPrice'] ?? '0',
       discountPrice: data['discountPrice'] ?? '0',

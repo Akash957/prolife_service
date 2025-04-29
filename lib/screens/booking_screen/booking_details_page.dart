@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:prolife_service/notification_screen/write_a_review.dart';
 
 class BookingDetailsPage extends StatelessWidget {
   const BookingDetailsPage({super.key});
@@ -17,7 +15,6 @@ class BookingDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(
               children: [
                 ClipRRect(
@@ -36,18 +33,26 @@ class BookingDetailsPage extends StatelessWidget {
                     children: [
                       const Text(
                         "Living Room Cleaning",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 5,),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Row(
                         children: List.generate(
                           5,
-                              (index) => const Icon(Icons.star, size: 16, color: Colors.amber),
+                          (index) => const Icon(Icons.star,
+                              size: 16, color: Colors.amber),
                         ),
-                      ),const SizedBox(height: 5,),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       const Text(
                         "\₹190",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -55,13 +60,12 @@ class BookingDetailsPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-
             Row(
               children: [
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      Get.to(WriteReviewPage());
+                      // Get.to(WriteReviewPage());
                     },
                     child: const Text("Write a Review"),
                   ),
@@ -76,7 +80,8 @@ class BookingDetailsPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 24),
-            const Text("About Service Provider", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("About Service Provider",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const CircleAvatar(
@@ -89,14 +94,18 @@ class BookingDetailsPage extends StatelessWidget {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.call, color: Colors.blue)),
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.message, color: Colors.blue)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.call, color: Colors.blue)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.message, color: Colors.blue)),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-
-            const Text("Booking Status", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Booking Status",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             const BookingStatusTile(
               title: "Booking Confirmed",
@@ -107,7 +116,8 @@ class BookingDetailsPage extends StatelessWidget {
             ),
             const BookingStatusTile(
               title: "Vendor Out for Service",
-              subtitle: "Service Provider has out for your service and reaching your location",
+              subtitle:
+                  "Service Provider has out for your service and reaching your location",
               date: "Mon, Oct 02, 2023",
               time: "09:00 AM",
               isCompleted: true,
@@ -121,19 +131,23 @@ class BookingDetailsPage extends StatelessWidget {
               isLast: true,
             ),
             const SizedBox(height: 16),
-            const Text("Payment Summary", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("Payment Summary",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             const PaymentRow(label: "Item Total", value: "\₹200"),
             const PaymentRow(label: "Discount", value: "-\₹10"),
             const PaymentRow(label: "Delivery Fee", value: "Free"),
             const Divider(),
-            const PaymentRow(label: "Grand Total", value: "\₹190", isTotal: true,),
+            const PaymentRow(
+              label: "Grand Total",
+              value: "\₹190",
+              isTotal: true,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
 
 class BookingStatusTile extends StatelessWidget {
   final String title;
@@ -160,9 +174,11 @@ class BookingStatusTile extends StatelessWidget {
       children: [
         Column(
           children: [
-            Icon(Icons.radio_button_checked, color: isCompleted ? Colors.blue : Colors.grey),
+            Icon(Icons.radio_button_checked,
+                color: isCompleted ? Colors.blue : Colors.grey),
             if (!isLast)
-              Container(height: 40, width: 2, color: Colors.blue.withOpacity(0.5)),
+              Container(
+                  height: 40, width: 2, color: Colors.blue.withOpacity(0.5)),
           ],
         ),
         const SizedBox(width: 12),
@@ -172,7 +188,8 @@ class BookingStatusTile extends StatelessWidget {
             children: [
               Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
               Text(subtitle),
-              Text("$date at $time", style: const TextStyle(color: Colors.grey)),
+              Text("$date at $time",
+                  style: const TextStyle(color: Colors.grey)),
               const SizedBox(height: 12),
             ],
           ),
@@ -212,4 +229,3 @@ class PaymentRow extends StatelessWidget {
     );
   }
 }
-

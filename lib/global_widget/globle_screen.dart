@@ -80,35 +80,6 @@ class GlobalWidget {
       ),
     );
   }
-
-  // static AllCategory(
-  //     BuildContext context, String text, image, VoidCallback onPressed) {
-  //   return InkWell(
-  //     onTap: onPressed,
-  //     child: Card(
-  //       elevation: 0,
-  //       color: Colors.white,
-  //       child: Column(
-  //         children: [
-  //           ClipRRect(
-  //             borderRadius: BorderRadius.circular(10),
-  //             child: Image(
-  //               image: NetworkImage(image),
-  //               height: 120,
-  //               width: 120,
-  //               fit: BoxFit.fitWidth,
-  //             ),
-  //           ),
-  //           Text(
-  //             text,
-  //             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   static BestServicesImage1(
     BuildContext context,
     String image,
@@ -180,30 +151,7 @@ class GlobalWidget {
     );
   }
 
-  // static ServiceDetailsImage(
-  //   BuildContext context,
-  //   String image,
-  // ) {
-  //   var widthScreen = MediaQuery.of(context).size.width * 0.8;
-  //   var heightScreen = MediaQuery.of(context).size.height * 0.3;
-  //   return InkWell(
-  //     child: Card(
-  //       color: Colors.white,
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //       child: Container(
-  //         height: heightScreen,
-  //         width: widthScreen,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10),
-  //           image: DecorationImage(
-  //             image: NetworkImage(image),
-  //             fit: BoxFit.cover,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+
 
   static BestServicesCircleAvatar(
     BuildContext context,
@@ -265,80 +213,6 @@ class GlobalWidget {
       ),
     );
   }
-  //
-  // static ButtosheetFunction(
-  //   BuildContext context,
-  // ) {
-  //   return
-  //     showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Container(
-  //         height: 80,
-  //         color: Colors.white,
-  //         child: Center(
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(8.0),
-  //             child: Row(
-  //               children: [
-  //                 Expanded(
-  //                   child:
-  //                   SizedBox(
-  //                     height: 55,
-  //                     width: double.infinity,
-  //                     child: ElevatedButton(
-  //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow,
-  //                         shape: RoundedRectangleBorder(
-  //                         borderRadius: BorderRadius.circular(5),
-  //                       ),),
-  //                       onPressed: () {
-  //                         Get.to(ServiceDetailsPage(product: partner,));
-  //                       },
-  //                       child: Text(
-  //                         'add',
-  //                         style: TextStyle(fontSize: 20),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(width: 2,),
-  //                 Expanded(
-  //                   child:
-  //                   SizedBox(
-  //                     height: 55,
-  //                     width: double.infinity,
-  //                     child: ElevatedButton(
-  //                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,
-  //                         shape: RoundedRectangleBorder(
-  //                           borderRadius: BorderRadius.circular(5),
-  //                         ),),
-  //                       onPressed: () {
-  //
-  //                       },
-  //                       child: Text(
-  //                         'add',
-  //                         style: TextStyle(fontSize: 20),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // static ServicesProvide(
-  //   BuildContext context,
-  //   String text,
-  // ) {
-  //   return Text(text,
-  //       style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal));
-  // }
-
   static WorkNameText(
     BuildContext context,
     String text,
@@ -446,10 +320,7 @@ class GlobalWidget {
     );
   }
 
-  // static Widget ClickIcon(
-  //     VoidCallback onPressed, BuildContext context, IconData icon) {
-  //   return InkWell(onTap: onPressed, child: Icon(icon));
-  // }
+
 
   static Widget workername(BuildContext context, String text) {
     return SizedBox(

@@ -92,11 +92,15 @@ class _AddressScreenState extends State<AddressScreen> {
                     width: 160,
                     height: 55,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        // location logic
+                      },
                       icon: const Icon(Icons.location_on, size: 20),
                       label: const Text("Add location", style: TextStyle(fontSize: 17)),
                       style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       ),
                     ),
@@ -125,16 +129,20 @@ class _AddressScreenState extends State<AddressScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       await addressProvider.saveAddressToFirestore();
-                     Get.to(const ShavedAddressScreen());
+                      Get.to(const ShavedAddressScreen());
                       Fluttertoast.showToast(msg: "Address saved successfully!");
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                    ),
                   ),
-                  child: const Text("Save Address",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: const Text(
+                    "Save Address",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
               ),
             ],
