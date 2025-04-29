@@ -80,6 +80,7 @@ class GlobalWidget {
       ),
     );
   }
+
   static BestServicesImage1(
     BuildContext context,
     String image,
@@ -151,12 +152,11 @@ class GlobalWidget {
     );
   }
 
-
-
   static BestServicesCircleAvatar(
     BuildContext context,
     String image,
-  ) {return Padding(
+  ) {
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         child: Container(
@@ -171,7 +171,9 @@ class GlobalWidget {
           ),
         ),
       ),
-    );}
+    );
+  }
+
   static BestServicesCircleAvatar2(
     BuildContext context,
     String image,
@@ -191,11 +193,13 @@ class GlobalWidget {
           ),
         ),
       ),
-    );}
+    );
+  }
+
   static BestServicesProfile(
-      BuildContext context,
-      String image,
-      ) {
+    BuildContext context,
+    String image,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -213,6 +217,7 @@ class GlobalWidget {
       ),
     );
   }
+
   static WorkNameText(
     BuildContext context,
     String text,
@@ -281,6 +286,7 @@ class GlobalWidget {
       ])),
     );
   }
+
   static ServicesProvideAddButton(
     VoidCallback onPressed,
     BuildContext context,
@@ -320,13 +326,14 @@ class GlobalWidget {
     );
   }
 
-
-
   static Widget workername(BuildContext context, String text) {
     return SizedBox(
       width: 80,
       child: Text(text,
-          style: const TextStyle(overflow: TextOverflow.ellipsis,fontSize: 15, fontStyle: FontStyle.italic)),
+          style: const TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontSize: 15,
+              fontStyle: FontStyle.italic)),
     );
   }
 
@@ -336,15 +343,15 @@ class GlobalWidget {
   }
 
   static BestServiceImage(
-      BuildContext context,
-      String image,
-      ) {
+    BuildContext context,
+    String image,
+  ) {
     var widthScreen = MediaQuery.of(context).size.width;
     var heightScreen = MediaQuery.of(context).size.height;
     return InkWell(
       child: Container(
         height: 120,
-        width: widthScreen*0.7,
+        width: widthScreen * 0.7,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(

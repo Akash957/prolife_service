@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../getx_service/getx_screen.dart';
@@ -92,6 +91,7 @@ class CartScreen extends StatelessWidget {
         double total = categoryController.cartItems.fold(
             0.0, (sum, item) => sum + double.parse(item.originalPrice.toString()));
         return Container(
+          color: Colors.blue.shade50,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             children: [
@@ -102,12 +102,11 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 50,
-                width: 130,
+                width: 150,
+                height: 55,
                 child: ElevatedButton(
                   onPressed: total == 0
-                      ? () => showAlertDialog(context)
-                      : () {
+                      ? () => showAlertDialog(context) : () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Proceeding to Payment')),
                     );
@@ -116,7 +115,7 @@ class CartScreen extends StatelessWidget {
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                   ),
-                  child: const Text('Pay Now', style: TextStyle(color: Colors.white)),
+                  child: const Text('Pay Now', style: TextStyle(color: Colors.white,fontSize: 18)),
                 ),
               )
             ],
