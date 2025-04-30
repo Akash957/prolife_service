@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
-import 'package:prolife_service/screen/address_screen.dart';
+import 'package:prolife_service/screen/add_address_screen.dart';
 import 'package:prolife_service/screen/shaved_address_screen.dart';
 import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
 import 'package:provider/provider.dart';

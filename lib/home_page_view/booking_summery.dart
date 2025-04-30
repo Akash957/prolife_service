@@ -42,21 +42,21 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       itemCount: 5,
                       itemSize: 25,
                       itemBuilder: (context, _) =>
-                          Icon(Icons.star, color: Colors.blue),
+                          const Icon(Icons.star, color: Colors.blue),
                       onRatingUpdate: (rating) {},
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         "₹${widget.product.originalPrice}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 21),
                       ),
                       SizedBox(width: 80),
@@ -73,7 +73,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                   5,
                                 ), // Border radius yahan set hota hai
                               ),
-                              child: Divider(
+                              child: const Divider(
                                 color: Colors.white,
                                 endIndent: 8,
                                 thickness: 3,
@@ -81,8 +81,8 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
+                          const Padding(
+                            padding: EdgeInsets.all(5.0),
                             child: Text(
                               "1",
                               style: TextStyle(fontSize: 18),
@@ -127,7 +127,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 20,
                                         ),
                                         GlobalWidget.BestServicesImage1(context,
@@ -155,7 +155,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             context,
                                             partner.originalPrice,
                                             partner.discountPrice),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 50,
                                         ),
                                         Row(
@@ -192,7 +192,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               },
                             ))),
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -200,12 +200,12 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       InkWell(
                           onTap: () {},
-                          child: Image(
+                          child: const Image(
                             image: AssetImage(
                               "assets/image/discount.png",
                             ),
@@ -216,38 +216,38 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       Spacer(),
                       InkWell(
                         onTap: () {},
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_right,
                           color: Colors.grey,
                           size: 35,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       )
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
-                      Text(
+                      const Text(
                         "Item Total",
                         style: TextStyle(fontSize: 20),
                       ),
                       Spacer(),
                       Text(
                         widget.product.originalPrice,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 21),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       )
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
                       SizedBox(
                         width: 20,
@@ -267,7 +267,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       )
                     ],
                   ),
-                  Row(
+                  const Row(
                     children: [
                       SizedBox(
                         width: 20,
@@ -289,7 +289,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       )
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -297,26 +297,26 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       GlobalWidget.WorkNameText(context, "Grand Total"),
                       Spacer(),
                       Text(
                         widget.product.originalPrice,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 23,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       )
                     ],
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Container(
@@ -326,9 +326,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                           color: Colors.blueGrey.shade200,
                           borderRadius: BorderRadius.circular(
                             5,
-                          ), // Border radius yahan set hota hai
+                          ),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.location_on_outlined,
                           size: 25,
                         ),
@@ -342,12 +342,12 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             fontSize: 23,
                             color: Colors.grey.shade500),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       )
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     indent: 10,
                     endIndent: 10,
                     height: 30,
@@ -355,7 +355,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   ),
                   Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Column(
@@ -365,7 +365,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                           // GlobalWidget.TextSpanTextOriginal(context, widget.product.price1,''),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Padding(
@@ -382,7 +382,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                           onPressed: () {
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => BookingSummaryScreen(),));
                           },
-                          child: Text(
+                          child: const Text(
                             "Booking Now",
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),

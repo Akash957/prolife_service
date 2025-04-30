@@ -14,6 +14,7 @@ class AddressModel {
   String? state;
   String? buildingName;
   String? areaName;
+  String? addressType;
 
   AddressModel({
     this.addressId,
@@ -25,6 +26,7 @@ class AddressModel {
     this.state,
     this.buildingName,
     this.areaName,
+    this.addressType
   });
 
   factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
@@ -37,6 +39,7 @@ class AddressModel {
     state: json["state"],
     buildingName: json["buildingName"],
     areaName: json["areaName"],
+    addressType: json['addressType']
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class AddressModel {
     "state": state,
     "buildingName": buildingName,
     "areaName": areaName,
+    "addressType":addressType
   };
 }

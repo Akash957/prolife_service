@@ -1,30 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:prolife_service/models/address_model.dart';
 import 'package:prolife_service/screen/shaved_address_screen.dart';
 import 'package:provider/provider.dart';
+
 import '../global_widget/address_textfield_widget.dart';
 import '../provider/address_provider.dart';
 
-class AddressScreen extends StatefulWidget {
-  const AddressScreen({super.key});
+class EditAddressScreen extends StatefulWidget {
+  final AddressModel address;
+
+  const EditAddressScreen({super.key, required this.address});
 
   @override
-  State<AddressScreen> createState() => _AddressScreenState();
+  State<EditAddressScreen> createState() => _EditAddressScreenState();
 }
 
-class _AddressScreenState extends State<AddressScreen> {
+class _EditAddressScreenState extends State<EditAddressScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<AddressProvider>(context, listen: false);
+    provider.setControllerWithData(widget.address);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final addressProvider = Provider.of<AddressProvider>(context);
+    final addressProvider = Provider.of<AddressProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(CupertinoIcons.arrow_left),
-        title: const Text("Add Delivery Address", style: TextStyle(fontSize: 25)),
+        leading: IconButton(onPressed: () {
+          Navigator.pop(context);
+        }, icon: const Icon(CupertinoIcons.arrow_left,color: Colors.white,)),
+        title: const Text("Update Address", style: TextStyle(fontSize: 25)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -118,23 +129,44 @@ class _AddressScreenState extends State<AddressScreen> {
                 isRequired: true,
               ),
               const SizedBox(height: 20),
+              const Text("Address Type", style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                children: [
+                  Radio<String>(
+                    value: 'Home',
+                    groupValue: addressProvider.selectedAddressType,
+                    onChanged: (value) => addressProvider.setAddressType(value!),
+                  ),
+                  const Text("Home"),
+                  Radio<String>(
+                    value: 'Work',
+                    groupValue: addressProvider.selectedAddressType,
+                    onChanged: (value) => addressProvider.setAddressType(value!),
+                  ),
+                  const Text("Work"),
+                  Radio<String>(
+                    value: 'Other',
+                    groupValue: addressProvider.selectedAddressType,
+                    onChanged: (value) => addressProvider.setAddressType(value!),
+                  ),
+                  const Text("Other"),
+                ],
+              ),
               SizedBox(
                 width: 260,
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await addressProvider.saveAddressToFirestore();
-                     Get.to(const ShavedAddressScreen());
-                      Fluttertoast.showToast(msg: "Address saved successfully!");
+                    if(_formKey.currentState!.validate()){
+                      addressProvider.updateAddressInFirestore(widget.address.addressId!);
+                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShavedAddressScreen(),));
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
                   ),
-                  child: const Text("Save Address",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: const Text("Update Address", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 ),
               ),
             ],

@@ -21,6 +21,26 @@ class AddressProvider with ChangeNotifier {
   List<AddressModel> get address => _address;
   bool get isLoading => _isLoading;
 
+  String _selectedAddressType = 'Home';
+  String get selectedAddressType => _selectedAddressType;
+
+  void setAddressType(String type){
+    _selectedAddressType = type;
+    notifyListeners();
+  }
+
+  void setControllerWithData(AddressModel address){
+    nameController.text = address.name!;
+    personalNumberController.text = address.phoneNumber!;
+    alternateNumberController.text = address.alternateNumber!;
+    pinCodeController.text = address.pincode!;
+    cityNameController.text = address.city!;
+    stateNameController.text = address.state!;
+    houseNameController.text = address.buildingName!;
+    roadNameController.text = address.areaName!;
+  }
+
+
   Future<void> saveAddressToFirestore() async {
     try {
       final address = AddressModel(
@@ -33,6 +53,7 @@ class AddressProvider with ChangeNotifier {
         state: stateNameController.text.trim(),
         buildingName: houseNameController.text.trim(),
         areaName: roadNameController.text.trim(),
+        addressType: _selectedAddressType,
       );
 
       await firestore
@@ -42,14 +63,7 @@ class AddressProvider with ChangeNotifier {
 
       debugPrint("✅ Address saved: ${address.toJson()}");
 
-      nameController.clear();
-      personalNumberController.clear();
-      alternateNumberController.clear();
-      pinCodeController.clear();
-      cityNameController.clear();
-      stateNameController.clear();
-      houseNameController.clear();
-      roadNameController.clear();
+      clearControllers();
 
       notifyListeners();
     } catch (e) {
@@ -72,14 +86,35 @@ class AddressProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateAddressInFirestore(AddressModel updateAddress)async{
-    try{
-      await firestore.collection('address').doc(updateAddress.addressId).update(updateAddress.toJson());
-      Fluttertoast.showToast(msg: 'Address updated:${updateAddress.toJson()}');
+
+  Future<void> updateAddressInFirestore(String addressId) async {
+    try {
+      final updatedAddress = AddressModel(
+        addressId: addressId,
+        name: nameController.text.trim(),
+        phoneNumber: personalNumberController.text.trim(),
+        alternateNumber: alternateNumberController.text.trim(),
+        pincode: pinCodeController.text.trim(),
+        city: cityNameController.text.trim(),
+        state: stateNameController.text.trim(),
+        buildingName: houseNameController.text.trim(),
+        areaName: roadNameController.text.trim(),
+        addressType: _selectedAddressType,
+      );
+
+      await firestore
+          .collection('address')
+          .doc(addressId)
+          .update(updatedAddress.toJson());
+
+      clearControllers();
+
+      Fluttertoast.showToast(msg: 'Address updated successfully!');
       await fetchAddress();
       notifyListeners();
-    } catch(e){
-      Fluttertoast.showToast(msg: 'Address updated failed');
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Address update failed');
+      debugPrint('Error updating address: $e');
     }
   }
 
@@ -92,6 +127,19 @@ class AddressProvider with ChangeNotifier {
     } catch(e){
       print('Error deleting address: $addressId');
     }
+  }
+
+  void clearControllers() {
+    nameController.clear();
+    personalNumberController.clear();
+    alternateNumberController.clear();
+    pinCodeController.clear();
+    cityNameController.clear();
+    stateNameController.clear();
+    houseNameController.clear();
+    roadNameController.clear();
+    _selectedAddressType = 'Home';
+    notifyListeners();
   }
 
 }
