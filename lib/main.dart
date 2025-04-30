@@ -52,9 +52,9 @@ class MyApp extends StatelessWidget {
       translationsKeys: AppTranslations.translations,
       fallbackLocale: const Locale('en'),
       title: 'ProLife Service',
-      // home: const SplashScreen(),
+      home: const SplashScreen(),
       // home: const BookingScreen(),
-      home: CartPage(),
+      // home: CartPage(),
     );
   }
 }

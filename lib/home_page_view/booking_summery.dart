@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../models/partners_model.dart';
+import '../screen/select_booking_slot.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   final PartnersModel product;
@@ -81,7 +82,8 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               setState(() {
                                 if (count > 1) {
                                   count--;
-                                  addData = (widget.product.originalPrice * count) as int;
+                                  addData = (widget.product.originalPrice *
+                                      count) as int;
                                 }
                               });
                             },
@@ -110,10 +112,11 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             ),
                           ),
                           GlobalWidget.IncreaseDecreaseButton(
-                                () {
+                            () {
                               setState(() {
                                 count++;
-                                addData = (widget.product.originalPrice * count) as int;
+                                addData = (widget.product.originalPrice * count)
+                                    as int;
                               });
                             },
                             context,
@@ -136,83 +139,81 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                     height: heightScreen * 0.4,
                     child: Expanded(
                         child: Obx(() => ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount:
-                          categoryController.filteredProducts.length,
-                          itemBuilder: (context, index) {
-                            final partner =
-                            categoryController.filteredProducts[index];
-                            return Container(
-                              width: widthScreen * 0.7,
-                              child: Card(
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                        height: 5
-                                    ),
-                                    GlobalWidget.BestServicesImage1(
-                                        context, widget.product.workingImageUrl),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(left: 8),
-                                      child: RatingBar.builder(
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemSize: 30,
-                                        itemBuilder: (context, _) =>
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.blue,
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                          print('Rating: $rating');
-                                        },
-                                      ),
-                                    ),
-                                    GlobalWidget.WorkNameText(
-                                        context, partner.serviceName),
-                                    GlobalWidget.TextSpanTextOriginal(
-                                        context,
-                                        partner.originalPrice,
-                                        partner.discountPrice),
-                                    SizedBox(
-                                      width: 50,
-                                    ),
-                                    Row(
-                                      children: [
-                                        GlobalWidget
-                                            .BestServicesCircleAvatar2(
-                                            context,
-                                            partner.profileImage),
-                                        Column(
-                                          crossAxisAlignment:
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  categoryController.filteredProducts.length,
+                              itemBuilder: (context, index) {
+                                final partner =
+                                    categoryController.filteredProducts[index];
+                                return Container(
+                                  width: widthScreen * 0.7,
+                                  child: Card(
+                                    child: Column(
+                                      crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          children: [
-                                            GlobalWidget.workername(
-                                                context, partner.name),
-                                            GlobalWidget.serviceType(
-                                                context, partner.workType),
-                                          ],
+                                      children: [
+                                        SizedBox(height: 5),
+                                        GlobalWidget.BestServicesImage1(context,
+                                            widget.product.workingImageUrl),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8),
+                                          child: RatingBar.builder(
+                                            allowHalfRating: true,
+                                            itemCount: 5,
+                                            itemSize: 30,
+                                            itemBuilder: (context, _) =>
+                                                const Icon(
+                                              Icons.star,
+                                              color: Colors.blue,
+                                            ),
+                                            onRatingUpdate: (rating) {
+                                              print('Rating: $rating');
+                                            },
+                                          ),
                                         ),
-                                        const Spacer(),
-                                        GlobalWidget
-                                            .ServicesProvideAddButton(
+                                        GlobalWidget.WorkNameText(
+                                            context, partner.serviceName),
+                                        GlobalWidget.TextSpanTextOriginal(
+                                            context,
+                                            partner.originalPrice,
+                                            partner.discountPrice),
+                                        SizedBox(
+                                          width: 50,
+                                        ),
+                                        Row(
+                                          children: [
+                                            GlobalWidget
+                                                .BestServicesCircleAvatar2(
+                                                    context,
+                                                    partner.profileImage),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                GlobalWidget.workername(
+                                                    context, partner.name),
+                                                GlobalWidget.serviceType(
+                                                    context, partner.workType),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            GlobalWidget
+                                                .ServicesProvideAddButton(
                                               () {
-                                            // Get.to(ServiceDetailsPage(product: partner));
-                                          },
-                                          context,
-                                          "Add",
+                                                // Get.to(ServiceDetailsPage(product: partner));
+                                              },
+                                              context,
+                                              "Add",
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ))),
+                                  ),
+                                );
+                              },
+                            ))),
                   ),
                   Divider(
                     indent: 10,
@@ -357,12 +358,26 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                       Text("Address"),
                       Spacer(),
-                      Text(
-                        "Change",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.grey.shade500),
+                      InkWell(
+                        onTap: (){
+
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(30))),
+                                builder: (context) => SelectBookingSlot());
+
+
+                        },
+                        child: Text(
+                          "Change",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                              color: Colors.grey.shade500),
+                        ),
                       ),
                       SizedBox(
                         width: 20,
@@ -382,8 +397,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                       Column(
                         children: [
-                          GlobalWidget.WorkNameText(context,"Price"),
-                          GlobalWidget.WorkNameText(context, "₹ ${widget.product.originalPrice}"),
+                          GlobalWidget.WorkNameText(context, "Price"),
+                          GlobalWidget.WorkNameText(
+                              context, "₹ ${widget.product.originalPrice}"),
                         ],
                       ),
                       Padding(

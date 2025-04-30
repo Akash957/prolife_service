@@ -195,13 +195,13 @@ class _CartPageState extends State<CartPage> {
                   child: Text("Add service")),
               FilledButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(30))),
-                        builder: (context) => SelectBookingSlot());
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     isScrollControlled: true,
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.vertical(
+                    //             top: Radius.circular(30))),
+                    //     builder: (context) => SelectBookingSlot());
                   },
                   style: FilledButton.styleFrom(
                       shape: RoundedRectangleBorder(
