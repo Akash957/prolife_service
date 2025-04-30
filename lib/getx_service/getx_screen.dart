@@ -105,7 +105,6 @@ class GetService extends GetxController {
         originalPrice: partner.originalPrice,
       ));
 
-
       print('Item added to cart in Firestore!');
     } catch (e) {
       print('Error adding to cart: $e');
