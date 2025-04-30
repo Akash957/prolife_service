@@ -108,9 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: categoryController.categories.length,
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      mainAxisSpacing: 1,
-                      crossAxisSpacing: 0.8,
-                      childAspectRatio: 0.9,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 0.9,
+                      childAspectRatio: 0.7,
                     ),
                     padding:  EdgeInsets.all(5),
                     itemBuilder: (context, index) {
@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding:  EdgeInsets.only(left: 2, right: 2),
                                 child: Text(
                                   category.name,
-                                  style: const TextStyle(fontSize: 10),
+                                  style: const TextStyle(fontSize: 11),
                                 ),
                               ),
                             ],
