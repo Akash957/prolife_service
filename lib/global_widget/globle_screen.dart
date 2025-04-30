@@ -274,7 +274,7 @@ class GlobalWidget {
         ),
         TextSpan(
             // text: "₹50",
-            text: "₹${text2}",
+            text: "${text2}",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

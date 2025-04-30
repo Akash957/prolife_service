@@ -14,107 +14,111 @@ class _SelectAddressState extends State<SelectAddress> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(
-            indent: 150,
-            endIndent: 150,
-            color: Colors.grey,
-            thickness: 6,
-          ),
-          ListTile(
-            leading: Text(
-              "Select address",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            trailing: GestureDetector(
-              onTap:(){
-                Navigator.pop(context);
-              },
-              child: Icon(
-                CupertinoIcons.multiply_circle,
-                color: Colors.red,
+    return Material(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(
+                indent: 150,
+                endIndent: 150,
+                color: Colors.grey,
+                thickness: 6,
               ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Divider(
-            indent: 30,
-            endIndent: 30,
-            color: Colors.grey,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            leading: Radio<String>(
-              value: "Home",
-              groupValue: selectedAddress,
-              onChanged: (value) {
-                setState(() {
-                  selectedAddress = value!;
-                });
-              },
-              activeColor: Colors.green,
-            ),
-            title: Text(
-              "Home",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            subtitle: Text("4517 Washington Ave.\nManchester, Kentuchy 39495"),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            leading: Radio<String>(
-              value: "Work",
-              groupValue: selectedAddress,
-              onChanged: (value) {
-                setState(() {
-                  selectedAddress = value!;
-
-                });
-
-              },
-              activeColor: Colors.green,
-            ),
-            title: Text("Work"),
-            subtitle:
-                Text("2118 Thornridge Cir. Syracuse,\nConnecticut 356224"),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddEditAddress()));
-              },
-              icon: Icon(
-                Icons.add_circle_outline_rounded,
-                color: Colors.white,
-              ),
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3),
+              ListTile(
+                leading: const Text(
+                  "Select address",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    CupertinoIcons.multiply_circle,
+                    color: Colors.red,
                   ),
-                  fixedSize: Size(250, 45),
-                  backgroundColor: Colors.blue),
-              label: Text("Add New Address"),
-            ),
-          )
-        ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Divider(
+                indent: 30,
+                endIndent: 30,
+                color: Colors.grey,
+                thickness: 1,
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                leading: Radio<String>(
+                  value: "Home",
+                  groupValue: selectedAddress,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAddress = value!;
+                    });
+                  },
+                  activeColor: Colors.green,
+                ),
+                title: const Text(
+                  "Home",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                subtitle: const Text(
+                  "4517 Washington Ave.\nManchester, Kentucky 39495",
+                ),
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                leading: Radio<String>(
+                  value: "Work",
+                  groupValue: selectedAddress,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedAddress = value!;
+                    });
+                  },
+                  activeColor: Colors.green,
+                ),
+                title: const Text(
+                  "Work",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                subtitle: const Text(
+                  "2118 Thornridge Cir. Syracuse,\nConnecticut 356224",
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddEditAddress(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.add_circle_outline_rounded,
+                    color: Colors.white,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    fixedSize: const Size(250, 45),
+                    backgroundColor: Colors.blue,
+                  ),
+                  label: const Text("Add New Address"),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
-
   }
 }

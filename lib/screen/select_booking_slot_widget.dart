@@ -18,7 +18,7 @@ Widget dateBox(String day, String date,bool isSelected,VoidCallback onTap) {
           "$day\n$date",
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold,
-          color: isSelected?Colors.white:Colors.black),
+              color: isSelected?Colors.white:Colors.black),
         ),
       ),
     ),
@@ -48,26 +48,4 @@ Widget timeBox(String time, bool isSelected, VoidCallback onTap) {
   );
 }
 
-// Widget timeBox(String time,bool isSelected) {
-//
-//   return Container(
-//     margin: EdgeInsets.symmetric(horizontal: 5),
-//     width: 69,
-//     height: 40,
-//     decoration: BoxDecoration(
-//
-//       color:isSelected ? Colors.blue : CupertinoColors.opaqueSeparator,
-//       borderRadius: BorderRadius.circular(2),
-//     ),
-//     child: Center(
-//       child: Text(
-//         "$time",
-//         textAlign: TextAlign.center,
-//         style: TextStyle(fontWeight: FontWeight.bold,
-//         color: isSelected?Colors.white:Colors.black)
-//         ,
-//       ),
-//     ),
-//   );
-// }
 
