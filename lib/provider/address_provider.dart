@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +6,7 @@ import '../models/address_model.dart';
 
 class AddressProvider with ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final currentUser = FirebaseAuth.instance.currentUser;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController personalNumberController = TextEditingController();
@@ -54,6 +56,7 @@ class AddressProvider with ChangeNotifier {
         buildingName: houseNameController.text.trim(),
         areaName: roadNameController.text.trim(),
         addressType: _selectedAddressType,
+        userId: currentUser?.uid,
       );
 
       await firestore
@@ -76,7 +79,7 @@ class AddressProvider with ChangeNotifier {
     notifyListeners();
 
     try{
-      final snapshots = await firestore.collection('address').get();
+      final snapshots = await firestore.collection('address').where('userId',isEqualTo: currentUser?.uid).get();
       _address = snapshots.docs.map((e) => AddressModel.fromJson(e.data()),).toList();
     } catch(e){
       print('Error fetching Addresses: $e');
@@ -100,6 +103,7 @@ class AddressProvider with ChangeNotifier {
         buildingName: houseNameController.text.trim(),
         areaName: roadNameController.text.trim(),
         addressType: _selectedAddressType,
+        userId: currentUser?.uid,
       );
 
       await firestore
@@ -110,6 +114,7 @@ class AddressProvider with ChangeNotifier {
       clearControllers();
 
       Fluttertoast.showToast(msg: 'Address updated successfully!');
+      debugPrint("✅ Address updated: ${updatedAddress.toJson()}");
       await fetchAddress();
       notifyListeners();
     } catch (e) {

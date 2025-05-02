@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/address_model.dart';
@@ -36,6 +37,7 @@ class ShavedAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -43,7 +45,7 @@ class ShavedAddressScreen extends StatelessWidget {
         title: const Text("Saved Addresses", style: TextStyle(fontSize: 25)),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection('address').snapshots(),
+        stream: firestore.collection('address').where('userId', isEqualTo: user?.uid).snapshots(),
         builder: (context, snapshot) {
           final List<AddressModel> addresses = snapshot.hasData
               ? snapshot.data!.docs
