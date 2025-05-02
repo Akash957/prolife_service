@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/models/address_model.dart';
 import 'package:prolife_service/screen/add_edit_address.dart';
 
 class SelectAddress extends StatefulWidget {
@@ -97,7 +98,7 @@ class _SelectAddressState extends State<SelectAddress> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const AddEditAddress(),
+                        builder: (context) =>  EditAddressScreen(address:AddressModel(),),
                       ),
                     );
                   },
