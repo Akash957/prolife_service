@@ -131,7 +131,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: heightScreen*0.40,
+                            height: heightScreen*0.42,
                             child: Obx(() => ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount:
@@ -140,7 +140,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                 final partner =
                                 categoryController.filteredProducts[index];
                                 return Container(
-                                  width: widthScreen*0.65,
+                                  width: widthScreen*0.68,
                                   child: Card(
                                     child: Column(
                                       crossAxisAlignment:
@@ -170,7 +170,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             context,
                                             partner.originalPrice,
                                             partner.discountPrice),
-                                        const SizedBox(width: 50),
+                                         SizedBox(width:widthScreen*0.25 ),
                                         Row(
                                           children: [
                                             GlobalWidget
@@ -195,6 +195,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             }, context, "Add"),
                                           ],
                                         ),
+
                                       ],
                                     ),
                                   ),
@@ -316,41 +317,45 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             height: 30,
                             thickness: 2,
                           ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 1),
-                              Column(
-                                children: [
-                                  GlobalWidget.WorkNameText(context, "Price"),
-                                  GlobalWidget.TextSpanTextOriginal(
-                                      context, widget.product.originalPrice, ''),
-                                ],
-                              ),
-                              const SizedBox(width: 10),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Get.to(BookingPayment());
-                                  },
-                                  child: const Text("Booking Now",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 18)),
+                          SizedBox(height: heightScreen*0.02,),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 35),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 1),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GlobalWidget.WorkNameText(context, "Price"),
+                                    GlobalWidget.TextSpanTextOriginal(context, widget.product.originalPrice,""),
+                                  ],
                                 ),
-                              ),
-                              const SizedBox(width: 20)
-                            ],
+                                Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blue,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Get.to(BookingPayment());
+                                    },
+                                    child: const Text("Booking Now",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16)),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
+
                 ],
               );
             },
