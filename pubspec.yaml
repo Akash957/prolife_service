@@ -36,6 +36,12 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  get_storage: ^2.1.1
+  hive: ^2.2.3
+  firebase_database: ^11.3.5
+  razorpay_flutter: ^1.4.0
+  time_range_picker: ^2.3.0
+  date_picker_plus: ^4.2.0
 
 
 dev_dependencies:

@@ -55,7 +55,7 @@ class ShavedAddressScreen extends StatelessWidget {
 
           return ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: addresses.length + 1, // Always +1 for 'Add New Address'
+            itemCount: addresses.length + 1,
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Card(

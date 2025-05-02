@@ -19,7 +19,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     MyBookingScreen(),
     ProfilePage(),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

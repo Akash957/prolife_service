@@ -28,14 +28,20 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final addressProvider = Provider.of<AddressProvider>(context, listen: false);
+    final addressProvider =
+        Provider.of<AddressProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {
-          Navigator.pop(context);
-        }, icon: const Icon(CupertinoIcons.arrow_left,)),
-        title: const Text("Update Address", style:  TextStyle(fontSize: 25)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              CupertinoIcons.arrow_left,
+              color: Colors.white,
+            )),
+        title: const Text("Update Address", style: TextStyle(fontSize: 25)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -105,10 +111,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () {},
                       icon: const Icon(Icons.location_on, size: 20),
-                      label: const Text("Add location", style: TextStyle(fontSize: 17)),
+                      label: const Text("Add location",
+                          style: TextStyle(fontSize: 17)),
                       style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                       ),
                     ),
                   ),
@@ -129,25 +138,29 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 isRequired: true,
               ),
               const SizedBox(height: 20),
-              const Text("Address Type", style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text("Address Type",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               Row(
                 children: [
                   Radio<String>(
                     value: 'Home',
                     groupValue: addressProvider.selectedAddressType,
-                    onChanged: (value) => addressProvider.setAddressType(value!),
+                    onChanged: (value) =>
+                        addressProvider.setAddressType(value!),
                   ),
                   const Text("Home"),
                   Radio<String>(
                     value: 'Work',
                     groupValue: addressProvider.selectedAddressType,
-                    onChanged: (value) => addressProvider.setAddressType(value!),
+                    onChanged: (value) =>
+                        addressProvider.setAddressType(value!),
                   ),
                   const Text("Work"),
                   Radio<String>(
                     value: 'Other',
                     groupValue: addressProvider.selectedAddressType,
-                    onChanged: (value) => addressProvider.setAddressType(value!),
+                    onChanged: (value) =>
+                        addressProvider.setAddressType(value!),
                   ),
                   const Text("Other"),
                 ],
@@ -157,16 +170,24 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if(_formKey.currentState!.validate()){
-                      addressProvider.updateAddressInFirestore(widget.address.addressId!);
-                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShavedAddressScreen(),));
+                    if (_formKey.currentState!.validate()) {
+                      addressProvider
+                          .updateAddressInFirestore(widget.address.addressId!);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ShavedAddressScreen(),
+                          ));
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(3)),
                   ),
-                  child: const Text("Update Address", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: const Text("Update Address",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 ),
               ),
             ],
