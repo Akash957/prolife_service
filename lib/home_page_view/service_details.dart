@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:prolife_service/models/partners_model.dart';
 import '../global_widget/globle_screen.dart';
 import 'booking_summery.dart';
@@ -18,6 +17,7 @@ class ServiceDetailsPage extends StatefulWidget {
 class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Service Details"))),
       body: Column(
@@ -61,7 +61,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
         ],
       ),
       bottomSheet: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(bottom:50),
         child: SizedBox(
           width: 250,
           height: 45,

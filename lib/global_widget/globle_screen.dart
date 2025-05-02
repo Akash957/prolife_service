@@ -5,6 +5,8 @@ class GlobalWidget {
     BuildContext context,
     image,
   ) {
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
     return Row(
       children: [
         SizedBox(
@@ -16,8 +18,8 @@ class GlobalWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image(
               image: NetworkImage(image),
-              height: 120,
-              width: 120,
+              height:heightScreen*0.16,
+              width: widthScreen*0.30,
               fit: BoxFit.cover,
             ),
           ),

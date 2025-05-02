@@ -8,11 +8,13 @@ class Onboarding3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(data.image, width: 500, height: 500),
+          Image.asset(data.image, width: widthScreen*0.97, height: heightScreen*0.56),
           const SizedBox(height: 20),
           Text(
             data.title,

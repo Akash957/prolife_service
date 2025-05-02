@@ -12,6 +12,8 @@ class ClickProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('Click on Categories')),
@@ -60,7 +62,7 @@ class ClickProduct extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return Container(
-                              height: 100,
+                              height:heightScreen*0.2,
                               padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
