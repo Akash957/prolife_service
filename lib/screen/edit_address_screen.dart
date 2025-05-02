@@ -34,8 +34,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       appBar: AppBar(
         leading: IconButton(onPressed: () {
           Navigator.pop(context);
-        }, icon: const Icon(CupertinoIcons.arrow_left,color: Colors.white,)),
-        title: const Text("Update Address", style: TextStyle(fontSize: 25)),
+        }, icon: const Icon(CupertinoIcons.arrow_left,)),
+        title: const Text("Update Address", style:  TextStyle(fontSize: 25)),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
