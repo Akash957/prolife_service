@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prolife_service/models/address_model.dart';
-import 'package:prolife_service/screen/add_edit_address.dart';
+import 'edit_address_screen.dart';
 
 class SelectAddress extends StatefulWidget {
   const SelectAddress({super.key});
