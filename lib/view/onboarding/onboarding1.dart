@@ -12,6 +12,8 @@ class Onboarding1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,8 +32,7 @@ class Onboarding1 extends StatelessWidget {
                 child: const Text("Skip",
                     style: TextStyle(color: Colors.grey, fontSize: 20))),
           ),
-          Image.asset(data.image, width: 500, height: 500),
-          const SizedBox(height: 20),
+          Image.asset(data.image, width: widthScreen*0.97, height: heightScreen*0.56),
           Text(
             data.title,
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
