@@ -61,7 +61,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
         ],
       ),
       bottomSheet: Padding(
-        padding: const EdgeInsets.only(bottom:20),
+        padding: const EdgeInsets.only(bottom:50),
         child: SizedBox(
           width: 250,
           height: 45,
@@ -77,6 +77,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
             onPressed: () {
               Get.to(BookingSummaryScreen(
                 product: widget.product,
+                partner: widget.product,
               ));
             },
             child: Text(

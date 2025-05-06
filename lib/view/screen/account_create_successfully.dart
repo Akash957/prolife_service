@@ -74,6 +74,7 @@ class _AccountCreateSuccessfullyState extends State<AccountCreateSuccessfully> {
                 ),
               ),
             ),
+            SizedBox(height: 50,),
           ],
         ),
       ),
