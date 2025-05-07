@@ -18,6 +18,8 @@ class PaymentProvider with ChangeNotifier {
   }
 
   VoidCallback? _onSuccess;
+  String? _partnerId, _name, _serviceName, _originalPrice, _workingImageUrl;
+  int? _quantity;
 
   void openCheckout({
     required String partnerId,
@@ -28,6 +30,13 @@ class PaymentProvider with ChangeNotifier {
     required int quantity,
   }) {
     int totalAmount = int.parse(originalPrice) * quantity * 100;
+
+    _partnerId = partnerId;
+    _name = name;
+    _serviceName = serviceName;
+    _originalPrice = originalPrice;
+    _workingImageUrl = workingImageUrl;
+    _quantity = quantity;
 
     var options = {
       'key': 'rzp_test_bToB0wfbBdrPfq',
@@ -49,17 +58,6 @@ class PaymentProvider with ChangeNotifier {
     } catch (e) {
       debugPrint('Error: $e');
     }
-
-    _onSuccess = () async {
-      await _storeBooking(
-        partnerId: partnerId,
-        name: name,
-        serviceName: serviceName,
-        originalPrice: (int.parse(originalPrice) * quantity).toString(),
-        workingImageUrl: workingImageUrl,
-        quantity: quantity,
-      );
-    };
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
@@ -72,7 +70,11 @@ class PaymentProvider with ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-    _onSuccess?.call();
+
+    _storeBooking(
+      paymentId: response.paymentId!,
+      status: "paid",
+    );
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -91,20 +93,23 @@ class PaymentProvider with ChangeNotifier {
   }
 
   Future<void> _storeBooking({
-    required String partnerId,
-    required String name,
-    required String serviceName,
-    required String originalPrice,
-    required String workingImageUrl,
-    required int quantity,
+    required String paymentId,
+    required String status,
   }) async {
+    if (_partnerId == null || _name == null || _serviceName == null || _originalPrice == null || _workingImageUrl == null || _quantity == null) {
+      debugPrint("Missing booking data");
+      return;
+    }
+
     await FirebaseFirestore.instance.collection('user_bookings').add({
-      'partnerId': partnerId,
-      'name': name,
-      'serviceName': serviceName,
-      'originalPrice': originalPrice,
-      'workingImageUrl': workingImageUrl,
-      'quantity': quantity,
+      'partnerId': _partnerId,
+      'name': _name,
+      'serviceName': _serviceName,
+      'originalPrice': (int.parse(_originalPrice!) * _quantity!).toString(),
+      'workingImageUrl': _workingImageUrl,
+      'quantity': _quantity,
+      'paymentId': paymentId,
+      'status': status,
       'timestamp': FieldValue.serverTimestamp(),
     });
   }

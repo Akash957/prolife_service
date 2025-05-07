@@ -8,6 +8,7 @@ class CartScreen extends StatelessWidget {
   CartScreen({super.key}) {
     categoryController.loadCartFirebase(); // Important: Load on init
   }
+
   double get total => categoryController.cartItems.fold(
       0.0, (sum, item) => sum + double.parse(item.originalPrice.toString()));
 
@@ -30,14 +31,16 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Cart'), backgroundColor: Colors.blue),
+      appBar:
+          AppBar(title: const Text('My Cart'), backgroundColor: Colors.blue),
       body: Obx(() {
         if (categoryController.cartItems.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.shopping_bag_outlined, size: 60, color: Colors.grey),
+                const Icon(Icons.shopping_bag_outlined,
+                    size: 60, color: Colors.grey),
                 const SizedBox(height: 10),
                 const Text('No Item in Cart', style: TextStyle(fontSize: 18)),
                 const SizedBox(height: 20),
@@ -65,7 +68,8 @@ class CartScreen extends StatelessWidget {
                 onDismissed: (direction) =>
                     categoryController.removeFromCart(index),
                 child: Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: ListTile(
                     leading: Image.network(item.workingImageUrl),
                     title: Text(item.workType),
@@ -88,8 +92,8 @@ class CartScreen extends StatelessWidget {
         }
       }),
       bottomNavigationBar: Obx(() {
-        double total = categoryController.cartItems.fold(
-            0.0, (sum, item) => sum + double.parse(item.originalPrice.toString()));
+        double total = categoryController.cartItems.fold(0.0,
+            (sum, item) => sum + double.parse(item.originalPrice.toString()));
         return Container(
           color: Colors.blue.shade50,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -98,7 +102,8 @@ class CartScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Total: ₹$total',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(
@@ -106,16 +111,20 @@ class CartScreen extends StatelessWidget {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: total == 0
-                      ? () => showAlertDialog(context) : () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Proceeding to Payment')),
-                    );
-                  },
+                      ? () => showAlertDialog(context)
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Proceeding to Payment')),
+                          );
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2)),
                   ),
-                  child: const Text('Pay Now', style: TextStyle(color: Colors.white,fontSize: 18)),
+                  child: const Text('Pay Now',
+                      style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
               )
             ],
