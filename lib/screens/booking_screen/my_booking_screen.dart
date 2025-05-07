@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import 'booking_details_page.dart';
 
 class MyBookingScreen extends StatelessWidget {
   const MyBookingScreen({super.key});
@@ -32,7 +36,7 @@ class MyBookingScreen extends StatelessWidget {
                 status,
                 style: TextStyle(
                   color: statusColor,
-                  fontSize: 12,
+                  fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -41,7 +45,7 @@ class MyBookingScreen extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -69,6 +73,7 @@ class MyBookingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: OutlinedButton(
                         onPressed: () {
+                          Get.to(() => const BookingDetailsPage());
                         },
                         style: OutlinedButton.styleFrom(
                           side:
