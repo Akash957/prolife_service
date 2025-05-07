@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
+import '../address_screen/select_address.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../models/partners_model.dart';
@@ -58,6 +59,8 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
           final int originalTotal = getOriginalTotal(cart.quantity);
           final int discountTotal = getDiscountTotal(cart.quantity);
+          final int discount =originalTotal - discountTotal;
+
 
           return Column(
             children: [
@@ -97,9 +100,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .decreaseQuantity();
+                                  Provider.of<CartProvider>(context, listen: false).decreaseQuantity();
                                 },
                                 child: Container(
                                   height: 35,
@@ -220,33 +221,18 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10),
-                          const Image(
-                            image: AssetImage("assets/image/discount.png"),
-                            width: 50,
-                            height: 50,
-                          ),
-                          GlobalWidget.WorkNameText(context, "Apply Coupon"),
-                          const Spacer(),
-                          const Icon(Icons.keyboard_arrow_right,
-                              color: Colors.grey, size: 35),
-                          const SizedBox(width: 20)
-                        ],
-                      ),
                       priceRow("Item Total", originalTotal),
                       priceRow("Discount", discountTotal),
                       priceRow("Service Fee", 0, free: true),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      priceRow("Grand Total", discountTotal),
+                      priceRow("Grand Total", discount),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
                       addressRow(),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      bottomRow(discountTotal, paymentProvider),
+                      bottomRow(discount, paymentProvider),
                     ],
                   ),
                 ),
@@ -281,29 +267,71 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   }
 
   Widget addressRow() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: Colors.blueGrey.shade200,
-              borderRadius: BorderRadius.circular(5),
+              color: Colors.blue.shade100,
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.location_on_outlined, size: 25),
+            child: const Icon(
+              Icons.location_on_outlined,
+              size: 30,
+              color: Colors.blue,
+            ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           const Expanded(
-            child: Text("No address selected",
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "No address selected",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "Tap to select your address",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Text("Change",
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(50))),
+                  builder: (context) => SelectAddress());
+            },
+            child: const Text(
+              "Change",
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.grey)),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.blue,
+              ),
+            ),
+          ),
         ],
       ),
     );
