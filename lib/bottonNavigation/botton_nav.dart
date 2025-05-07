@@ -16,8 +16,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   List pagecontrooller = [
     HomeScreen(),
     AllCategories(),
-    MyBookingScreen(),
-    ProfilePage(),
+    MyBookingData(),
+     ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -59,44 +59,57 @@ class ClickProduct extends StatelessWidget {
                     const Spacer(),
                     GlobalWidget.ServicesProvideAddButton(() {
                       showModalBottomSheet(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5), // Border radius 5
+                          ),
                           context: context,
                           builder: (context) {
                             return Container(
-                              height:heightScreen*0.2,
+                              height:heightScreen*0.1,
                               padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        categoryController.addToCart(partner,context);
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('AddToCart Success',style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
-                                        );
-                                        Get.back();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.yellow),
-                                      child: const Text('Add to Cart'),
+                                    child: SizedBox(
+                                      height: 55,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          categoryController.addToCart(partner,context);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('AddToCart Success',style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
+                                          );
+                                          Get.back();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(5), // Border radius 5
+                                            ),
+                                            backgroundColor: Colors.yellow),
+                                        child: const Text('Add to Cart',style: TextStyle(fontSize: 20,color: Colors.white)),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 10),
                                   Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Get.to(ServiceDetailsPage(
-                                            product: partner));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.blue),
-                                      child: const Text('Add'),
+                                    child: SizedBox(
+                                      height: 55,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Get.to(ServiceDetailsPage(product: partner));
+                                        },
+                                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,
+                                          shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(5), // Border radius 5
+                                        ),),
+                                        child: Text("Book Now",style: TextStyle(fontSize: 20,color: Colors.white),),
+                                      ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             );
                           });
-                    }, context, "Add"),
+                    }, context, "Book"),
                   ],
                 )
               ],

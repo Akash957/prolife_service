@@ -32,16 +32,14 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
     super.dispose();
   }
 
-  int getOriginalTotal(int quantity) =>
-      int.parse(widget.product.originalPrice) * quantity;
-
-  int getDiscountTotal(int quantity) =>
-      int.parse(widget.product.discountPrice) * quantity;
+  int getOriginalTotal(int quantity) => int.parse(widget.product.originalPrice) * quantity;
+  int getDiscountTotal(int quantity) => int.parse(widget.product.discountPrice) * quantity;
 
   @override
   Widget build(BuildContext context) {
-    final paymentProvider =
-        Provider.of<PaymentProvider>(context, listen: false);
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
+    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Booking Summary")),
@@ -58,6 +56,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
           final int originalTotal = getOriginalTotal(cart.quantity);
           final int discountTotal = getDiscountTotal(cart.quantity);
+
+          final int discount = originalTotal-discountTotal;
+
 
           return Column(
             children: [
@@ -97,8 +98,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
+                                  Provider.of<CartProvider>(context, listen: false)
                                       .decreaseQuantity();
                                 },
                                 child: Container(
@@ -122,8 +122,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               InkWell(
                                 onTap: () {
                                   Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .increaseQuantity();
+                                          listen: false).increaseQuantity();
                                 },
                                 child: Container(
                                   height: 35,
@@ -149,7 +148,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 350,
+                        height:heightScreen*0.4,
                         child: Obx(() => ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount:
@@ -220,33 +219,20 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10),
-                          const Image(
-                            image: AssetImage("assets/image/discount.png"),
-                            width: 50,
-                            height: 50,
-                          ),
-                          GlobalWidget.WorkNameText(context, "Apply Coupon"),
-                          const Spacer(),
-                          const Icon(Icons.keyboard_arrow_right,
-                              color: Colors.grey, size: 35),
-                          const SizedBox(width: 20)
-                        ],
-                      ),
+
                       priceRow("Item Total", originalTotal),
                       priceRow("Discount", discountTotal),
+
                       priceRow("Service Fee", 0, free: true),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      priceRow("Grand Total", discountTotal),
+                      priceRow("Grand Total", discount),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
                       addressRow(),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
-                      bottomRow(discountTotal, paymentProvider),
+                      bottomRow(discount, paymentProvider),
                     ],
                   ),
                 ),
