@@ -5,12 +5,11 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.4.4
+  sdk: ^3.6.6
 
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.8
   firebase_auth: ^5.5.1
   get: ^4.7.2
@@ -33,10 +32,6 @@ dependencies:
   shared_preferences: ^2.3.3
   time_range: ^1.1.1
   date_picker_timeline: ^1.2.6
-
-
-
-
   flutter_localizations:
     sdk: flutter
   get_storage: ^2.1.1
@@ -49,12 +44,16 @@ dependencies:
   share_plus: ^11.0.0
   font_scaler: ^1.0.0
   url_launcher: ^6.3.1
-
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+flutter_icons:
+  android: true
+  image_path: "assets/proLife_icon.png"
 
 flutter:
   generate: true
