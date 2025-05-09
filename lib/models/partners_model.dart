@@ -1,37 +1,3 @@
-// class PartnersModel {
-//   final String partner_id;
-//   final String serviceName;
-//   final String originalPrice;
-//   final String discountPrice;
-//   final String? workingImageUrl;
-//   final String? profileImage;
-//   final String name;
-//   final String workType;
-//
-//   PartnersModel({
-//     required this.partner_id,
-//     required this.serviceName,
-//     required this.originalPrice,
-//     required this.discountPrice,
-//     this.workingImageUrl,
-//     this.profileImage,
-//     required this.name,
-//     required this.workType,
-//   });
-//
-//   factory PartnersModel.fromMap(Map<String, dynamic> data) {
-//     return PartnersModel(
-//       partner_id: data['partner_id'] ?? "",
-//       serviceName: data['serviceName'] ?? '',
-//       originalPrice: data['originalPrice'] ?? '0',
-//       discountPrice: data['discountPrice'] ?? '0',
-//       workingImageUrl: data['workingImageUrl'] ?? '',
-//       profileImage: data['profileImage'] ?? '',
-//       name: data['name'] ?? '',
-//       workType: data['workType'] ?? '',
-//     );
-//   }
-// }
 class PartnersModel {
   final String partnerId;
   final String name;
@@ -53,7 +19,6 @@ class PartnersModel {
     required this.discountPrice,
   });
 
-  // Map se object banane ke liye (from Firebase ya JSON)
   factory PartnersModel.fromMap(Map<String, dynamic> map) {
     return PartnersModel(
       partnerId: map['partner_id'] ?? '',
@@ -67,7 +32,6 @@ class PartnersModel {
     );
   }
 
-  // Object ko Map me convert karne ke liye (Firebase ya API me save karne ke liye)
   Map<String, dynamic> toMap() {
     return {
       'partner_id': partnerId,

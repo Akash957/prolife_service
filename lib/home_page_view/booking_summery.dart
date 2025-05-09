@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:prolife_service/payments_gateway/booking_payment.dart';
+import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
+import '../address_screen/select_address.dart';
+import '../address_screen/select_booking_slot.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
+import '../models/address_model.dart';
 import '../models/partners_model.dart';
 import '../provider/cart_provider.dart';
-import 'service_details.dart';
+import '../provider/payment_provider.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   final PartnersModel product;
 
-  const BookingSummaryScreen({super.key, required this.product});
+  const BookingSummaryScreen({
+    super.key,
+    required this.product,
+  });
 
   @override
   State<BookingSummaryScreen> createState() => _BookingSummaryScreenState();
@@ -20,104 +26,127 @@ class BookingSummaryScreen extends StatefulWidget {
 
 class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   final categoryController = Get.put(GetService());
+  AddressModel? selectedAddress;
+
+  @override
+  void dispose() {
+    Provider.of<PaymentProvider>(context, listen: false).disposeRazorpay();
+    super.dispose();
+  }
+
+  int getOriginalTotal(int quantity) =>
+      int.parse(widget.product.originalPrice) * quantity;
+
+  int getDiscountTotal(int quantity) =>
+      int.parse(widget.product.discountPrice) * quantity;
 
   @override
   Widget build(BuildContext context) {
-    var widthScreen = MediaQuery.of(context).size.width;
-    var heightScreen = MediaQuery.of(context).size.height;
-    return Scaffold(
-        appBar: AppBar(title: const Text("Booking Summary")),
-        body: Consumer<CartProvider>(
-            builder: (context, cart, child) {
-              if (cart.quantity == 0) {
-                return const Center(
-                  child: Text(
-                    "No item in cart",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  ),
-                );
-              }
-              int originalTotal =
-                  int.parse(widget.product.originalPrice) * cart.quantity;
-              int discountTotal =
-                  int.parse(widget.product.discountPrice) * cart.quantity;
+    final paymentProvider =
+        Provider.of<PaymentProvider>(context, listen: false);
 
-              return Column(
+    return Scaffold(
+      appBar: AppBar(title: const Text("Booking Summary")),
+      body: Consumer<CartProvider>(
+        builder: (context, cart, child) {
+          if (cart.quantity == 0) {
+            return const Center(
+              child: Text(
+                "No item in cart",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+            );
+          }
+
+          final int originalTotal = getOriginalTotal(cart.quantity);
+          final int discountTotal = getDiscountTotal(cart.quantity);
+          final int discount = originalTotal - discountTotal;
+
+          return Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  GlobalWidget.BookingImage(
+                      context, widget.product.workingImageUrl),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GlobalWidget.BookingImage(
-                          context, widget.product.workingImageUrl),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      const SizedBox(height: 20),
+                      GlobalWidget.WorkNameText(
+                          context, widget.product.serviceName),
+                      Row(
                         children: [
-                          const SizedBox(height: 20),
-                          GlobalWidget.WorkNameText(
-                              context, widget.product.serviceName),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: RatingBar.builder(
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 25,
-                              itemBuilder: (context, _) =>
-                              const Icon(Icons.star, color: Colors.blue),
-                              onRatingUpdate: (rating) {},
+                          RatingBarIndicator(
+                            rating: 4.5,
+                            itemBuilder: (context, _) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                            itemCount: 5,
+                            itemSize: 25,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '4.5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: Colors.black.withOpacity(0.7),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const SizedBox(width: 5),
+                          Text(
+                            "₹${widget.product.originalPrice}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 21),
+                          ),
+                          const SizedBox(width: 80),
                           Row(
                             children: [
-                              const SizedBox(width: 5),
-                              Text(
-                                "₹${widget.product.originalPrice}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 21),
-                              ),
-                              SizedBox(width:widthScreen*0.18),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Provider.of<CartProvider>(context, listen: false).decreaseQuantity();
-                                    },
-                                    child: Container(
-                                      height: 35,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: const Icon(Icons.remove,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      cart.quantity.toString(),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      Provider.of<CartProvider>(context,
+                              InkWell(
+                                onTap: () {
+                                  Provider.of<CartProvider>(context,
                                           listen: false)
-                                          .increaseQuantity();
-                                    },
-                                    child: Container(
-                                      height: 35,
-                                      width: 35,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: const Icon(Icons.add,
-                                          color: Colors.white),
-                                    ),
+                                      .decreaseQuantity();
+                                },
+                                child: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                ],
+                                  child: const Icon(Icons.remove,
+                                      color: Colors.white),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  cart.quantity.toString(),
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .increaseQuantity();
+                                },
+                                child: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Icon(Icons.add,
+                                      color: Colors.white),
+                                ),
                               ),
                             ],
                           ),
@@ -125,44 +154,52 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       ),
                     ],
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: heightScreen*0.42,
-                            child: Obx(() => ListView.builder(
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 350,
+                        child: Obx(() => ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                              categoryController.filteredProducts.length,
+                                  categoryController.filteredProducts.length,
                               itemBuilder: (context, index) {
                                 final partner =
-                                categoryController.filteredProducts[index];
-                                return Container(
-                                  width: widthScreen*0.68,
+                                    categoryController.filteredProducts[index];
+                                return SizedBox(
+                                  width: 250,
                                   child: Card(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 20),
-                                        GlobalWidget.BestServicesImage1(
-                                            context,
-                                            widget.product.workingImageUrl
-                                                .toString()),
-                                        Padding(
-                                          padding:
-                                          const EdgeInsets.only(left: 8),
-                                          child: RatingBar.builder(
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 30,
-                                            itemBuilder: (context, _) =>
-                                            const Icon(Icons.star,
-                                                color: Colors.blue),
-                                            onRatingUpdate: (rating) {},
-                                          ),
+                                        GlobalWidget.BestServicesImage1(context,
+                                            widget.product.workingImageUrl),
+                                        Row(
+                                          children: [
+                                            RatingBarIndicator(
+                                              rating: 4.5,
+                                              itemBuilder: (context, _) =>
+                                                  const Icon(Icons.star,
+                                                      color: Colors.amber),
+                                              itemCount: 5,
+                                              itemSize: 25,
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              '4.5',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13,
+                                                color: Colors.black
+                                                    .withOpacity(0.7),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         GlobalWidget.WorkNameText(
                                             context, partner.serviceName),
@@ -170,16 +207,16 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             context,
                                             partner.originalPrice,
                                             partner.discountPrice),
-                                         SizedBox(width:widthScreen*0.25 ),
+                                        const SizedBox(width: 50),
                                         Row(
                                           children: [
                                             GlobalWidget
                                                 .BestServicesCircleAvatar2(
-                                                context,
-                                                partner.profileImage),
+                                                    context,
+                                                    partner.profileImage),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 GlobalWidget.workername(
                                                     context, partner.name),
@@ -195,171 +232,182 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             }, context, "Add"),
                                           ],
                                         ),
-
                                       ],
                                     ),
                                   ),
                                 );
                               },
                             )),
-                          ),
-                          const Divider(
-                            indent: 10,
-                            endIndent: 10,
-                            height: 30,
-                            thickness: 2,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              InkWell(
-                                onTap: () {},
-                                child: const Image(
-                                  image: AssetImage("assets/image/discount.png"),
-                                  width: 50,
-                                  height: 50,
-                                ),
-                              ),
-                              GlobalWidget.WorkNameText(context, "Apply Coupon"),
-                              const Spacer(),
-                              InkWell(
-                                onTap: () {},
-                                child: const Icon(Icons.keyboard_arrow_right,
-                                    color: Colors.grey, size: 35),
-                              ),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              const Text("Item Total",
-                                  style: TextStyle(fontSize: 20)),
-                              const Spacer(),
-                              Text("₹$originalTotal",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 21)),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              const Text("Discount",
-                                  style: TextStyle(fontSize: 20)),
-                              const Spacer(),
-                              Text("₹$discountTotal",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 21)),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              const Text("Service Fee",
-                                  style:
-                                  TextStyle(fontSize: 20, color: Colors.blue)),
-                              const Spacer(),
-                              const Text("Free",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23,
-                                      color: Colors.blue)),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          const Divider(
-                            indent: 10,
-                            endIndent: 10,
-                            height: 30,
-                            thickness: 2,
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              GlobalWidget.WorkNameText(context, "Grand Total"),
-                              const Spacer(),
-                              Text("₹$originalTotal",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 23)),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const SizedBox(width: 20),
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.blueGrey.shade200,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: const Icon(
-                                  Icons.location_on_outlined,
-                                  size: 25,
-                                ),
-                              ),
-                              const Text("Address"),
-                              const Spacer(),
-                              const Text("Change",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23,
-                                      color: Colors.grey)),
-                              const SizedBox(width: 20)
-                            ],
-                          ),
-                          const Divider(
-                            indent: 10,
-                            endIndent: 10,
-                            height: 30,
-                            thickness: 2,
-                          ),
-                          SizedBox(height: heightScreen*0.02,),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 35),
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 1),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GlobalWidget.WorkNameText(context, "Price"),
-                                    GlobalWidget.TextSpanTextOriginal(context, widget.product.originalPrice,""),
-                                  ],
-                                ),
-                                Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 20),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Get.to(BookingPayment());
-                                    },
-                                    child: const Text("Booking Now",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
+                      const Divider(
+                          indent: 10, endIndent: 10, height: 30, thickness: 2),
+                      priceRow("Item Total", originalTotal),
+                      priceRow("Discount", discountTotal),
+                      priceRow("Service Fee", 0, free: true),
+                      const Divider(
+                          indent: 10, endIndent: 10, height: 30, thickness: 2),
+                      priceRow("Grand Total", discount),
+                      const Divider(
+                          indent: 10, endIndent: 10, height: 30, thickness: 2),
+                      addressRow(),
+                      const Divider(
+                          indent: 10, endIndent: 10, height: 30, thickness: 2),
+                      bottomRow(discount, paymentProvider),
+                    ],
                   ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
-                ],
-              );
-            },
+  Widget priceRow(String label, int amount, {bool free = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      child: Row(
+        children: [
+          Text(label,
+              style: TextStyle(
+                  fontSize: 20, color: free ? Colors.blue : Colors.black)),
+          const Spacer(),
+          Text(
+            free ? "Free" : "₹$amount",
+            style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.bold,
+              color: free ? Colors.blue : Colors.black,
             ),
-       );
- }
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget addressRow() {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Colors.blue.shade100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(
+              Icons.location_on_outlined,
+              size: 30,
+              color: Colors.blue,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  selectedAddress != null
+                      ? (selectedAddress!.addressType ?? "Address")
+                      : "No address selected",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  selectedAddress != null
+                      ? "${selectedAddress!.name ?? ''}, ${selectedAddress!.buildingName ?? ''}, ${selectedAddress!.areaName ?? ''}, ${selectedAddress!.city ?? ''} - ${selectedAddress!.pincode ?? ''}, ${selectedAddress!.state ?? ''}"
+                      : "Tap to select your address",
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () async {
+              final result = await showModalBottomSheet<AddressModel>(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(50))),
+                builder: (context) => const SelectAddress(),
+              );
+
+              if (result != null) {
+                setState(() {
+                  selectedAddress = result;
+                });
+              }
+            },
+            child: const Text(
+              "Change",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomRow(int total, PaymentProvider provider) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GlobalWidget.WorkNameText(context, "Price"),
+              const SizedBox(height: 5),
+              Text("₹$total",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 23)),
+            ],
+          ),
+          const Spacer(),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 2,
+            ),
+            onPressed: () {
+              Get.to(SelectBookingSlot(
+                partner: widget.product,
+              ));
+            },
+            child: const Text(
+              "Book",
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

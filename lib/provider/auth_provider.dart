@@ -96,14 +96,18 @@ class AuthProvider with ChangeNotifier {
   Future<void> signOut(BuildContext context) async {
     try {
       setLoading(true);
-      await googleSignIn.signOut();
-      await auth.signOut();
+      await googleSignIn.signOut().catchError((e) {
+        debugPrint("Google Sign Out Error: $e");
+      });
+      await auth.signOut().catchError((e) {
+        debugPrint("Firebase Sign Out Error: $e");
+      });
       currentUserModel = null;
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SignUpScreen(),
-          ));
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => SignUpScreen()),
+        (route) => false,
+      );
+
       notifyListeners();
     } catch (e) {
       debugPrint("Sign Out Error: $e");
