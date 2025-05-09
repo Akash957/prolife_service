@@ -31,7 +31,7 @@ class TermsAndConditionsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Last update: 01/09/2023',
+                'Last update: 01/03/2025',
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.grey,

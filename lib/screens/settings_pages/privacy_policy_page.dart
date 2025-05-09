@@ -31,7 +31,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Last update: 02/04/2025',
+                'Last update: 02/05/2025',
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.grey,

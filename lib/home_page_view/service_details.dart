@@ -17,7 +17,6 @@ class ServiceDetailsPage extends StatefulWidget {
 class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Service Details"))),
       body: Column(
@@ -29,25 +28,35 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
               children: [
                 GlobalWidget.ServiceDateilImage(
                     context, widget.product.workingImageUrl.toString()),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: RatingBar.builder(
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 30,
-                    itemBuilder: (context, _) =>
-                        Icon(Icons.star, color: Colors.blue),
-                    onRatingUpdate: (rating) {
-                      print('User selected rating: $rating');
-                    },
-                  ),
+                Row(
+                  children: [
+                    RatingBarIndicator(
+                      rating: 4.5,
+                      itemBuilder: (context, _) =>
+                      const Icon(Icons.star, color: Colors.amber),
+                      itemCount: 5,
+                      itemSize: 25,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '4.5',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
                 ),
-                GlobalWidget.WorkNameText(context, widget.product.name,),
-                GlobalWidget.TextSpanTextOriginal(
-                    context, widget.product.originalPrice, widget.product.discountPrice),
+                GlobalWidget.WorkNameText(
+                  context,
+                  widget.product.name,
+                ),
+                GlobalWidget.TextSpanTextOriginal(context,
+                    widget.product.originalPrice, widget.product.discountPrice),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
                   child: Text(
                     "I am a complete fully cleaning work",
                     style: TextStyle(fontSize: 18),
@@ -61,7 +70,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
         ],
       ),
       bottomSheet: Padding(
-        padding: const EdgeInsets.only(bottom:50),
+        padding: const EdgeInsets.only(bottom: 50),
         child: SizedBox(
           width: 250,
           height: 45,
@@ -77,10 +86,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
             onPressed: () {
               Get.to(BookingSummaryScreen(
                 product: widget.product,
-                partner: widget.product,
               ));
             },
-            child: Text(
+            child: const Text(
               "Booking Service",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
