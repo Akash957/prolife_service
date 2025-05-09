@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.12.0"
-  badges:
-    dependency: "direct main"
-    description:
-      name: badges
-      sha256: a7b6bbd60dce418df0db3058b53f9d083c22cdb5132a052145dc267494df0b84
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -129,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  date_picker_timeline:
+    dependency: "direct main"
+    description:
+      name: date_picker_timeline
+      sha256: c05e6540fa3055c9036e6f99e758972e14be0e1010d5a6e7a1261d4a6f3292df
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
   dio:
     dependency: transitive
     description:
@@ -1042,6 +1042,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.4"
+  time_range:
+    dependency: "direct main"
+    description:
+      name: time_range
+      sha256: "1ee8879eea0e0cee2ce47319b6f18707499f6ea4f7dd58cbb91ca18f145bfe55"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   time_range_picker:
     dependency: "direct main"
     description:

@@ -130,7 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
-                        Get.to(() => ClickProduct(categoryName: category.name,));
+                        Get.to(() => ClickProduct(
+                              categoryName: category.name,
+                            ));
                         categoryController
                             .filterProductsByWorkType(category.name);
                       },
@@ -188,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBox(
-              height: heightScreen * 0.4,
+              height: heightScreen * 0.37,
               child: Expanded(
                   child: Obx(() => ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -199,28 +201,32 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Container(
                             width: widthScreen * 0.7,
                             child: Card(
+                              color: Colors.white,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
                                   GlobalWidget.BestServicesImage1(
                                       context, partner.workingImageUrl),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: RatingBar.builder(
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemSize: 30,
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.blue,
+                                  Row(
+                                    children: [
+                                      RatingBarIndicator(
+                                        rating: 4.5,
+                                        itemBuilder: (context, _) => const Icon(
+                                            Icons.star,
+                                            color: Colors.amber),
+                                        itemCount: 5,
+                                        itemSize: 25,
                                       ),
-                                      onRatingUpdate: (rating) {
-                                        print('Rating: $rating');
-                                      },
-                                    ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        '4.5',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   GlobalWidget.WorkNameText(
                                       context, partner.serviceName),

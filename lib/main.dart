@@ -13,7 +13,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -29,12 +28,13 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(create: (_) => AddressProvider(),),
-        ChangeNotifierProvider(create: (_) => CartProvider(),),
+        ChangeNotifierProvider(
+          create: (_) => AddressProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
         ChangeNotifierProvider(create: (_) => PaymentProvider()),
-
-
-
       ],
       child: const MyApp(),
     ),
@@ -46,11 +46,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      fallbackLocale: const Locale('en'),
       title: 'ProLife Service',
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

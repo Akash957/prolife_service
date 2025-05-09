@@ -4,20 +4,20 @@ import 'package:get/get.dart';
 import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
 import '../address_screen/select_address.dart';
+import '../address_screen/select_booking_slot.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
+import '../models/address_model.dart';
 import '../models/partners_model.dart';
 import '../provider/cart_provider.dart';
 import '../provider/payment_provider.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   final PartnersModel product;
-  final PartnersModel partner;
 
   const BookingSummaryScreen({
     super.key,
     required this.product,
-    required this.partner,
   });
 
   @override
@@ -26,6 +26,7 @@ class BookingSummaryScreen extends StatefulWidget {
 
 class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   final categoryController = Get.put(GetService());
+  AddressModel? selectedAddress;
 
   @override
   void dispose() {
@@ -59,8 +60,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
           final int originalTotal = getOriginalTotal(cart.quantity);
           final int discountTotal = getDiscountTotal(cart.quantity);
-          final int discount =originalTotal - discountTotal;
-
+          final int discount = originalTotal - discountTotal;
 
           return Column(
             children: [
@@ -75,16 +75,25 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                       const SizedBox(height: 20),
                       GlobalWidget.WorkNameText(
                           context, widget.product.serviceName),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: RatingBar.builder(
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 25,
-                          itemBuilder: (context, _) =>
-                              const Icon(Icons.star, color: Colors.blue),
-                          onRatingUpdate: (rating) {},
-                        ),
+                      Row(
+                        children: [
+                          RatingBarIndicator(
+                            rating: 4.5,
+                            itemBuilder: (context, _) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                            itemCount: 5,
+                            itemSize: 25,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '4.5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: Colors.black.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -100,7 +109,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Provider.of<CartProvider>(context, listen: false).decreaseQuantity();
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .decreaseQuantity();
                                 },
                                 child: Container(
                                   height: 35,
@@ -168,18 +179,27 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                         const SizedBox(height: 20),
                                         GlobalWidget.BestServicesImage1(context,
                                             widget.product.workingImageUrl),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8),
-                                          child: RatingBar.builder(
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 30,
-                                            itemBuilder: (context, _) =>
-                                                const Icon(Icons.star,
-                                                    color: Colors.blue),
-                                            onRatingUpdate: (rating) {},
-                                          ),
+                                        Row(
+                                          children: [
+                                            RatingBarIndicator(
+                                              rating: 4.5,
+                                              itemBuilder: (context, _) =>
+                                                  const Icon(Icons.star,
+                                                      color: Colors.amber),
+                                              itemCount: 5,
+                                              itemSize: 25,
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              '4.5',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13,
+                                                color: Colors.black
+                                                    .withOpacity(0.7),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         GlobalWidget.WorkNameText(
                                             context, partner.serviceName),
@@ -290,22 +310,26 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "No address selected",
-                  style: TextStyle(
+                  selectedAddress != null
+                      ? (selectedAddress!.addressType ?? "Address")
+                      : "No address selected",
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  "Tap to select your address",
-                  style: TextStyle(
+                  selectedAddress != null
+                      ? "${selectedAddress!.name ?? ''}, ${selectedAddress!.buildingName ?? ''}, ${selectedAddress!.areaName ?? ''}, ${selectedAddress!.city ?? ''} - ${selectedAddress!.pincode ?? ''}, ${selectedAddress!.state ?? ''}"
+                      : "Tap to select your address",
+                  style: const TextStyle(
                     fontSize: 13,
                     color: Colors.grey,
                   ),
@@ -314,14 +338,21 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
           ),
           InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(50))),
-                  builder: (context) => SelectAddress());
+            onTap: () async {
+              final result = await showModalBottomSheet<AddressModel>(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(50))),
+                builder: (context) => const SelectAddress(),
+              );
+
+              if (result != null) {
+                setState(() {
+                  selectedAddress = result;
+                });
+              }
             },
             child: const Text(
               "Change",
@@ -363,15 +394,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
               elevation: 2,
             ),
             onPressed: () {
-              provider.openCheckout(
-                partnerId: widget.partner.partnerId,
-                name: widget.partner.name,
-                serviceName: widget.partner.serviceName,
-                originalPrice: widget.partner.originalPrice,
-                workingImageUrl: widget.partner.workingImageUrl,
-                quantity:
-                    Provider.of<CartProvider>(context, listen: false).quantity,
-              );
+              Get.to(SelectBookingSlot(
+                partner: widget.product,
+              ));
             },
             child: const Text(
               "Book",
