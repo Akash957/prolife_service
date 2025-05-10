@@ -6,6 +6,7 @@ import 'package:prolife_service/provider/cart_provider.dart';
 import 'package:prolife_service/provider/location_provider.dart';
 import 'package:prolife_service/provider/payment_provider.dart';
 import 'package:prolife_service/provider/profile_provider.dart';
+import 'package:prolife_service/provider/review_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
@@ -28,13 +29,10 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
-        ChangeNotifierProvider(
-          create: (_) => AddressProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => CartProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => AddressProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => PaymentProvider()),
+        ChangeNotifierProvider(create: (_) => ReviewProvider()),
       ],
       child: const MyApp(),
     ),

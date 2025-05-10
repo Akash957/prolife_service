@@ -386,18 +386,20 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
           const Spacer(),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
+              backgroundColor: selectedAddress != null
+                  ? Colors.orange
+                  : Colors.grey, // Color based on address
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               elevation: 2,
             ),
-            onPressed: () {
-              Get.to(SelectBookingSlot(
-                partner: widget.product,
-              ));
-            },
+            onPressed: selectedAddress != null
+                ? () {
+                    Get.to(SelectBookingSlot(partner: widget.product));
+                  }
+                : null,
             child: const Text(
               "Book",
               style: TextStyle(

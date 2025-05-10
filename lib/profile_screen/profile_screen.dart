@@ -170,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconColor: const Color(0xFF2575FC),
                             title: 'My Bookings',
                             onTap: () {
-                              Get.to(const BookingDetailsPage());
+                              Get.to(BookingStates());
                             },
                           ),
                           const Divider(height: 1, indent: 16),
