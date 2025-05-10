@@ -17,7 +17,6 @@ class ServiceDetailsPage extends StatefulWidget {
 class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Service Details"))),
       body: Column(
@@ -42,12 +41,15 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     },
                   ),
                 ),
-                GlobalWidget.WorkNameText(context, widget.product.name,),
-                GlobalWidget.TextSpanTextOriginal(
-                    context, widget.product.originalPrice, widget.product.discountPrice),
+                GlobalWidget.WorkNameText(
+                  context,
+                  widget.product.name,
+                ),
+                GlobalWidget.TextSpanTextOriginal(context,
+                    widget.product.originalPrice, widget.product.discountPrice),
                 GlobalWidget.WorkNameText(context, "Descriptions"),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
                   child: Text(
                     "I am a complete fully cleaning work",
                     style: TextStyle(fontSize: 18),
@@ -61,7 +63,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
         ],
       ),
       bottomSheet: Padding(
-        padding: const EdgeInsets.only(bottom:50),
+        padding: const EdgeInsets.only(bottom: 50),
         child: SizedBox(
           width: 250,
           height: 45,
@@ -77,9 +79,10 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
             onPressed: () {
               Get.to(BookingSummaryScreen(
                 product: widget.product,
+                partner: widget.product,
               ));
             },
-            child: Text(
+            child: const Text(
               "Booking Service",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),

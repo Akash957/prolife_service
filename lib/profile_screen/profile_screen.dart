@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
-import 'package:prolife_service/screen/shaved_address_screen.dart';
-import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
+import 'package:prolife_service/screens/booking_screen/booking_states.dart';
 import 'package:provider/provider.dart';
+import '../address_screen/shaved_address_screen.dart';
+import '../models/partners_model.dart';
 import '../provider/auth_provider.dart';
 import '../provider/profile_provider.dart';
 import '../screens/settings_pages/privacy_policy_page.dart';
 import '../screens/settings_pages/terms_and_conditions_page.dart';
+import '../service/call_support.dart';
+import '../service/dynamic_link_service.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key,});
+
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -24,62 +28,6 @@ class _ProfilePageState extends State<ProfilePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ProfileProvider>(context, listen: false).getUserData();
     });
-  }
-
-  void _showLanguageDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        String? selectedLocale = Get.locale?.languageCode;
-        return AlertDialog(
-          title: Text('select_language'.tr),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: const Text('English'),
-                leading: Radio<String>(
-                  value: 'en',
-                  groupValue: selectedLocale,
-                  onChanged: (value) {
-                    if (value != null) {
-                      Get.updateLocale(Locale(value));
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('Español'),
-                leading: Radio<String>(
-                  value: 'es',
-                  groupValue: selectedLocale,
-                  onChanged: (value) {
-                    if (value != null) {
-                      Get.updateLocale(Locale(value));
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-              ListTile(
-                title: const Text('हिंदी'),
-                leading: Radio<String>(
-                  value: 'hi',
-                  groupValue: selectedLocale,
-                  onChanged: (value) {
-                    if (value != null) {
-                      Get.updateLocale(Locale(value));
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -138,49 +86,56 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 60),
-                              Hero(
-                                tag: 'profile-avatar',
-                                child: CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.white.withOpacity(0.2),
-                                  child: ClipOval(
-                                    child: imageUrl != null && imageUrl.isNotEmpty
-                                        ? Image.network(
-                                      imageUrl,
-                                      width: 96,
-                                      height: 96,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return const Icon(Icons.person,
-                                            size: 50, color: Colors.white);
-                                      },
-                                    )
-                                        : const Icon(Icons.person, size: 50, color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 40.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Hero(
+                                  tag: 'profile-avatar',
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor:
+                                        Colors.white.withOpacity(0.2),
+                                    child: ClipOval(
+                                      child: imageUrl != null &&
+                                              imageUrl.isNotEmpty
+                                          ? Image.network(
+                                              imageUrl,
+                                              width: 96,
+                                              height: 96,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return const Icon(Icons.person,
+                                                    size: 50,
+                                                    color: Colors.white);
+                                              },
+                                            )
+                                          : const Icon(Icons.person,
+                                              size: 50, color: Colors.white),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                name,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                                const SizedBox(height: 10),
+                                Text(
+                                  name,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                email,
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.9),
-                                  fontSize: 14,
+                                const SizedBox(height: 4),
+                                Text(
+                                  email,
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -202,11 +157,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.edit,
                             iconColor: const Color(0xFF6A11CB),
-                            title: 'Edit Profile'.tr,
+                            title: 'Edit Profile',
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => const EditProfilePage()),
+                                MaterialPageRoute(
+                                    builder: (_) => const EditProfilePage()),
                               );
                             },
                           ),
@@ -214,16 +170,16 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.calendar_today,
                             iconColor: const Color(0xFF2575FC),
-                            title: 'My Bookings'.tr,
+                            title: 'My Bookings',
                             onTap: () {
-                              Get.to(const BookingDetailsPage());
+                              Get.to(const BookingStates());
                             },
                           ),
                           const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
                             icon: Icons.location_pin,
                             iconColor: const Color(0xFF4CAF50),
-                            title: 'My Addresses'.tr,
+                            title: 'My Addresses',
                             onTap: () {
                               Get.to(const ShavedAddressScreen());
                             },
@@ -244,11 +200,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.privacy_tip,
                             iconColor: const Color(0xFF9C27B0),
-                            title: 'Privacy Policy'.tr,
+                            title: 'Privacy Policy',
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) => const PrivacyPolicyPage()),
+                                MaterialPageRoute(
+                                    builder: (_) => const PrivacyPolicyPage()),
                               );
                             },
                           ),
@@ -261,7 +218,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => const TermsAndConditionsPage()),
+                                    builder: (_) =>
+                                        const TermsAndConditionsPage()),
                               );
                             },
                           ),
@@ -269,16 +227,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           ProfileMenuItem(
                             icon: Icons.support_agent,
                             iconColor: const Color(0xFFFF9800),
-                            title: 'Customer Support'.tr,
-                            onTap: () {},
+                            title: 'Customer Support',
+                            onTap: callSupport,
                           ),
                           const Divider(height: 1, indent: 16),
                           ProfileMenuItem(
-                            icon: Icons.language,
+                            icon: Icons.share,
                             iconColor: const Color(0xFF2196F3),
-                            title: 'language'.tr,
+                            title: 'Share App',
                             trailing: const Text(""),
-                            onTap: _showLanguageDialog,
+                            onTap: () {
+                              DynamicLinkService.shareApp(context);
+                            },
                           ),
                         ],
                       ),
@@ -290,8 +250,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.logout, color: Colors.white),
                       label: Text(
-                        'Logout'.tr,
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        'Logout',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
@@ -306,25 +267,52 @@ class _ProfilePageState extends State<ProfilePage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Confirm Logout'.tr),
-                              content: Text('Are you sure you want to logout?'.tr),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              title: const Row(
+                                children: [
+                                  Icon(Icons.logout, color: Colors.redAccent),
+                                  SizedBox(width: 8),
+                                  Text('Confirm Logout'),
+                                ],
+                              ),
+                              content: const Text(
+                                'Are you sure you want to logout?',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              actionsAlignment: MainAxisAlignment.spaceBetween,
                               actions: [
                                 TextButton(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.grey[700],
+                                    textStyle: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                   child: Text('Cancel'.tr),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
                                 ),
-                                const SizedBox(width: 20),
-                                TextButton(
-                                  child: Text(
-                                    'Logout'.tr,
-                                    style: const TextStyle(color: Colors.redAccent),
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.redAccent,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
                                   ),
+                                  icon: const Icon(Icons.exit_to_app),
+                                  label: Text('Logout'.tr),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
-                                    Provider.of<AuthProvider>(context, listen: false)
-                                        .signOut(context);
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop();
+                                    Future.delayed(
+                                        const Duration(milliseconds: 100), () {
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .signOut(context);
+                                    });
                                   },
                                 ),
                               ],
