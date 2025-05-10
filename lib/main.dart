@@ -15,6 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
+
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -32,9 +33,6 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AddressProvider(),),
         ChangeNotifierProvider(create: (_) => CartProvider(),),
         ChangeNotifierProvider(create: (_) => PaymentProvider()),
-
-
-
       ],
       child: const MyApp(),
     ),

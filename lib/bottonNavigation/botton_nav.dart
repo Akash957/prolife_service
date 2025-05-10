@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prolife_service/screens/booking_screen/my_booking_screen.dart';
+import 'package:prolife_service/screens/booking_screen/my_booking_data.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
 import '../profile_screen/profile_screen.dart';
@@ -18,7 +18,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     const HomeScreen(),
     const AllCategories(),
     const MyBookingScreen(),
-    const ProfilePage(),
+     const ProfilePage(),
   ];
 
   void onTabTapped(int index) {

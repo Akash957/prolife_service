@@ -33,16 +33,14 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
     super.dispose();
   }
 
-  int getOriginalTotal(int quantity) =>
-      int.parse(widget.product.originalPrice) * quantity;
-
-  int getDiscountTotal(int quantity) =>
-      int.parse(widget.product.discountPrice) * quantity;
+  int getOriginalTotal(int quantity) => int.parse(widget.product.originalPrice) * quantity;
+  int getDiscountTotal(int quantity) => int.parse(widget.product.discountPrice) * quantity;
 
   @override
   Widget build(BuildContext context) {
-    final paymentProvider =
-        Provider.of<PaymentProvider>(context, listen: false);
+    var widthScreen = MediaQuery.of(context).size.width;
+    var heightScreen = MediaQuery.of(context).size.height;
+    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Booking Summary")),
@@ -61,14 +59,12 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
           final int discountTotal = getDiscountTotal(cart.quantity);
           final int discount =originalTotal - discountTotal;
 
-
           return Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GlobalWidget.BookingImage(
-                      context, widget.product.workingImageUrl),
+                  GlobalWidget.BookingImage(context, widget.product.workingImageUrl),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -95,7 +91,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 21),
                           ),
-                          const SizedBox(width: 80),
+                           SizedBox(width:widthScreen*0.15),
                           Row(
                             children: [
                               InkWell(
@@ -156,8 +152,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               itemCount:
                                   categoryController.filteredProducts.length,
                               itemBuilder: (context, index) {
-                                final partner =
-                                    categoryController.filteredProducts[index];
+                                final partner = categoryController.filteredProducts[index];
                                 return SizedBox(
                                   width: 250,
                                   child: Card(
@@ -166,7 +161,11 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 20),
-                                        GlobalWidget.BestServicesImage1(context,
+                                        GlobalWidget.BestServicesImage1(
+                                           () {
+
+                                           }
+                                            ,context,
                                             widget.product.workingImageUrl),
                                         Padding(
                                           padding:
@@ -193,7 +192,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             GlobalWidget
                                                 .BestServicesCircleAvatar2(
                                                     context,
-                                                    partner.profileImage),
+                                                    partner.profileImage,() {
+                                              Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
+                                                    },),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -368,7 +369,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 name: widget.partner.name,
                 serviceName: widget.partner.serviceName,
                 originalPrice: widget.partner.originalPrice,
+                discountPrice: widget.partner.discountPrice,
                 workingImageUrl: widget.partner.workingImageUrl,
+                profileImage: widget.partner.profileImage,
                 quantity:
                     Provider.of<CartProvider>(context, listen: false).quantity,
               );

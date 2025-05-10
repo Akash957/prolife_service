@@ -18,7 +18,7 @@ class PaymentProvider with ChangeNotifier {
   }
 
   VoidCallback? _onSuccess;
-  String? _partnerId, _name, _serviceName, _originalPrice, _workingImageUrl;
+  String? _partnerId, _name, _serviceName, _originalPrice,_discountPrice,_workingImageUrl,_profileImageUrl;
   int? _quantity;
 
   void openCheckout({
@@ -26,24 +26,31 @@ class PaymentProvider with ChangeNotifier {
     required String name,
     required String serviceName,
     required String originalPrice,
+    required String discountPrice,
     required String workingImageUrl,
+    required String profileImage,
     required int quantity,
   }) {
-    int totalAmount = int.parse(originalPrice) * quantity * 100;
+    int totalAmountOriginal = int.parse(originalPrice) * quantity * 100;
+    int totalAmountDiscountPrice = int.parse(discountPrice) * quantity * 100;
 
     _partnerId = partnerId;
     _name = name;
     _serviceName = serviceName;
     _originalPrice = originalPrice;
+    _discountPrice = discountPrice;
     _workingImageUrl = workingImageUrl;
+    _profileImageUrl = profileImage;
     _quantity = quantity;
 
     var options = {
       'key': 'rzp_test_bToB0wfbBdrPfq',
-      'amount': totalAmount,
+      'totalAmountOriginal': totalAmountOriginal,
+      'totalAmountDiscount': totalAmountDiscountPrice,
       'name': serviceName,
       'description': name,
       'image': workingImageUrl,
+      'profileImage': profileImage,
       'prefill': {
         'contact': '8888888888',
         'email': 'test@example.com',
@@ -96,7 +103,7 @@ class PaymentProvider with ChangeNotifier {
     required String paymentId,
     required String status,
   }) async {
-    if (_partnerId == null || _name == null || _serviceName == null || _originalPrice == null || _workingImageUrl == null || _quantity == null) {
+    if (_partnerId == null || _name == null || _serviceName == null || _originalPrice == null|| _discountPrice == null || _workingImageUrl == null|| _profileImageUrl == null || _quantity == null) {
       debugPrint("Missing booking data");
       return;
     }
@@ -106,7 +113,9 @@ class PaymentProvider with ChangeNotifier {
       'name': _name,
       'serviceName': _serviceName,
       'originalPrice': (int.parse(_originalPrice!) * _quantity!).toString(),
+      'discountPrice': (int.parse(_discountPrice!) * _quantity!).toString(),
       'workingImageUrl': _workingImageUrl,
+      'profileImage': _profileImageUrl,
       'quantity': _quantity,
       'paymentId': paymentId,
       'status': status,

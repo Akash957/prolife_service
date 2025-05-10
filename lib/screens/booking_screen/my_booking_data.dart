@@ -32,7 +32,6 @@ class MyBookingScreen extends StatelessWidget {
     final dateTime = timestamp.toDate();
     return DateFormat('EEE, MMM d, yyyy – hh:mm a').format(dateTime);
   }
-
   Widget buildBookingCard({
     required BuildContext context,
     required Map<String, dynamic> data,
@@ -46,6 +45,7 @@ class MyBookingScreen extends StatelessWidget {
     final timestamp = _formatTimestamp(data['timestamp']);
 
     return Card(
+      color: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 0,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -78,9 +78,7 @@ class MyBookingScreen extends StatelessWidget {
               ),
             ),
             Text(
-              timestamp,
-              style: const TextStyle(color: Colors.grey),
-            ),
+              timestamp, style: const TextStyle(color: Colors.grey),),
             if (amountPaid != null) ...[
               const Divider(height: 20),
               Row(
@@ -92,9 +90,7 @@ class MyBookingScreen extends StatelessWidget {
                       SizedBox(width: 6),
                     ],
                   ),
-                  Text(
-                    amountPaid,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  Text(amountPaid, style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

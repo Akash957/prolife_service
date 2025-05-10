@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class GlobalWidget {
   static BookingImage(
@@ -18,8 +19,8 @@ class GlobalWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image(
               image: NetworkImage(image),
-              height:heightScreen*0.16,
-              width: widthScreen*0.30,
+              height: heightScreen * 0.16,
+              width: widthScreen * 0.30,
               fit: BoxFit.cover,
             ),
           ),
@@ -84,12 +85,14 @@ class GlobalWidget {
   }
 
   static BestServicesImage1(
+  VoidCallback onTop,
     BuildContext context,
     String image,
   ) {
     var widthScreen = MediaQuery.of(context).size.width * 0.7;
     // var heightScreen = MediaQuery.of(context).size;
     return InkWell(
+      onTap:onTop,
       child: Card(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -109,12 +112,14 @@ class GlobalWidget {
   }
 
   static ReferImage(
+      VoidCallback onTop,
     BuildContext context,
     String image,
   ) {
     var widthScreen = MediaQuery.of(context).size.width * 1.0;
     var heightScreen = MediaQuery.of(context).size.height * 0.2;
     return InkWell(
+      onTap: onTop,
       child: Container(
         height: heightScreen,
         width: widthScreen,
@@ -155,12 +160,14 @@ class GlobalWidget {
   }
 
   static BestServicesCircleAvatar(
+  VoidCallback onTap,
     BuildContext context,
     String image,
   ) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
+        onTap: onTap,
         child: Container(
           height: 60,
           width: 60,
@@ -177,12 +184,11 @@ class GlobalWidget {
   }
 
   static BestServicesCircleAvatar2(
-    BuildContext context,
-    String image,
-  ) {
+      BuildContext context, String image,VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
+        onTap: onTap,
         child: Container(
           height: 40,
           width: 40,
@@ -195,6 +201,14 @@ class GlobalWidget {
           ),
         ),
       ),
+    );
+  }
+  static fullScreenImage(BuildContext context, String image,){
+    return PhotoView(
+      imageProvider: NetworkImage(image),
+      backgroundDecoration: BoxDecoration(color: Colors.black),
+      minScale: PhotoViewComputedScale.contained,
+      maxScale: PhotoViewComputedScale.covered * 2.0,
     );
   }
 
