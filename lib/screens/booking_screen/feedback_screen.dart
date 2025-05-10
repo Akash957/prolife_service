@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../bottonNavigation/botton_nav.dart';
 import '../../home_page_view/home_screen.dart';
 
 class FeedbackScreen extends StatelessWidget {
@@ -52,7 +53,7 @@ class FeedbackScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavScreen()));
               },
               child: const Text(
                 'Done',

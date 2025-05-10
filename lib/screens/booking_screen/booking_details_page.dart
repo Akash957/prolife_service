@@ -1,229 +1,294 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:prolife_service/screens/booking_screen/vertical_step_progress_view.dart';
+import 'package:prolife_service/screens/booking_screen/write_review.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import '../../global_widget/globle_screen.dart';
+import '../../models/booking_model.dart';
+import '../../provider/review_provider.dart';
+import '../../service/call_support.dart';
 
-class BookingDetailsPage extends StatelessWidget {
-  const BookingDetailsPage({super.key});
+class BookingStates extends StatefulWidget {
+  const BookingStates({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Booking Details'),
-        leading: const BackButton(),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    "https://images.pexels.com/photos/4107285/pexels-photo-4107285.jpeg",
-                    height: 80,
-                    width: 80,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Living Room Cleaning",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: List.generate(
-                          5,
-                          (index) => const Icon(Icons.star,
-                              size: 16, color: Colors.amber),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text(
-                        "\₹190",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                      // Get.to(WriteReviewPage());
-                    },
-                    child: const Text("Write a Review"),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Book Again"),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            const Text("About Service Provider",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://randomuser.me/api/portraits/men/32.jpg"),
-                radius: 24,
-              ),
-              title: const Text("Ronald Richards"),
-              subtitle: const Text("Service Provider"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.call, color: Colors.blue)),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.message, color: Colors.blue)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text("Booking Status",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const BookingStatusTile(
-              title: "Booking Confirmed",
-              subtitle: "Service provider has accept your booking",
-              date: "Mon, Oct 02, 2023",
-              time: "10:00 AM",
-              isCompleted: true,
-            ),
-            const BookingStatusTile(
-              title: "Vendor Out for Service",
-              subtitle:
-                  "Service Provider has out for your service and reaching your location",
-              date: "Mon, Oct 02, 2023",
-              time: "09:00 AM",
-              isCompleted: true,
-            ),
-            const BookingStatusTile(
-              title: "Service Completed",
-              subtitle: "Service Provider has complete his service",
-              date: "Mon, Oct 02, 2023",
-              time: "12:00 AM",
-              isCompleted: true,
-              isLast: true,
-            ),
-            const SizedBox(height: 16),
-            const Text("Payment Summary",
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            const PaymentRow(label: "Item Total", value: "\₹200"),
-            const PaymentRow(label: "Discount", value: "-\₹10"),
-            const PaymentRow(label: "Delivery Fee", value: "Free"),
-            const Divider(),
-            const PaymentRow(
-              label: "Grand Total",
-              value: "\₹190",
-              isTotal: true,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  _BookingStatesState createState() => _BookingStatesState();
 }
 
-class BookingStatusTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String date;
-  final String time;
-  final bool isCompleted;
-  final bool isLast;
+class _BookingStatesState extends State<BookingStates> {
+  final List<Map<String, String>> statusSteps = [
+    {
+      "status": "Order Placed",
+      "desc": "You have successfully placed the order"
+    },
+    {"status": "Dispatched", "desc": "Your service has been dispatched"},
+    {"status": "Delivered", "desc": "Service delivered successfully"},
+  ];
 
-  const BookingStatusTile({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.date,
-    required this.time,
-    this.isCompleted = false,
-    this.isLast = false,
-  });
+  List<Map<String, String>> getTimelineSteps(String currentStatus) {
+    int currentIndex =
+        statusSteps.indexWhere((step) => step['status'] == currentStatus);
+    if (currentIndex == -1) currentIndex = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+    List<Map<String, String>> steps = [];
+    for (int i = 0; i <= currentIndex; i++) {
+      steps.add({
+        'status': statusSteps[i]['status']!,
+        'desc': statusSteps[i]['desc']!,
+        'date': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        'time': DateFormat('hh:mm a').format(DateTime.now()),
+      });
+    }
+    return steps;
+  }
+
+  int getCurrentStep(String status) {
+    switch (status) {
+      case 'Order Placed':
+        return 0;
+      case 'Dispatched':
+        return 1;
+      case 'Delivered':
+        return 2;
+      default:
+        return 0;
+    }
+  }
+
+  Widget buildBookingCard({
+    required BuildContext context,
+    required BookingModel booking,
+  }) {
+    final title = booking.serviceName;
+    final originalPrice = booking.originalPrice;
+    final discountPrice = booking.discountPrice;
+
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
           children: [
-            Icon(Icons.radio_button_checked,
-                color: isCompleted ? Colors.blue : Colors.grey),
-            if (!isLast)
-              Container(
-                  height: 40, width: 2, color: Colors.blue.withOpacity(0.5)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (booking.workingImageUrl.isNotEmpty)
+                  GlobalWidget.BookingImage(context, booking.workingImageUrl)
+                else
+                  Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.image_not_supported, size: 50),
+                  ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18)),
+                      Row(
+                        children: [
+                          RatingBarIndicator(
+                            rating: 3.5,
+                            itemBuilder: (context, _) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                            itemCount: 5,
+                            itemSize: 20,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '4.5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: Colors.black.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text("₹$originalPrice",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 16)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(
+                                color: Colors.blue, width: 1.5),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChangeNotifierProvider(
+                                create: (_) => ReviewProvider(),
+                                child: WriteReviewPage(booking: booking),
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text("Write a Review",
+                            style: TextStyle(fontSize: 16, color: Colors.blue)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Book Again Action
+                        },
+                        child: const Text("Book Again",
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15, top: 10),
+              child: Text("About Service Provider",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+            Card(
+              margin: const EdgeInsets.all(10),
+              child: ListTile(
+                leading: booking.profileImage.isNotEmpty
+                    ? CircleAvatar(
+                        backgroundImage: NetworkImage(booking.profileImage),
+                      )
+                    : const CircleAvatar(child: Icon(Icons.person)),
+                title: Text(booking.name),
+                subtitle: Text(booking.serviceName),
+                trailing: IconButton(
+                  icon: const Icon(Icons.call, color: Colors.blue),
+                  onPressed: () {
+                    callSupport();
+                  },
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15, top: 10),
+              child: Text("Booking Status",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+            const SizedBox(height: 20),
+            VerticalStepProgressView(
+              curStep: getCurrentStep(booking.bookingStatus),
+              steps: ['Order Placed', 'Dispatched', 'Delivered'],
+            ),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Text("Payment Summary",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+            priceRow("Item Total", originalPrice),
+            priceRow("Discount", discountPrice),
+            const Divider(indent: 10, endIndent: 10, height: 30, thickness: 2),
+            priceRow("Grand Total", originalPrice),
           ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-              Text(subtitle),
-              Text("$date at $time",
-                  style: const TextStyle(color: Colors.grey)),
-              const SizedBox(height: 12),
-            ],
-          ),
-        )
       ],
     );
   }
-}
-
-class PaymentRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final bool isTotal;
-
-  const PaymentRow({
-    super.key,
-    required this.label,
-    required this.value,
-    this.isTotal = false,
-  });
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = isTotal
-        ? const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
-        : const TextStyle(fontSize: 14);
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('My Booking')),
+        body: const Center(child: Text('User not logged in')),
+      );
+    }
 
+    return Scaffold(
+      appBar: AppBar(title: const Text('My Booking')),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('user_bookings')
+                .where('userId', isEqualTo: currentUser.uid)
+                .orderBy('timestamp', descending: true)
+                .limit(1)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return const Center(child: Text('No bookings found.'));
+              }
+              final bookingDoc = snapshot.data!.docs.first;
+              final booking = BookingModel.fromDocument(bookingDoc);
+              return buildBookingCard(context: context, booking: booking);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget priceRow(String text, String price, {bool free = false}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: textStyle),
-          Text(value, style: textStyle),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 18,
+              color: free ? Colors.blue : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            free ? "Free" : "₹$price",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: free ? Colors.blue : Colors.black,
+            ),
+          ),
         ],
       ),
     );

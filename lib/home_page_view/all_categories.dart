@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../getx_service/getx_screen.dart';
@@ -12,17 +11,16 @@ class AllCategories extends StatefulWidget {
 }
 
 class _AllCategoriesState extends State<AllCategories> {
-  final getController = Get.put(GetService());
+  final categoryController = Get.put(GetService());
   bool showSearch = false;
 
   @override
   Widget build(BuildContext context) {
-    final categoryController = Get.put(GetService());
-    var widthScreen = MediaQuery.of(context).size.width * 2;
-    var heightScreen = MediaQuery.of(context).size.height * 1;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("All Categories"),
+        backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
             icon: Icon(showSearch ? Icons.close : Icons.search),
@@ -37,16 +35,22 @@ class _AllCategoriesState extends State<AllCategories> {
             ? PreferredSize(
                 preferredSize: const Size.fromHeight(60),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: TextField(
                     onChanged: (value) {
                       categoryController.searchCategories(value);
                     },
                     decoration: InputDecoration(
-                      hintText: "Search image...",
-                      prefixIcon: Icon(Icons.search),
+                      hintText: "Search category...",
+                      prefixIcon: const Icon(Icons.search),
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 16),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
@@ -54,46 +58,93 @@ class _AllCategoriesState extends State<AllCategories> {
               )
             : null,
       ),
-      body: Obx(() => ListView.builder(
-            itemCount: categoryController.categories.length,
-            itemBuilder: (context, index) {
-              final category = categoryController.categories[index];
-              return ListTile(
-                title: InkWell(
-                  onTap: () {
-                    Get.to(ClickProduct());
-                    categoryController.filterProductsByWorkType(
-                      category.name,
-                    );
-                  },
-                  child: Card(
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image.network(
-                            category.imageUrl,
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      body: Obx(
+        () => categoryController.categories.isEmpty
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.separated(
+                padding: const EdgeInsets.all(12),
+                itemCount: categoryController.categories.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final category = categoryController.categories[index];
+                  return InkWell(
+                    onTap: () {
+                      categoryController
+                          .filterProductsByWorkType(category.name);
+                      Get.to(() => ClickProduct(categoryName: category.name,));
+                    },
+                    borderRadius: BorderRadius.circular(16),
+                    child: Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
                           children: [
-                            Text("Name: ${category.name}"),
-                            Text("${category.service}"),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                category.imageUrl,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return const SizedBox(
+                                    width: 80,
+                                    height: 80,
+                                    child: Center(
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2)),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                  width: 80,
+                                  height: 80,
+                                  color: Colors.grey[300],
+                                  child:
+                                      const Icon(Icons.broken_image, size: 40),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    category.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    category.service,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Icon(Icons.arrow_forward_ios,
+                                size: 16, color: Colors.grey),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
-          )),
+                  );
+                },
+              ),
+      ),
     );
   }
 }
