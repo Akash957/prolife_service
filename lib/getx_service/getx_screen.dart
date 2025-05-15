@@ -21,9 +21,9 @@ class GetService extends GetxController {
   Future<void> fetchData() async {
     try {
       final categorySnapshot =
-      await FirebaseFirestore.instance.collection('category_item').get();
+          await FirebaseFirestore.instance.collection('category_item').get();
       categories.value = categorySnapshot.docs.map(
-            (doc) {
+        (doc) {
           final data = doc.data();
           return CategoryModel(
               name: data["name"],
@@ -33,15 +33,15 @@ class GetService extends GetxController {
       ).toList();
 
       final productSnapshot =
-      await FirebaseFirestore.instance.collection('partners').get();
+          await FirebaseFirestore.instance.collection('partners').get();
       partnerList.value = productSnapshot.docs.map(
-            (doc) {
+        (doc) {
           final data = doc.data();
           return PartnersModel(
             partnerId: "${data["partner_id"]}",
             name: "${data["name"]}",
             profileImage: "${data["profileImage"]}",
-            workType: "${ data["workType"]}",
+            workType: "${data["workType"]}",
             workingImageUrl: "${data["workingImageUrl"]}",
             serviceName: "${data["serviceName"]}",
             originalPrice: "${data["originalPrice"]}",
@@ -70,8 +70,10 @@ class GetService extends GetxController {
     if (query.isEmpty) {
       fetchData();
     } else {
-      final filtered = categories.where((category) =>
-          category.name.toLowerCase().contains(query.toLowerCase())).toList();
+      final filtered = categories
+          .where((category) =>
+              category.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
 
       if (filtered.isNotEmpty) {
         selectedCategory.value = filtered.first.name;
@@ -87,11 +89,10 @@ class GetService extends GetxController {
   final String userId = '1';
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-
   Future<void> addToCart(PartnersModel partner, BuildContext context) async {
     try {
-      final userCartRef = _firestore.collection('carts').doc(userId).collection(
-          'items');
+      final userCartRef =
+          _firestore.collection('carts').doc(userId).collection('items');
       final newItemRef = await userCartRef.add(partner.toMap());
       cartItems.add(PartnersModel(
         partnerId: newItemRef.id,
@@ -130,10 +131,8 @@ class GetService extends GetxController {
 
   Future<void> clearCart() async {
     try {
-      final cartCollection = _firestore
-          .collection('carts')
-          .doc(userId)
-          .collection('items');
+      final cartCollection =
+          _firestore.collection('carts').doc(userId).collection('items');
       final cartSnapshot = await cartCollection.get();
 
       for (var doc in cartSnapshot.docs) {
@@ -179,6 +178,4 @@ class GetService extends GetxController {
 
     print('Listening for real-time cart updates from Firestore...');
   }
-
-
 }

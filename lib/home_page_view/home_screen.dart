@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
+import '../bottonNavigation/botton_nav.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../provider/location_provider.dart';
@@ -33,7 +35,17 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: InkWell(
-          onTap: () => Get.to(() => const LocationScreen()),
+          onTap: () {
+            final locationProvider =
+                Provider.of<LocationProvider>(context, listen: false);
+            if (locationProvider.currentAddress != null) {
+              // If the address is set, navigate to the BottomNavScreen
+              Get.to(() => const BottomNavScreen());
+            } else {
+              // If address is not set, navigate to LocationScreen
+              Get.to(() => const LocationScreen());
+            }
+          },
           child: Row(
             children: [
               const Icon(Icons.location_on, color: Colors.orange),
@@ -41,17 +53,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (locationProvider.currentAddress != null)
-                    Text(
-                      locationProvider.currentAddress!,
-                      style: const TextStyle(fontSize: 14),
-                    )
-                  else
-                    const Text(
-                      overflow: TextOverflow.ellipsis,
-                      "Tap to select location",
-                      style: TextStyle(fontSize: 14),
-                    ),
+                  Consumer<LocationProvider>(
+                    builder: (context, locationProvider, child) {
+                      return locationProvider.currentAddress != null
+                          ? Text(
+                              locationProvider.currentAddress!,
+                              style: const TextStyle(fontSize: 14),
+                            )
+                          : const Text(
+                              "Tap to select location",
+                              style: TextStyle(fontSize: 14),
+                            );
+                    },
+                  ),
                 ],
               ),
             ],
@@ -191,80 +205,77 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               height: heightScreen * 0.37,
-              child: Expanded(
-                  child: Obx(() => ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categoryController.filteredProducts.length,
-                        itemBuilder: (context, index) {
-                          final partner =
-                              categoryController.filteredProducts[index];
-                          return Container(
-                            width: widthScreen * 0.7,
-                            child: Card(
-                              color: Colors.white,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Obx(() => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryController.filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      final partner =
+                          categoryController.filteredProducts[index];
+                      return Container(
+                        width: widthScreen * 0.7,
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GlobalWidget.BestServicesImage1(
+                                  context, partner.workingImageUrl),
+                              Row(
                                 children: [
-                                  GlobalWidget.BestServicesImage1(
-                                      context, partner.workingImageUrl),
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: 4.5,
-                                        itemBuilder: (context, _) => const Icon(
-                                            Icons.star,
-                                            color: Colors.amber),
-                                        itemCount: 5,
-                                        itemSize: 25,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        '4.5',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13,
-                                          color: Colors.black.withOpacity(0.7),
-                                        ),
-                                      ),
-                                    ],
+                                  RatingBarIndicator(
+                                    rating: 4.5,
+                                    itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber),
+                                    itemCount: 5,
+                                    itemSize: 25,
                                   ),
-                                  GlobalWidget.WorkNameText(
-                                      context, partner.serviceName),
-                                  // GlobalWidget.TextSpanTextOriginal(context, partner.price1, partner.price2),
-                                  SizedBox(
-                                    width: 50,
-                                  ),
-                                  Row(
-                                    children: [
-                                      GlobalWidget.BestServicesCircleAvatar2(
-                                          context, partner.profileImage),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          GlobalWidget.workername(
-                                              context, partner.name),
-                                          GlobalWidget.serviceType(
-                                              context, partner.workType),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      GlobalWidget.ServicesProvideAddButton(
-                                        () {
-                                          // Get.to(ServiceDetailsPage(product: partner));
-                                        },
-                                        context,
-                                        "Add",
-                                      ),
-                                    ],
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '4.5',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Colors.black.withOpacity(0.7),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ))),
-            ),
+                              GlobalWidget.WorkNameText(
+                                  context, partner.serviceName),
+                              SizedBox(width: 50),
+                              Row(
+                                children: [
+                                  GlobalWidget.BestServicesCircleAvatar2(
+                                      context, partner.profileImage),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GlobalWidget.workername(
+                                          context, partner.name),
+                                      GlobalWidget.serviceType(
+                                          context, partner.workType),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  GlobalWidget.ServicesProvideAddButton(
+                                    () {
+                                      Get.to(
+                                          ServiceDetailsPage(product: partner));
+                                    },
+                                    context,
+                                    "Add",
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+            )
           ],
         ),
       ),

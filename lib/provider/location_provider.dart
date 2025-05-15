@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationProvider with ChangeNotifier {
   String? _currentAddress;
@@ -14,14 +15,28 @@ class LocationProvider with ChangeNotifier {
 
   List<dynamic> get searchResults => _searchResults;
 
+  LocationProvider() {
+    _loadAddress();
+  }
+
+  Future<void> _loadAddress() async {
+    final prefs = await SharedPreferences.getInstance();
+    _currentAddress = prefs.getString('current_address');
+    notifyListeners();
+  }
+
+  Future<void> _saveAddress(String address) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('current_address', address);
+  }
+
   Future<void> getCurrentLocation() async {
     try {
       bool isEnabled = await Geolocator.isLocationServiceEnabled();
       if (!isEnabled) {
-        Fluttertoast.showToast(msg: 'Enable Location Services');
+        Fluttertoast.showToast(msg: 'Location Services enable karo');
         return;
       }
-
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -47,6 +62,7 @@ class LocationProvider with ChangeNotifier {
         Placemark p = placemarks.first;
         _currentAddress =
             "${p.name}, ${p.locality}, ${p.administrativeArea}, ${p.country}";
+        _saveAddress(_currentAddress!);
         notifyListeners();
       }
     } catch (e) {
@@ -98,6 +114,7 @@ class LocationProvider with ChangeNotifier {
 
   void setAddress(String address) {
     _currentAddress = address;
+    _saveAddress(address);
     notifyListeners();
   }
 }
