@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:uuid/uuid.dart';
 import '../bottonNavigation/botton_nav.dart';
 
 class PaymentProvider with ChangeNotifier {
@@ -141,8 +142,10 @@ class PaymentProvider with ChangeNotifier {
 
       debugPrint("Saving booking for userId: $userId");
 
+      var booking_Id = Uuid().v4();
       DocumentReference bookingRef =
-      await FirebaseFirestore.instance.collection('user_bookings').add({
+          await FirebaseFirestore.instance.collection('user_bookings').add({
+        "bookingId": booking_Id,
         'userId': userId,
         'partnerId': partnerId,
         'name': name,
@@ -171,7 +174,7 @@ class PaymentProvider with ChangeNotifier {
       Navigator.pushAndRemoveUntil(
         context!,
         MaterialPageRoute(builder: (context) => BottomNavScreen()),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       debugPrint("Error saving booking: $e");

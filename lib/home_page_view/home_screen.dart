@@ -39,10 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
             final locationProvider =
                 Provider.of<LocationProvider>(context, listen: false);
             if (locationProvider.currentAddress != null) {
-              // If the address is set, navigate to the BottomNavScreen
               Get.to(() => const BottomNavScreen());
             } else {
-              // If address is not set, navigate to LocationScreen
               Get.to(() => const LocationScreen());
             }
           },

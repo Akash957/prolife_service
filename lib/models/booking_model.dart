@@ -13,6 +13,7 @@ class BookingModel {
   final String startTime;
   final String endTime;
   final String bookingStatus;
+  final String bookingId;
   final String paymentId;
   final DateTime timestamp;
   final String profileImage;
@@ -22,6 +23,7 @@ class BookingModel {
     required this.id,
     required this.userId,
     required this.partnerId,
+    required this.bookingId,
     required this.name,
     required this.serviceName,
     required this.originalPrice,
@@ -41,6 +43,7 @@ class BookingModel {
     final data = doc.data() as Map<String, dynamic>;
     return BookingModel(
       id: doc.id,
+      bookingId: data['bookingId'] ?? '',
       userId: data['userId'] ?? '',
       partnerId: data['partnerId'] ?? '',
       name: data['name'] ?? '',
@@ -49,7 +52,7 @@ class BookingModel {
       workingImageUrl: data['workingImageUrl'] ?? '',
       quantity: data['quantity'] ?? 1,
       bookingDate:
-          (data['bookingDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      (data['bookingDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       startTime: data['startTime'] ?? '',
       endTime: data['endTime'] ?? '',
       bookingStatus: data['booking_status'] ?? 'Order Placed',

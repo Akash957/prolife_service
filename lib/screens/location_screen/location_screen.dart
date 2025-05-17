@@ -32,7 +32,8 @@ class _LocationScreenState extends State<LocationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey.shade400),
                   borderRadius: BorderRadius.circular(12),
@@ -48,7 +49,8 @@ class _LocationScreenState extends State<LocationScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: const InputDecoration(
-                          hintText: "Search for your location/society/apartment",
+                          hintText:
+                              "Search for your location/society/apartment",
                           border: InputBorder.none,
                         ),
                         onChanged: (value) {
@@ -66,7 +68,6 @@ class _LocationScreenState extends State<LocationScreen> {
                 onTap: () async {
                   await locationProvider.getCurrentLocation();
                   if (locationProvider.currentAddress != null) {
-                    // If address is available, navigate to BottomNavScreen
                     Get.to(() => const BottomNavScreen());
                   }
                 },
