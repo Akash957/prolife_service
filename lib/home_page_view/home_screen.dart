@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 categoryController.searchCategories(value);
               },
               decoration: InputDecoration(
-                hintText: "Search image...",
+                hintText: "Search service...",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
