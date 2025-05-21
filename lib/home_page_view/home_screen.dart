@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
@@ -196,8 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         scrollDirection: Axis.horizontal,
                         itemCount: categoryController.filteredProducts.length,
                         itemBuilder: (context, index) {
-                          final partner =
-                              categoryController.filteredProducts[index];
+                          final partner = categoryController.filteredProducts[index];
                           return Container(
                             width: widthScreen * 0.7,
                             child: Card(
@@ -206,6 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   GlobalWidget.BestServicesImage1(
+                                    () {
+                                      Get.to(GlobalWidget.fullScreenImage(context, partner.workingImageUrl));
+                                    },
                                       context, partner.workingImageUrl),
                                   Row(
                                     children: [
@@ -237,7 +241,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Row(
                                     children: [
                                       GlobalWidget.BestServicesCircleAvatar2(
-                                          context, partner.profileImage),
+                                          context, partner.profileImage,() {
+                                            Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
+                                          },),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -270,4 +276,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 }

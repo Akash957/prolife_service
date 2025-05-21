@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,12 +7,8 @@ class MyBookingScreen extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'order placed':
+      case 'paid':
         return Colors.blue;
-      case 'dispatched':
-        return Colors.orange;
-      case 'delivered':
-        return Colors.green;
       case 'cancelled':
         return Colors.red;
       default:
@@ -23,12 +18,8 @@ class MyBookingScreen extends StatelessWidget {
 
   Color _getStatusBgColor(String status) {
     switch (status.toLowerCase()) {
-      case 'order placed':
+      case 'paid':
         return Colors.blue.shade50;
-      case 'dispatched':
-        return Colors.orange.shade100;
-      case 'delivered':
-        return Colors.green.shade100;
       case 'cancelled':
         return Colors.red.shade100;
       default:
@@ -41,13 +32,12 @@ class MyBookingScreen extends StatelessWidget {
     final dateTime = timestamp.toDate();
     return DateFormat('EEE, MMM d, yyyy – hh:mm a').format(dateTime);
   }
-
   Widget buildBookingCard({
     required BuildContext context,
     required Map<String, dynamic> data,
     required String docId,
   }) {
-    final status = data['booking_status'] ?? 'Unknown';
+    final status = data['status'] ?? 'Unknown';
     final title = data['serviceName'] ?? 'No Title';
     final amountPaid = data['originalPrice'] != null
         ? "Amount Paid ₹${data['originalPrice']}"
@@ -55,8 +45,9 @@ class MyBookingScreen extends StatelessWidget {
     final timestamp = _formatTimestamp(data['timestamp']);
 
     return Card(
+      color: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 1,
+      elevation: 0,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -87,9 +78,7 @@ class MyBookingScreen extends StatelessWidget {
               ),
             ),
             Text(
-              timestamp,
-              style: const TextStyle(color: Colors.grey),
-            ),
+              timestamp, style: const TextStyle(color: Colors.grey),),
             if (amountPaid != null) ...[
               const Divider(height: 20),
               Row(
@@ -99,17 +88,13 @@ class MyBookingScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.check_circle, color: Colors.blue),
                       SizedBox(width: 6),
-                      Text('Payment Success',
-                          style: TextStyle(fontWeight: FontWeight.w500)),
                     ],
                   ),
-                  Text(
-                    amountPaid,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Text(amountPaid, style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
-            ],
+            ]
           ],
         ),
       ),
@@ -118,17 +103,6 @@ class MyBookingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      debugPrint("No authenticated user found.");
-      return const Scaffold(
-        body: Center(child: Text('User not logged in')),
-      );
-    }
-
-    debugPrint("Fetching bookings for userId: ${currentUser.uid}");
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Bookings'),
@@ -138,90 +112,43 @@ class MyBookingScreen extends StatelessWidget {
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('user_bookings')
-              .where('userId', isEqualTo: currentUser.uid)
               .orderBy('timestamp', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-            if (snapshot.hasError) {
-              debugPrint("StreamBuilder error: ${snapshot.error}");
-              return Center(child: Text('Error: ${snapshot.error}'));
-            }
+
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              debugPrint("No bookings found for userId: ${currentUser.uid}");
               return const Center(child: Text('No bookings found.'));
             }
 
             final bookings = snapshot.data!.docs;
-            debugPrint("Found ${bookings.length} bookings for userId: ${currentUser.uid}");
 
-            final orderPlacedBookings = bookings.where((doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'order placed';
-            }).toList();
+            final paidBookings = bookings
+                .where((doc) =>
+                    (doc.data() as Map<String, dynamic>)['status']
+                        ?.toString()
+                        .toLowerCase() ==
+                    'paid')
+                .toList();
 
-            final dispatchedBookings = bookings.where((doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'dispatched';
-            }).toList();
-
-            final deliveredBookings = bookings.where((doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'delivered';
-            }).toList();
-
-            final cancelledBookings = bookings.where((doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'cancelled';
-            }).toList();
+            final cancelledBookings = bookings
+                .where((doc) =>
+                    (doc.data() as Map<String, dynamic>)['status']
+                        ?.toString()
+                        .toLowerCase() ==
+                    'cancelled')
+                .toList();
 
             return ListView(
               children: [
-                if (orderPlacedBookings.isNotEmpty) ...[
-                  const Text(
-                    "🕒 Order Placed Bookings",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                if (paidBookings.isNotEmpty) ...[
+                  const Text("✅ Completed Bookings",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
-                  ...orderPlacedBookings.map((doc) {
-                    final data = doc.data() as Map<String, dynamic>;
-                    return buildBookingCard(
-                      context: context,
-                      data: data,
-                      docId: doc.id,
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                ],
-                if (dispatchedBookings.isNotEmpty) ...[
-                  const Text(
-                    "🚚 Dispatched Bookings",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  ...dispatchedBookings.map((doc) {
-                    final data = doc.data() as Map<String, dynamic>;
-                    return buildBookingCard(
-                      context: context,
-                      data: data,
-                      docId: doc.id,
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                ],
-                if (deliveredBookings.isNotEmpty) ...[
-                  const Text(
-                    "✅ Delivered Bookings",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  ...deliveredBookings.map((doc) {
+                  ...paidBookings.map((doc) {
                     final data = doc.data() as Map<String, dynamic>;
                     return buildBookingCard(
                       context: context,
@@ -232,10 +159,9 @@ class MyBookingScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                 ],
                 if (cancelledBookings.isNotEmpty) ...[
-                  const Text(
-                    "❌ Cancelled Bookings",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                  const Text("❌ Cancelled Bookings",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   ...cancelledBookings.map((doc) {
                     final data = doc.data() as Map<String, dynamic>;
