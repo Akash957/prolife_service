@@ -21,9 +21,9 @@ class GetService extends GetxController {
   Future<void> fetchData() async {
     try {
       final categorySnapshot =
-          await FirebaseFirestore.instance.collection('category_item').get();
+      await FirebaseFirestore.instance.collection('category_item').get();
       categories.value = categorySnapshot.docs.map(
-        (doc) {
+            (doc) {
           final data = doc.data();
           return CategoryModel(
               name: data["name"],
@@ -33,9 +33,9 @@ class GetService extends GetxController {
       ).toList();
 
       final productSnapshot =
-          await FirebaseFirestore.instance.collection('partners').get();
+      await FirebaseFirestore.instance.collection('partners').get();
       partnerList.value = productSnapshot.docs.map(
-        (doc) {
+            (doc) {
           final data = doc.data();
           return PartnersModel(
             partnerId: "${data["partner_id"]}",
@@ -72,7 +72,7 @@ class GetService extends GetxController {
     } else {
       final filtered = categories
           .where((category) =>
-              category.name.toLowerCase().contains(query.toLowerCase()))
+          category.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
       if (filtered.isNotEmpty) {
@@ -92,7 +92,7 @@ class GetService extends GetxController {
   Future<void> addToCart(PartnersModel partner, BuildContext context) async {
     try {
       final userCartRef =
-          _firestore.collection('carts').doc(userId).collection('items');
+      _firestore.collection('carts').doc(userId).collection('items');
       final newItemRef = await userCartRef.add(partner.toMap());
       cartItems.add(PartnersModel(
         partnerId: newItemRef.id,
@@ -132,7 +132,7 @@ class GetService extends GetxController {
   Future<void> clearCart() async {
     try {
       final cartCollection =
-          _firestore.collection('carts').doc(userId).collection('items');
+      _firestore.collection('carts').doc(userId).collection('items');
       final cartSnapshot = await cartCollection.get();
 
       for (var doc in cartSnapshot.docs) {

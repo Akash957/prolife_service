@@ -23,7 +23,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   @override
   Widget build(BuildContext context) {
     final paymentProvider =
-        Provider.of<PaymentProvider>(context, listen: false);
+    Provider.of<PaymentProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
 
     return Scaffold(
@@ -57,7 +57,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                 const SizedBox(height: 20),
                 const Text('Select Date',
                     style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 DatePicker(
                   height: 100,
@@ -74,7 +74,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                 const SizedBox(height: 25),
                 const Text('Select Time',
                     style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 TimeRange(
                   fromTitle: const Text('From',

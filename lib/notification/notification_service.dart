@@ -1,20 +1,21 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class NotificationService{
+class NotificationService {
   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   void initialize() {
-    InitializationSettings initializationSettings =
-    const InitializationSettings(
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
     );
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
+
   Future<void> requestPermission() async {
     NotificationSettings setting = await firebaseMessaging.requestPermission(
       alert: true,
@@ -33,10 +34,11 @@ class NotificationService{
       badge: true,
       sound: true,
     );
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {});
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      showNotification(message);
     });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
 
     FirebaseMessaging.instance.getInitialMessage().then((message) async {
       if (message != null) {}
@@ -44,15 +46,20 @@ class NotificationService{
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    AndroidNotificationDetails androidNotificationDetails =
-    const AndroidNotificationDetails("chanel_id", "CHANEL NAME",
-        importance: Importance.max, priority: Priority.high);
-    NotificationDetails notificationDetails =
-    NotificationDetails(android: androidNotificationDetails);
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      "chanel_id",
+      "CHANEL NAME",
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        message.notification!.title,
-        message.notification!.body,
-        notificationDetails);
-    }
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      message.notification!.title,
+      message.notification!.body,
+      notificationDetails,
+    );
+  }
 }

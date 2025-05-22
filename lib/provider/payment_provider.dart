@@ -142,7 +142,7 @@ class PaymentProvider with ChangeNotifier {
       debugPrint("Saving booking for userId: $userId");
 
       DocumentReference docRef =
-          FirebaseFirestore.instance.collection('user_bookings').doc();
+      FirebaseFirestore.instance.collection('user_bookings').doc();
       await docRef.set({
         'bookingId': docRef.id,
         'userId': userId,
@@ -173,7 +173,7 @@ class PaymentProvider with ChangeNotifier {
       Navigator.pushAndRemoveUntil(
         context!,
         MaterialPageRoute(builder: (context) => BottomNavScreen()),
-        (route) => false,
+            (route) => false,
       );
     } catch (e) {
       debugPrint("Error saving booking: $e");

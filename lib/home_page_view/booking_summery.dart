@@ -27,10 +27,17 @@ class BookingSummaryScreen extends StatefulWidget {
 class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   final categoryController = Get.put(GetService());
   AddressModel? selectedAddress;
+  late PaymentProvider paymentProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+  }
 
   @override
   void dispose() {
-    Provider.of<PaymentProvider>(context, listen: false).disposeRazorpay();
+    paymentProvider.disposeRazorpay();
     super.dispose();
   }
 
@@ -42,9 +49,6 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final paymentProvider =
-        Provider.of<PaymentProvider>(context, listen: false);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
