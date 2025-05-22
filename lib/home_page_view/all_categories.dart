@@ -19,11 +19,11 @@ class _AllCategoriesState extends State<AllCategories> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("All Categories"),
+        title: const Text("All Categories",style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
-            icon: Icon(showSearch ? Icons.close : Icons.search),
+            icon: Icon(showSearch ? Icons.close : Icons.search,color: Colors.white,),
             onPressed: () {
               setState(() {
                 showSearch = !showSearch;

@@ -36,13 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         title: InkWell(
           onTap: () {
-            final locationProvider =
-                Provider.of<LocationProvider>(context, listen: false);
-            if (locationProvider.currentAddress != null) {
-              Get.to(() => const BottomNavScreen());
-            } else {
-              Get.to(() => const LocationScreen());
-            }
+            Get.to(() => LocationScreen());
           },
           child: Row(
             children: [
@@ -78,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 categoryController.searchCategories(value);
               },
               decoration: InputDecoration(
-                hintText: "Search image...",
+                hintText: "Search for Categories...",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -197,8 +191,6 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GlobalWidget.WorkNameText(context, "Best Services"),
                 Spacer(),
-                GlobalWidget.SeeAllCategories(() {}, context, "See All"),
-                SizedBox(width: 20),
               ],
             ),
             SizedBox(

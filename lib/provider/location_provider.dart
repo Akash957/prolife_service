@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LocationProvider with ChangeNotifier {
   String? _currentAddress;
   List<dynamic> _searchResults = [];
-  final String apikey = 'AlzaSyLlkDIhqWEBbrwuVI8A_g6-IrRHJmolieX';
+  final String apikey = 'AlzaSyOv8hq8JhCxtG-GX1LGY6e4Hhbcy4dKqiW';
 
   String? get currentAddress => _currentAddress;
 

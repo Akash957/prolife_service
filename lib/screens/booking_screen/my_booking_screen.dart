@@ -8,13 +8,13 @@ class MyBookingScreen extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'order placed':
+      case 'request':
         return Colors.blue;
-      case 'dispatched':
+      case 'conform':
         return Colors.orange;
-      case 'delivered':
+      case 'complete':
         return Colors.green;
-      case 'cancelled':
+      case 'reject':
         return Colors.red;
       default:
         return Colors.grey;
@@ -23,13 +23,13 @@ class MyBookingScreen extends StatelessWidget {
 
   Color _getStatusBgColor(String status) {
     switch (status.toLowerCase()) {
-      case 'order placed':
+      case 'request':
         return Colors.blue.shade50;
-      case 'dispatched':
+      case 'conform':
         return Colors.orange.shade100;
-      case 'delivered':
+      case 'complete':
         return Colors.green.shade100;
-      case 'cancelled':
+      case 'reject':
         return Colors.red.shade100;
       default:
         return Colors.grey.shade200;
@@ -55,9 +55,10 @@ class MyBookingScreen extends StatelessWidget {
     final timestamp = _formatTimestamp(data['timestamp']);
 
     return Card(
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 1,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -130,8 +131,10 @@ class MyBookingScreen extends StatelessWidget {
     debugPrint("Fetching bookings for userId: ${currentUser.uid}");
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('My Bookings'),
+        backgroundColor: Colors.blueAccent,
+        title: const Text('My Bookings',style: TextStyle(color: Colors.white),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -155,30 +158,31 @@ class MyBookingScreen extends StatelessWidget {
             }
 
             final bookings = snapshot.data!.docs;
-            debugPrint("Found ${bookings.length} bookings for userId: ${currentUser.uid}");
+            debugPrint(
+                "Found ${bookings.length} bookings for userId: ${currentUser.uid}");
 
             final orderPlacedBookings = bookings.where((doc) {
               final data = doc.data() as Map<String, dynamic>;
               final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'order placed';
+              return status.toLowerCase() == 'request';
             }).toList();
 
             final dispatchedBookings = bookings.where((doc) {
               final data = doc.data() as Map<String, dynamic>;
               final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'dispatched';
+              return status.toLowerCase() == 'conform';
             }).toList();
 
             final deliveredBookings = bookings.where((doc) {
               final data = doc.data() as Map<String, dynamic>;
               final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'delivered';
+              return status.toLowerCase() == 'complete';
             }).toList();
 
             final cancelledBookings = bookings.where((doc) {
               final data = doc.data() as Map<String, dynamic>;
               final status = data['booking_status'] ?? '';
-              return status.toLowerCase() == 'cancelled';
+              return status.toLowerCase() == 'reject';
             }).toList();
 
             return ListView(

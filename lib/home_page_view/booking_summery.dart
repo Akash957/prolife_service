@@ -46,7 +46,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
         Provider.of<PaymentProvider>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Booking Summary")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          backgroundColor: Colors.white, title: const Text("Booking Summary")),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           if (cart.quantity == 0) {
@@ -172,6 +174,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                 return SizedBox(
                                   width: 250,
                                   child: Card(
+                                    color: Colors.white,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -182,7 +185,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                         Row(
                                           children: [
                                             RatingBarIndicator(
-                                              rating: 4.5,
+                                              rating: 4.0,
                                               itemBuilder: (context, _) =>
                                                   const Icon(Icons.star,
                                                       color: Colors.amber),
@@ -191,7 +194,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             ),
                                             const SizedBox(width: 6),
                                             Text(
-                                              '4.5',
+                                              '4.0',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 13,
@@ -368,7 +371,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
     );
   }
 
-  Widget bottomRow(int total, PaymentProvider provider) {
+  Widget bottomRow(int discount, PaymentProvider provider) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -378,7 +381,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             children: [
               GlobalWidget.WorkNameText(context, "Price"),
               const SizedBox(height: 5),
-              Text("₹$total",
+              Text("₹$discount",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 23)),
             ],

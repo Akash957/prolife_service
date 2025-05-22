@@ -20,7 +20,8 @@ class DeviceTokenServices {
   }
 
   Future<String?> getDeviceToken(String userId) async {
-    final doc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final doc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
     if (doc.exists) {
       return doc.data()?['deviceToken'];
     }

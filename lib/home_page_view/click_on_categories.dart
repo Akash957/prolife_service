@@ -17,6 +17,7 @@ class ClickProduct extends StatelessWidget {
     var widthScreen = MediaQuery.of(context).size.width;
     var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -34,6 +35,7 @@ class ClickProduct extends StatelessWidget {
               itemBuilder: (context, index) {
                 final partner = categoryController.filteredProducts[index];
                 return Card(
+                  color: Colors.white,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   elevation: 2,

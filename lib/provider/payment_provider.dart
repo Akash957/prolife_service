@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:uuid/uuid.dart';
 import '../bottonNavigation/botton_nav.dart';
 
 class PaymentProvider with ChangeNotifier {
@@ -84,7 +83,7 @@ class PaymentProvider with ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-    _storeBooking(paymentId: response.paymentId!, status: "Order Placed");
+    _storeBooking(paymentId: response.paymentId!, status: "request");
     _storePayment(paymentId: response.paymentId!);
   }
 
@@ -142,10 +141,10 @@ class PaymentProvider with ChangeNotifier {
 
       debugPrint("Saving booking for userId: $userId");
 
-      var booking_Id = Uuid().v4();
-      DocumentReference bookingRef =
-          await FirebaseFirestore.instance.collection('user_bookings').add({
-        "bookingId": booking_Id,
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection('user_bookings').doc();
+      await docRef.set({
+        'bookingId': docRef.id,
         'userId': userId,
         'partnerId': partnerId,
         'name': name,
@@ -161,7 +160,7 @@ class PaymentProvider with ChangeNotifier {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      debugPrint("Booking saved with ID: ${bookingRef.id} for userId: $userId");
+      debugPrint("Booking saved with ID: ${docRef.id} for userId: $userId");
 
       Fluttertoast.showToast(
         msg: "Booking confirmed!",

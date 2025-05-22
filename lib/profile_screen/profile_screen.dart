@@ -34,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Consumer<ProfileProvider>(
         builder: (context, provider, child) {
           final imageUrl = provider.userData?['imageUrl'];

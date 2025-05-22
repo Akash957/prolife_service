@@ -110,7 +110,11 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                       if (_startTime == null || _endTime == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text("Please select a time range")),
+                              backgroundColor: Colors.green,
+                              content: Text(
+                                "Please select a time range",
+                                style: TextStyle(color: Colors.white),
+                              )),
                         );
                         return;
                       }
@@ -134,7 +138,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                       backgroundColor: Colors.blue,
                     ),
                     child: const Text('Proceed to Payment',
-                        style: TextStyle(fontSize: 16)),
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ),
               ],

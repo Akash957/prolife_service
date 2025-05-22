@@ -20,17 +20,14 @@ class BookingStates extends StatefulWidget {
 
 class _BookingStatesState extends State<BookingStates> {
   final List<Map<String, String>> statusSteps = [
-    {
-      "status": "Order Placed",
-      "desc": "You have successfully placed the order"
-    },
-    {"status": "Dispatched", "desc": "Your service has been dispatched"},
-    {"status": "Delivered", "desc": "Service delivered successfully"},
+    {"status": "request", "desc": "You have successfully placed the order"},
+    {"status": "conform", "desc": "Your service has been dispatched"},
+    {"status": "complete", "desc": "Service delivered successfully"},
   ];
 
   List<Map<String, String>> getTimelineSteps(String currentStatus) {
     int currentIndex =
-    statusSteps.indexWhere((step) => step['status'] == currentStatus);
+        statusSteps.indexWhere((step) => step['status'] == currentStatus);
     if (currentIndex == -1) currentIndex = 0;
 
     List<Map<String, String>> steps = [];
@@ -47,11 +44,11 @@ class _BookingStatesState extends State<BookingStates> {
 
   int getCurrentStep(String status) {
     switch (status) {
-      case 'Order Placed':
+      case 'request':
         return 0;
-      case 'Dispatched':
+      case 'conform':
         return 1;
-      case 'Delivered':
+      case 'complete':
         return 2;
       default:
         return 0;
@@ -96,7 +93,7 @@ class _BookingStatesState extends State<BookingStates> {
                           RatingBarIndicator(
                             rating: 3.5,
                             itemBuilder: (context, _) =>
-                            const Icon(Icons.star, color: Colors.amber),
+                                const Icon(Icons.star, color: Colors.amber),
                             itemCount: 5,
                             itemSize: 20,
                           ),
@@ -141,11 +138,10 @@ class _BookingStatesState extends State<BookingStates> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ChangeNotifierProvider(
-                                    create: (_) => ReviewProvider(),
-                                    child: WriteReviewPage(booking: booking),
-                                  ),
+                              builder: (context) => ChangeNotifierProvider(
+                                create: (_) => ReviewProvider(),
+                                child: WriteReviewPage(booking: booking),
+                              ),
                             ),
                           );
                         },
@@ -170,7 +166,7 @@ class _BookingStatesState extends State<BookingStates> {
                         },
                         child: const Text("Book Again",
                             style:
-                            TextStyle(fontSize: 16, color: Colors.white)),
+                                TextStyle(fontSize: 16, color: Colors.white)),
                       ),
                     ),
                   ),
@@ -187,8 +183,8 @@ class _BookingStatesState extends State<BookingStates> {
               child: ListTile(
                 leading: booking.profileImage.isNotEmpty
                     ? CircleAvatar(
-                  backgroundImage: NetworkImage(booking.profileImage),
-                )
+                        backgroundImage: NetworkImage(booking.profileImage),
+                      )
                     : const CircleAvatar(child: Icon(Icons.person)),
                 title: Text(booking.name),
                 subtitle: Text(booking.serviceName),

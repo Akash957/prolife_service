@@ -18,7 +18,9 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text("Service Details"),
         centerTitle: true,
       ),
@@ -131,6 +133,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
         ),
       ),
       bottomSheet: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(16),
         child: SizedBox(
           width: double.infinity,
