@@ -18,7 +18,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     const HomeScreen(),
     const AllCategories(),
     const MyBookingScreen(),
-    const ProfilePage(),
+     const ProfilePage(),
   ];
 
   void onTabTapped(int index) {

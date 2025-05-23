@@ -75,6 +75,7 @@ class GetService extends GetxController {
           category.name.toLowerCase().contains(query.toLowerCase()))
           .toList();
 
+      // SelectedCategory ko first match bana do agar available ho
       if (filtered.isNotEmpty) {
         selectedCategory.value = filtered.first.name;
         categories.value = filtered;
