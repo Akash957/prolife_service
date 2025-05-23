@@ -34,6 +34,7 @@ class SendNotificationToPartners {
         headers: header,
         body: jsonEncode(body),
       );
+      print(response);
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
           msg: "Notification sent successfully",

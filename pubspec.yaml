@@ -34,6 +34,9 @@ dependencies:
   time_range: ^1.1.1
   date_picker_timeline: ^1.2.6
   timeline_tile: ^2.0.0
+  permission_handler: ^11.0.1
+
+
 
 
 

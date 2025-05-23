@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:prolife_service/notification/device_token_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../bottonNavigation/botton_nav.dart';
+import '../notification/send_notification_ToPartners.dart';
 
 class PaymentProvider with ChangeNotifier {
   late Razorpay razorpay;
@@ -142,7 +144,7 @@ class PaymentProvider with ChangeNotifier {
       debugPrint("Saving booking for userId: $userId");
 
       DocumentReference docRef =
-      FirebaseFirestore.instance.collection('user_bookings').doc();
+          FirebaseFirestore.instance.collection('user_bookings').doc();
       await docRef.set({
         'bookingId': docRef.id,
         'userId': userId,
@@ -160,6 +162,18 @@ class PaymentProvider with ChangeNotifier {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
+      DeviceTokenServices.getDeviceToken("$partnerId").then(
+        (value) {
+          if (value != null) {
+            print("Notification sending");
+            SendNotificationToPartners().sendNotificationToPartners(
+                token: value,
+                message: "You have new booking from $name",
+                otherUid: "$partnerId",
+                title: "Booking Request");
+          }
+        },
+      );
       debugPrint("Booking saved with ID: ${docRef.id} for userId: $userId");
 
       Fluttertoast.showToast(
@@ -173,7 +187,7 @@ class PaymentProvider with ChangeNotifier {
       Navigator.pushAndRemoveUntil(
         context!,
         MaterialPageRoute(builder: (context) => BottomNavScreen()),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       debugPrint("Error saving booking: $e");

@@ -12,25 +12,22 @@ import 'package:provider/provider.dart';
 import 'package:prolife_service/provider/auth_provider.dart';
 import 'package:prolife_service/view/screen/splash_screen.dart';
 import 'firebase_options.dart';
+import 'notification/notification_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  debugPrint("Background Message: ${message.messageId}");
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundHandler);
-  FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
 
+  NotificationService notificationService = NotificationService();
+  await notificationService.initialize();
+  await notificationService.requestPermission();
   await Firebase.initializeApp(
     name: 'image-uplode-4d545',
     options: DefaultFirebaseOptions.currentPlatform,
