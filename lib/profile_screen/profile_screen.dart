@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/profile_screen/profile_menu_Item.dart';
-import 'package:prolife_service/screens/booking_screen/booking_states.dart';
+import 'package:prolife_service/screens/booking_screen/booking_details_page.dart';
 import 'package:provider/provider.dart';
 import '../address_screen/shaved_address_screen.dart';
-import '../models/partners_model.dart';
 import '../provider/auth_provider.dart';
 import '../provider/profile_provider.dart';
 import '../screens/settings_pages/privacy_policy_page.dart';
@@ -14,8 +13,7 @@ import '../service/dynamic_link_service.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key,});
-
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -36,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Consumer<ProfileProvider>(
         builder: (context, provider, child) {
           final imageUrl = provider.userData?['imageUrl'];
@@ -172,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconColor: const Color(0xFF2575FC),
                             title: 'My Bookings',
                             onTap: () {
-                              Get.to(const BookingStates());
+                              Get.to(BookingStates());
                             },
                           ),
                           const Divider(height: 1, indent: 16),

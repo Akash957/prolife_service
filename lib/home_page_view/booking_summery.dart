@@ -4,20 +4,20 @@ import 'package:get/get.dart';
 import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
 import '../address_screen/select_address.dart';
+import '../address_screen/select_booking_slot.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
+import '../models/address_model.dart';
 import '../models/partners_model.dart';
 import '../provider/cart_provider.dart';
 import '../provider/payment_provider.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   final PartnersModel product;
-  final PartnersModel partner;
 
   const BookingSummaryScreen({
     super.key,
     required this.product,
-    required this.partner,
   });
 
   @override
@@ -26,24 +26,33 @@ class BookingSummaryScreen extends StatefulWidget {
 
 class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   final categoryController = Get.put(GetService());
+  AddressModel? selectedAddress;
+  late PaymentProvider paymentProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+  }
 
   @override
   void dispose() {
-    Provider.of<PaymentProvider>(context, listen: false).disposeRazorpay();
+    paymentProvider.disposeRazorpay();
     super.dispose();
   }
 
-  int getOriginalTotal(int quantity) => int.parse(widget.product.originalPrice) * quantity;
-  int getDiscountTotal(int quantity) => int.parse(widget.product.discountPrice) * quantity;
+  int getOriginalTotal(int quantity) =>
+      int.parse(widget.product.originalPrice) * quantity;
+
+  int getDiscountTotal(int quantity) =>
+      int.parse(widget.product.discountPrice) * quantity;
 
   @override
   Widget build(BuildContext context) {
-    var widthScreen = MediaQuery.of(context).size.width;
-    var heightScreen = MediaQuery.of(context).size.height;
-    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Booking Summary")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+          backgroundColor: Colors.white, title: const Text("Booking Summary")),
       body: Consumer<CartProvider>(
         builder: (context, cart, child) {
           if (cart.quantity == 0) {
@@ -57,30 +66,40 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
           final int originalTotal = getOriginalTotal(cart.quantity);
           final int discountTotal = getDiscountTotal(cart.quantity);
-          final int discount =originalTotal - discountTotal;
+          final int discount = originalTotal - discountTotal;
 
           return Column(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GlobalWidget.BookingImage(context, widget.product.workingImageUrl),
+                  GlobalWidget.BookingImage(
+                      context, widget.product.workingImageUrl),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
                       GlobalWidget.WorkNameText(
                           context, widget.product.serviceName),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5),
-                        child: RatingBar.builder(
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 25,
-                          itemBuilder: (context, _) =>
-                              const Icon(Icons.star, color: Colors.blue),
-                          onRatingUpdate: (rating) {},
-                        ),
+                      Row(
+                        children: [
+                          RatingBarIndicator(
+                            rating: 4.5,
+                            itemBuilder: (context, _) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                            itemCount: 5,
+                            itemSize: 25,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '4.5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: Colors.black.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -91,12 +110,14 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 21),
                           ),
-                           SizedBox(width:widthScreen*0.15),
+                          const SizedBox(width: 80),
                           Row(
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Provider.of<CartProvider>(context, listen: false).decreaseQuantity();
+                                  Provider.of<CartProvider>(context,
+                                          listen: false)
+                                      .decreaseQuantity();
                                 },
                                 child: Container(
                                   height: 35,
@@ -152,33 +173,40 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                               itemCount:
                                   categoryController.filteredProducts.length,
                               itemBuilder: (context, index) {
-                                final partner = categoryController.filteredProducts[index];
+                                final partner =
+                                    categoryController.filteredProducts[index];
                                 return SizedBox(
                                   width: 250,
                                   child: Card(
+                                    color: Colors.white,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 20),
-                                        GlobalWidget.BestServicesImage1(
-                                           () {
-
-                                           }
-                                            ,context,
+                                        GlobalWidget.BestServicesImage1(context,
                                             widget.product.workingImageUrl),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8),
-                                          child: RatingBar.builder(
-                                            allowHalfRating: true,
-                                            itemCount: 5,
-                                            itemSize: 30,
-                                            itemBuilder: (context, _) =>
-                                                const Icon(Icons.star,
-                                                    color: Colors.blue),
-                                            onRatingUpdate: (rating) {},
-                                          ),
+                                        Row(
+                                          children: [
+                                            RatingBarIndicator(
+                                              rating: 4.0,
+                                              itemBuilder: (context, _) =>
+                                                  const Icon(Icons.star,
+                                                      color: Colors.amber),
+                                              itemCount: 5,
+                                              itemSize: 25,
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Text(
+                                              '4.0',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 13,
+                                                color: Colors.black
+                                                    .withOpacity(0.7),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         GlobalWidget.WorkNameText(
                                             context, partner.serviceName),
@@ -192,9 +220,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                                             GlobalWidget
                                                 .BestServicesCircleAvatar2(
                                                     context,
-                                                    partner.profileImage,() {
-                                              Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
-                                                    },),
+                                                    partner.profileImage),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -291,22 +317,26 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "No address selected",
-                  style: TextStyle(
+                  selectedAddress != null
+                      ? (selectedAddress!.addressType ?? "Address")
+                      : "No address selected",
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  "Tap to select your address",
-                  style: TextStyle(
+                  selectedAddress != null
+                      ? "${selectedAddress!.name ?? ''}, ${selectedAddress!.buildingName ?? ''}, ${selectedAddress!.areaName ?? ''}, ${selectedAddress!.city ?? ''} - ${selectedAddress!.pincode ?? ''}, ${selectedAddress!.state ?? ''}"
+                      : "Tap to select your address",
+                  style: const TextStyle(
                     fontSize: 13,
                     color: Colors.grey,
                   ),
@@ -315,14 +345,21 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
           ),
           InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(50))),
-                  builder: (context) => SelectAddress());
+            onTap: () async {
+              final result = await showModalBottomSheet<AddressModel>(
+                context: context,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(50))),
+                builder: (context) => const SelectAddress(),
+              );
+
+              if (result != null) {
+                setState(() {
+                  selectedAddress = result;
+                });
+              }
             },
             child: const Text(
               "Change",
@@ -338,7 +375,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
     );
   }
 
-  Widget bottomRow(int total, PaymentProvider provider) {
+  Widget bottomRow(int discount, PaymentProvider provider) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -348,7 +385,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             children: [
               GlobalWidget.WorkNameText(context, "Price"),
               const SizedBox(height: 5),
-              Text("₹$total",
+              Text("₹$discount",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 23)),
             ],
@@ -356,26 +393,20 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
           const Spacer(),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
+              backgroundColor: selectedAddress != null
+                  ? Colors.orange
+                  : Colors.grey, // Color based on address
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
               elevation: 2,
             ),
-            onPressed: () {
-              provider.openCheckout(
-                partnerId: widget.partner.partnerId,
-                name: widget.partner.name,
-                serviceName: widget.partner.serviceName,
-                originalPrice: widget.partner.originalPrice,
-                discountPrice: widget.partner.discountPrice,
-                workingImageUrl: widget.partner.workingImageUrl,
-                profileImage: widget.partner.profileImage,
-                quantity:
-                    Provider.of<CartProvider>(context, listen: false).quantity,
-              );
-            },
+            onPressed: selectedAddress != null
+                ? () {
+                    Get.to(SelectBookingSlot(partner: widget.product));
+                  }
+                : null,
             child: const Text(
               "Book",
               style: TextStyle(

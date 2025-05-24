@@ -17,6 +17,7 @@ class ClickProduct extends StatelessWidget {
     var widthScreen = MediaQuery.of(context).size.width;
     var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -34,6 +35,7 @@ class ClickProduct extends StatelessWidget {
               itemBuilder: (context, index) {
                 final partner = categoryController.filteredProducts[index];
                 return Card(
+                  color: Colors.white,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   elevation: 2,
@@ -47,11 +49,7 @@ class ClickProduct extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: GlobalWidget.ReferImage(
-                            () {
-                              Get.to(GlobalWidget.fullScreenImage(context, partner.workingImageUrl));
-                            },
-                              context, partner.workingImageUrl),
+                          child: GlobalWidget.ReferImage(context, partner.workingImageUrl),
                         ),
                         const SizedBox(height: 6),
                         Row(
@@ -81,11 +79,7 @@ class ClickProduct extends StatelessWidget {
                         const Divider(height: 20, color: Colors.grey),
                         Row(
                           children: [
-                            GlobalWidget.BestServicesCircleAvatar(
-                              () {
-                                Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
-                              },
-                                context, partner.profileImage),
+                            GlobalWidget.BestServicesCircleAvatar(context, partner.profileImage),
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +107,11 @@ class ClickProduct extends StatelessWidget {
                                         left: 16,
                                         right: 16,
                                         top: 20,
-                                        bottom: MediaQuery.of(context).viewInsets.bottom + 20,),
+                                        bottom: MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom +
+                                            20,
+                                      ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [

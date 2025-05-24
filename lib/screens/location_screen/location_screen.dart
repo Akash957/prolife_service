@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../bottonNavigation/botton_nav.dart';
 import '../../provider/location_provider.dart';
-import '../../home_page_view/home_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prolife_service/models/address_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../models/address_model.dart';
 import 'add_address_screen.dart';
 
 class SelectAddress extends StatefulWidget {
@@ -16,6 +16,7 @@ class _SelectAddressState extends State<SelectAddress> {
   String? selectedAddressId;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final user = FirebaseAuth.instance.currentUser;
+  List<AddressModel> addresses = [];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _SelectAddressState extends State<SelectAddress> {
                 width: 50,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Colors.green.shade300,
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -73,25 +74,21 @@ class _SelectAddressState extends State<SelectAddress> {
                     return const Center(child: Text('No address found.'));
                   }
 
-                  final List<AddressModel> addresses = snapshot.data!.docs
-                      .map((doc) => AddressModel.fromJson(
-                          doc.data() as Map<String, dynamic>))
-                      .toList();
+                  addresses = snapshot.data!.docs.map((doc) =>
+                      AddressModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
 
                   return ListView.builder(
                     itemCount: addresses.length,
                     itemBuilder: (context, index) {
                       final address = addresses[index];
                       final title = address.addressType ?? "Address";
-
                       final subtitle =
-                          "${address.buildingName ?? ''}, ${address.areaName ?? ''}\n"
+                          "${address.name ?? ''}, ${address.buildingName ?? ''}, ${address.areaName ?? ''}\n"
                           "${address.city ?? ''} - ${address.pincode ?? ''}, ${address.state ?? ''}";
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: addressTile(
-                            title, subtitle, address.addressId ?? ''),
+                        child: addressTile(title, subtitle, address.addressId ?? ''),
                       );
                     },
                   );
@@ -104,27 +101,55 @@ class _SelectAddressState extends State<SelectAddress> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddAddressScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => const AddAddressScreen()),
                   );
                 },
                 icon: const Icon(Icons.add_circle_outline, color: Colors.white),
-                label: const Text("Add New Address"),
+                label: const Text("Add New Address", style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   minimumSize: const Size(250, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
                   elevation: 5,
                 ),
               ),
             ),
+            const SizedBox(height: 10),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  if (selectedAddressId != null) {
+                    final selectedAddress = addresses.firstWhere(
+                          (address) => address.addressId == selectedAddressId,
+                    );
+                    Navigator.pop(context, selectedAddress);
+                  }
+                },
+                icon: const Icon(Icons.done, color: Colors.white, size: 24),
+                label: const Text(
+                  "Confirm Address",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade600,
+                  minimumSize: const Size(250, 50),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 8,
+                ),
+              ),
+            ),
+
+
           ],
         ),
       ),
@@ -144,6 +169,11 @@ class _SelectAddressState extends State<SelectAddress> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
+        onTap: () {
+          setState(() {
+            selectedAddressId = addressId;
+          });
+        },
         leading: Radio<String>(
           value: addressId,
           groupValue: selectedAddressId,
