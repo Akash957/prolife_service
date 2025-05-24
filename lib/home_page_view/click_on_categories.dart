@@ -49,11 +49,7 @@ class ClickProduct extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: GlobalWidget.ReferImage(
-                            () {
-                              Get.to(GlobalWidget.fullScreenImage(context, partner.workingImageUrl));
-                            },
-                              context, partner.workingImageUrl),
+                          child: GlobalWidget.ReferImage(context, partner.workingImageUrl),
                         ),
                         const SizedBox(height: 6),
                         Row(
@@ -83,11 +79,7 @@ class ClickProduct extends StatelessWidget {
                         const Divider(height: 20, color: Colors.grey),
                         Row(
                           children: [
-                            GlobalWidget.BestServicesCircleAvatar(
-                              () {
-                                Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
-                              },
-                                context, partner.profileImage),
+                            GlobalWidget.BestServicesCircleAvatar(context, partner.profileImage),
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
