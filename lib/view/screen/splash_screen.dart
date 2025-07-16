@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:prolife_service/view/onboarding/onboarding1.dart';
+import 'package:get/get.dart';
+import 'package:prolife_service/home_page_view/home_screen.dart';
+import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
+
+import '../../bottonNavigation/botton_nav.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -9,15 +15,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) =>  OnboardingScreen()),
-      );
-    });
+    Timer(const Duration(seconds: 5), _checkAuthState);
+  }
+
+  void _checkAuthState() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      Get.offAll(() => BottomNavScreen());
+    } else {
+      Get.offAll(() => OnboardingScreen());
+    }
   }
 
   @override
