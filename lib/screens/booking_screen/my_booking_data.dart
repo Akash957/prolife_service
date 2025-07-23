@@ -127,9 +127,7 @@ class MyBookingScreen extends StatelessWidget {
         body: Center(child: Text('User not logged in')),
       );
     }
-
     debugPrint("Fetching bookings for userId: ${currentUser.uid}");
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -166,7 +164,6 @@ class MyBookingScreen extends StatelessWidget {
               final status = data['booking_status'] ?? '';
               return status.toLowerCase() == 'request';
             }).toList();
-
             final dispatchedBookings = bookings.where((doc) {
               final data = doc.data() as Map<String, dynamic>;
               final status = data['booking_status'] ?? '';
@@ -189,7 +186,7 @@ class MyBookingScreen extends StatelessWidget {
               children: [
                 if (orderPlacedBookings.isNotEmpty) ...[
                   const Text(
-                    "🕒 Order Placed Bookings",
+                    "Order Placed Bookings",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
@@ -205,7 +202,7 @@ class MyBookingScreen extends StatelessWidget {
                 ],
                 if (dispatchedBookings.isNotEmpty) ...[
                   const Text(
-                    "🚚 Dispatched Bookings",
+                    "Dispatched Bookings",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
@@ -221,7 +218,7 @@ class MyBookingScreen extends StatelessWidget {
                 ],
                 if (deliveredBookings.isNotEmpty) ...[
                   const Text(
-                    "✅ Delivered Bookings",
+                    "Delivered Bookings",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
@@ -237,7 +234,7 @@ class MyBookingScreen extends StatelessWidget {
                 ],
                 if (cancelledBookings.isNotEmpty) ...[
                   const Text(
-                    "❌ Cancelled Bookings",
+                    "Cancelled Bookings",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),

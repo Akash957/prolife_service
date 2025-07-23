@@ -17,11 +17,9 @@ class NotificationService {
   );
 
   Future<void> initialize() async {
-    const AndroidInitializationSettings androidInitializationSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidInitializationSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initializationSettings =
-        InitializationSettings(android: androidInitializationSettings);
+    const InitializationSettings initializationSettings = InitializationSettings(android: androidInitializationSettings);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
@@ -39,29 +37,28 @@ class NotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      Fluttertoast.showToast(msg: "✅ Notification permission granted");
+      Fluttertoast.showToast(msg: "Notification permission granted");
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      Fluttertoast.showToast(msg: "ℹ️ Provisional permission granted");
+      Fluttertoast.showToast(msg: "️ Provisional permission granted");
     } else {
-      Fluttertoast.showToast(msg: "❌ Notification permission denied");
+      Fluttertoast.showToast(msg: "Notification permission denied");
     }
   }
 
   Future<void> initNotificationHandlers(BuildContext context) async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint("📩 Foreground message: ${message.notification?.title}");
+      debugPrint("Foreground message: ${message.notification?.title}");
       showNotification(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      debugPrint("📦 Notification opened (background): ${message.data}");
+      debugPrint("Notification opened (background): ${message.data}");
     });
 
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
-      debugPrint("🚀 App launched by notification: ${initialMessage.data}");
+      debugPrint("App launched by notification: ${initialMessage.data}");
     }
 
     await FirebaseMessaging.instance

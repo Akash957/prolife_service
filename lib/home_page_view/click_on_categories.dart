@@ -14,17 +14,14 @@ class ClickProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var widthScreen = MediaQuery.of(context).size.width;
-    var heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         title: Text(
           categoryName,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
       body: Obx(() => categoryController.filteredProducts.isEmpty

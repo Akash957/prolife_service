@@ -83,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(TermsAndConditionsPage());
+                      // Get.to(TermsAndConditionsPage());
                     },
                     child: const Text(
                       'Terms of service',

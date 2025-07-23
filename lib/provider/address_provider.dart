@@ -64,13 +64,13 @@ class AddressProvider with ChangeNotifier {
           .doc(address.addressId)
           .set(address.toJson());
 
-      debugPrint("✅ Address saved: ${address.toJson()}");
+      debugPrint("Address saved: ${address.toJson()}");
 
       clearControllers();
 
       notifyListeners();
     } catch (e) {
-      debugPrint("❌ Error saving address: $e");
+      debugPrint("Error saving address: $e");
     }
   }
 
@@ -114,7 +114,7 @@ class AddressProvider with ChangeNotifier {
       clearControllers();
 
       Fluttertoast.showToast(msg: 'Address updated successfully!');
-      debugPrint("✅ Address updated: ${updatedAddress.toJson()}");
+      debugPrint("Address updated: ${updatedAddress.toJson()}");
       await fetchAddress();
       notifyListeners();
     } catch (e) {

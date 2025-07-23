@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'firebase_fcm_service.dart';
+
+import 'fcm_server_key.dart';
 
 class SendNotificationToPartners {
   var baseUrl =
@@ -16,7 +17,7 @@ class SendNotificationToPartners {
   }) async {
     String? serverKey = await GetServerKey().getServerKeyToken();
     var header = <String, String>{
-      'Content-Type': 'application/json',
+      'Content_Type': 'application/json',
       'Authorization': 'Bearer $serverKey',
     };
     Map<String, dynamic> body = {

@@ -176,7 +176,6 @@ class GetService extends GetxController {
     }, onError: (error) {
       print('Error loading cart in real-time: $error');
     });
-
     print('Listening for real-time cart updates from Firestore...');
   }
 }

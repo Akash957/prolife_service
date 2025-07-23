@@ -118,6 +118,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                         );
                         return;
                       }
+
                       paymentProvider.openCheckout(
                         context: context,
                         partnerId: widget.partner.partnerId,

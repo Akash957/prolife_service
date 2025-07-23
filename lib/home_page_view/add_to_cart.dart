@@ -8,7 +8,6 @@ class CartScreen extends StatelessWidget {
   CartScreen({super.key}) {
     categoryController.loadCartFirebase(); // Important: Load on init
   }
-
   double get total => categoryController.cartItems.fold(
       0.0, (sum, item) => sum + double.parse(item.originalPrice.toString()));
 
