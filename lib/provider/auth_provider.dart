@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prolife_service/view/screen/singup_screen.dart';
 
 import '../models/user_model.dart';
+import '../notification/device_token_services.dart';
 import '../view/screen/account_create_successfully.dart';
 
 class AuthProvider with ChangeNotifier {
@@ -83,13 +84,12 @@ class AuthProvider with ChangeNotifier {
         imageUrl: user.photoURL,
         phone: '',
       );
-
       await firestore.collection('users').doc(user.uid).set(newUser.toMap());
       currentUserModel = newUser;
     } else {
       currentUserModel = UserModel.fromMap(userDoc.data()!);
     }
-
+    await DeviceTokenServices().storeDeviceToken();
     notifyListeners();
   }
 

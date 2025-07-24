@@ -17,13 +17,10 @@ class _AllCategoriesState extends State<AllCategories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("All Categories"),
-        backgroundColor: Colors.blueAccent,
+      appBar: AppBar(title: const Text("All Categories",style: TextStyle(color: Colors.black),),
         actions: [
           IconButton(
-            icon: Icon(showSearch ? Icons.close : Icons.search),
+            icon: Icon(showSearch ? Icons.close : Icons.search,color: Colors.black,),
             onPressed: () {
               setState(() {
                 showSearch = !showSearch;
@@ -37,20 +34,22 @@ class _AllCategoriesState extends State<AllCategories> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextField(
-                    onChanged: (value) {
-                      categoryController.searchCategories(value);
-                    },
-                    decoration: InputDecoration(
-                      hintText: "Search category...",
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 16),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
+                  child: Card(
+                    child: TextField(
+                      onChanged: (value) {
+                        categoryController.searchCategories(value);
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Search category...",
+                        prefixIcon: const Icon(Icons.search),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
