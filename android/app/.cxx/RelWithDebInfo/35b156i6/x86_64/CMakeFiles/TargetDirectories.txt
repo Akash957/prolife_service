@@ -1,0 +1,2 @@
+C:/Users/lenov/prolife_service/prolife_service/android/app/.cxx/RelWithDebInfo/35b156i6/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/lenov/prolife_service/prolife_service/android/app/.cxx/RelWithDebInfo/35b156i6/x86_64/CMakeFiles/rebuild_cache.dir

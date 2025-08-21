@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
+import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
@@ -35,7 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: InkWell(
-          onTap: () => Get.to(() => const LocationScreen()),
+          onTap: () {
+            Get.to(() => LocationScreen());
+          },
           child: Row(
             children: [
               const Icon(Icons.location_on, color: Colors.orange),
@@ -43,17 +44,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (locationProvider.currentAddress != null)
-                    Text(
-                      locationProvider.currentAddress!,
-                      style: const TextStyle(fontSize: 14),
-                    )
-                  else
-                    const Text(
-                      overflow: TextOverflow.ellipsis,
-                      "Tap to select location",
-                      style: TextStyle(fontSize: 14),
-                    ),
+                  Consumer<LocationProvider>(
+                    builder: (context, locationProvider, child) {
+                      return locationProvider.currentAddress != null
+                          ? Text(
+                              locationProvider.currentAddress!,
+                              style: const TextStyle(fontSize: 14),
+                            )
+                          : const Text(
+                              "Tap to select location",
+                              style: TextStyle(fontSize: 14),
+                            );
+                    },
+                  ),
                 ],
               ),
             ],
@@ -68,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 categoryController.searchCategories(value);
               },
               decoration: InputDecoration(
-                hintText: "Search image...",
+                hintText: "Search for Categories...",
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -140,10 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Card(
                         color: Colors.white,
-                        elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.1),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(6),
@@ -154,8 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
                                   category.imageUrl,
-                                  height: 55,
-                                  width: 55,
+                                  height: 58,
+                                  width: 58,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       const Icon(Icons.error,
@@ -167,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 category.name,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black87,
                                 ),
@@ -187,94 +189,84 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 GlobalWidget.WorkNameText(context, "Best Services"),
                 Spacer(),
-                GlobalWidget.SeeAllCategories(() {}, context, "See All"),
-                SizedBox(width: 20),
               ],
             ),
             SizedBox(
               height: heightScreen * 0.37,
-              child: Expanded(
-                  child: Obx(() => ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categoryController.filteredProducts.length,
-                        itemBuilder: (context, index) {
-                          final partner = categoryController.filteredProducts[index];
-                          return Container(
-                            width: widthScreen * 0.7,
-                            child: Card(
-                              color: Colors.white,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Obx(() => ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryController.filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      final partner =
+                          categoryController.filteredProducts[index];
+                      return Container(
+                        width: widthScreen * 0.7,
+                        child: Card(
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GlobalWidget.BestServicesImage1(
+                                  context, partner.workingImageUrl),
+                              Row(
                                 children: [
-                                  GlobalWidget.BestServicesImage1(
-                                    () {
-                                      Get.to(GlobalWidget.fullScreenImage(context, partner.workingImageUrl));
-                                    },
-                                      context, partner.workingImageUrl),
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                        rating: 4.5,
-                                        itemBuilder: (context, _) => const Icon(
-                                            Icons.star,
-                                            color: Colors.amber),
-                                        itemCount: 5,
-                                        itemSize: 25,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        '4.5',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13,
-                                          color: Colors.black.withOpacity(0.7),
-                                        ),
-                                      ),
-                                    ],
+                                  RatingBarIndicator(
+                                    rating: 4.5,
+                                    itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber),
+                                    itemCount: 5,
+                                    itemSize: 25,
                                   ),
-                                  GlobalWidget.WorkNameText(
-                                      context, partner.serviceName),
-                                  // GlobalWidget.TextSpanTextOriginal(context, partner.price1, partner.price2),
-                                  SizedBox(
-                                    width: 50,
-                                  ),
-                                  Row(
-                                    children: [
-                                      GlobalWidget.BestServicesCircleAvatar2(
-                                          context, partner.profileImage,() {
-                                            Get.to(GlobalWidget.fullScreenImage(context, partner.profileImage));
-                                          },),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          GlobalWidget.workername(
-                                              context, partner.name),
-                                          GlobalWidget.serviceType(
-                                              context, partner.workType),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      GlobalWidget.ServicesProvideAddButton(
-                                        () {
-                                          // Get.to(ServiceDetailsPage(product: partner));
-                                        },
-                                        context,
-                                        "Add",
-                                      ),
-                                    ],
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    '4.5',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Colors.black.withOpacity(0.7),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ))),
-            ),
+                              GlobalWidget.WorkNameText(
+                                  context, partner.serviceName),
+                              SizedBox(width: 50),
+                              Row(
+                                children: [
+                                  GlobalWidget.BestServicesCircleAvatar2(
+                                      context, partner.profileImage),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GlobalWidget.workername(
+                                          context, partner.name),
+                                      GlobalWidget.serviceType(
+                                          context, partner.workType),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  GlobalWidget.ServicesProvideAddButton(
+                                    () {
+                                      Get.to(
+                                          ServiceDetailsPage(product: partner));
+                                    },
+                                    context,
+                                    "Add",
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+            )
           ],
         ),
       ),
     );
   }
-
 }
