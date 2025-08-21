@@ -25,7 +25,7 @@ class TermsAndConditionsPage extends StatelessWidget {
         foregroundColor: Colors.black,
       ),
       body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+        padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class TermsAndConditionsPage extends StatelessWidget {
               SizedBox(height: 10),
               Text(
                 'Please read these terms of service, carefully before using our app operated by us.',
-                style: TextStyle(fontSize: 16.5,color: Colors.black87),
+                style: TextStyle(fontSize: 16.5, color: Colors.black87),
               ),
               SizedBox(height: 20),
               Text(
@@ -53,8 +53,23 @@ class TermsAndConditionsPage extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                "It is a long established fact that a reader \nwill be distracted by the readable content of \na page when looking at its layout. The point \nof using Lorem Ipsum is that it has a more \n-or-less normal distribution of letters, as \nopposed to using 'Content here, content \nhere', making it look like readable English. \nMany desktop publishing packages and \nweb page editors now use Lorem Ipsum as \ntheir default model text, and a search for \n‘lorem ipsum’ will uncover many web sites \nstill in their infancy. Various versions have \nevolved over the years, sometimes by \naccident, sometimes on purpose (injected \nhumour and the like).",
-                style: TextStyle(fontSize: 16.5, height: 1.6,color: Colors.black87),
+                "It is a long established fact that a reader \n"
+                    "will be distracted by the readable content of \n"
+                    "a page when looking at its layout. The point \n"
+                    "of using Lorem Ipsum is that it has a more \n"
+                    "-or-less normal distribution of letters, as \n"
+                    "opposed to using 'Content here, content \n"
+                    "here', making it look like readable English. \n"
+                    "Many desktop publishing packages and \n"
+                    "web page editors now use Lorem Ipsum as \n"
+                    "their default model text, and a search for \n‘"
+                    "lorem ipsum’ will uncover many web sites \ns"
+                    "till in their infancy. Various versions have \n"
+                    "evolved over the years, sometimes by \n"
+                    "accident, sometimes on purpose (injected \n"
+                    "humour and the like).",
+                style: TextStyle(
+                    fontSize: 16.5, height: 1.6, color: Colors.black87),
               ),
             ],
           ),

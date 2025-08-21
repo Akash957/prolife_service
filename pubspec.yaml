@@ -52,17 +52,23 @@ dependencies:
   share_plus: ^11.0.0
   font_scaler: ^1.0.0
   url_launcher: ^6.3.1
-  flutter_launcher_icons: ^0.14.3
+  flutter_launcher_icons: ^0.14.4
   firebase_messaging: ^15.2.5
   flutter_local_notifications: ^19.2.0
   googleapis_auth: ^2.0.0
   uuid: ^4.5.1
+  rename: ^3.1.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter:
   generate: true

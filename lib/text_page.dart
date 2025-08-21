@@ -8,8 +8,8 @@ class RatingScreen extends StatefulWidget {
 }
 
 class _RatingScreenState extends State<RatingScreen> {
-  double selectedRating = 0.0;  // ⭐ User ki selected rating
-  int reviewCount = 0;          // ⭐ Total reviews count
+  double selectedRating = 0.0;
+  int reviewCount = 0;
 
   @override
   Widget build(BuildContext context) {
