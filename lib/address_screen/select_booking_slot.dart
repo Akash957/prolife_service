@@ -8,8 +8,9 @@ import '../provider/cart_provider.dart';
 
 class SelectBookingSlot extends StatefulWidget {
   final PartnersModel partner;
+  String payablePrice;
 
-  const SelectBookingSlot({super.key, required this.partner});
+   SelectBookingSlot({super.key, required this.partner,required this.payablePrice});
 
   @override
   State<SelectBookingSlot> createState() => _SelectBookingSlotState();
@@ -130,6 +131,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                         selectedDate: _selectedDate,
                         startTime: _startTime!,
                         endTime: _endTime!,
+                        payablePrice: widget.payablePrice
                       );
                     },
                     style: ElevatedButton.styleFrom(

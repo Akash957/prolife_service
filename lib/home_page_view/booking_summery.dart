@@ -317,7 +317,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
               children: [
                 Text(
                   selectedAddress != null
-                      ? (selectedAddress!.addressType ?? "Address")
+                      ? (selectedAddress?.addressType ?? "Address")
                       : "No address selected",
                   style: const TextStyle(
                     fontSize: 16,
@@ -328,7 +328,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 const SizedBox(height: 4),
                 Text(
                   selectedAddress != null
-                      ? "${selectedAddress!.name ?? ''}, ${selectedAddress!.buildingName ?? ''}, ${selectedAddress!.areaName ?? ''}, ${selectedAddress!.city ?? ''} - ${selectedAddress!.pincode ?? ''}, ${selectedAddress!.state ?? ''}"
+                      ? "${selectedAddress?.name ?? ''}, ${selectedAddress?.buildingName ?? ''}, ${selectedAddress?.areaName ?? ''}, ${selectedAddress?.city ?? ''} - ${selectedAddress?.pincode ?? ''}, ${selectedAddress?.state ?? ''}"
                       : "Tap to select your address",
                   style: const TextStyle(
                     fontSize: 13,
@@ -398,7 +398,8 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
             onPressed: selectedAddress != null
                 ? () {
-                    Get.to(SelectBookingSlot(partner: widget.product));
+                    var payablePrice = discount *100;
+                    Get.to(SelectBookingSlot(partner: widget.product, payablePrice: "$payablePrice" ,));
                   }
                 : null,
             child: const Text(
