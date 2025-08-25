@@ -15,10 +15,10 @@ class GlobalWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
             child: Image(
               image: NetworkImage(image),
-              height:heightScreen*0.16,
+              height:heightScreen*0.20,
               width: widthScreen*0.30,
               fit: BoxFit.cover,
             ),

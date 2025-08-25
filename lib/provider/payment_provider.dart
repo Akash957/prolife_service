@@ -56,7 +56,8 @@ class PaymentProvider with ChangeNotifier {
     this.endTime = endTime;
 
     var options = {
-      'key': 'rzp_test_bToB0wfbBdrPfq',
+      // 'key': 'rzp_test_bToB0wfbBdrPfq',
+      'key': 'rzp_test_R7xQYpa54gC33c',
       'amount': totalAmount,
       'name': serviceName,
       'description': name,

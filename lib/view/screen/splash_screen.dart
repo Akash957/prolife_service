@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prolife_service/home_page_view/home_screen.dart';
 import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
-
 import '../../bottonNavigation/botton_nav.dart';
 
 class SplashScreen extends StatefulWidget {
