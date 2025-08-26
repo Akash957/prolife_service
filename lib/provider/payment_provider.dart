@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,21 @@ import 'package:prolife_service/notification/device_token_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../bottonNavigation/botton_nav.dart';
 import '../notification/send_notification_ToPartners.dart';
+import 'package:http/http.dart'as http;
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../utils/functions/randomValues.dart';
 class PaymentProvider with ChangeNotifier {
   late Razorpay razorpay;
   BuildContext? context;
-
+  DateTime selectedDate = DateTime.now();
+  String payableAmount = "0.0";
   PaymentProvider() {
     razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse response){
+      print("success ${response.paymentId}");
+      _handlePaymentSuccess(response);
+    });
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
@@ -25,7 +34,7 @@ class PaymentProvider with ChangeNotifier {
 
   String? partnerId, name, serviceName, originalPrice, workingImageUrl;
   int? quantity;
-  DateTime? selectedDate;
+
   TimeOfDay? startTime;
   TimeOfDay? endTime;
 
@@ -40,11 +49,9 @@ class PaymentProvider with ChangeNotifier {
     required DateTime selectedDate,
     required TimeOfDay startTime,
     required TimeOfDay endTime,
-  }) {
+    required payablePrice
+  }) async{
     this.context = context;
-
-    int totalAmount = int.parse(originalPrice) * quantity * 100;
-
     this.partnerId = partnerId;
     this.name = name;
     this.serviceName = serviceName;
@@ -55,16 +62,20 @@ class PaymentProvider with ChangeNotifier {
     this.startTime = startTime;
     this.endTime = endTime;
 
+    payableAmount = "${payablePrice * 100}";
+
+    var price = int.parse(payablePrice);
+    var orderId =await generateOrder(price);
     var options = {
-      // 'key': 'rzp_test_bToB0wfbBdrPfq',
-      'key': 'rzp_test_R7xQYpa54gC33c',
-      'amount': totalAmount,
-      'name': serviceName,
-      'description': name,
-      'image': workingImageUrl,
+      'key':'rzp_test_R7xQYpa54gC33c',
+      'amount': "$price",
+      'name': "$serviceName",
+      'order_id': orderId,
+      'description': "$name",
+      'image': "$workingImageUrl",
       'prefill': {
-        'contact': '8888888888',
-        'email': 'test@example.com',
+        'contact': '8292448021',
+        'email': 'sudishkumar.edugaon@gmail.com',
       },
       'external': {
         'wallets': ['paytm']
@@ -78,7 +89,29 @@ class PaymentProvider with ChangeNotifier {
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+ Future<String> generateOrder(int price)async{
+   var receipt = "order_${generateRandomString(10)}";
+   String basicAuth = 'Basic ' + base64Encode(utf8.encode('${'rzp_test_R7xQYpa54gC33c'}:${'eylAZfD3TFA7wwoHYWYw7nQg'}'));
+    var order = jsonEncode({
+      "amount": "$price",
+      "currency": "INR",
+      "receipt": receipt,
+      "notes": {
+        "notes_key_1": "Service Booking",
+        "notes_key_2": ""
+      }
+    });
+    var response =await http.post(Uri.parse("https://api.razorpay.com/v1/orders"), body: order, headers: {"authorization" : basicAuth});
+    if(response.statusCode==200){
+      var jsonRes = jsonDecode(response.body);
+
+      return "${jsonRes['id']}";
+    }else {
+      return "";
+    }
+  }
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async{
+    print(response);
     Fluttertoast.showToast(
       msg: "Payment Success: ${response.paymentId}",
       toastLength: Toast.LENGTH_SHORT,
@@ -87,8 +120,27 @@ class PaymentProvider with ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-    _storeBooking(paymentId: response.paymentId!, status: "request");
-    _storePayment(paymentId: response.paymentId!);
+
+    // await FirebaseFirestore.instance.collection("user_bookings").doc("${response.paymentId}").set(
+    //     {
+    //       "bookingId": "${response.paymentId}",
+    //       "paymentId" : "${response.paymentId}"
+    //     });
+    // Fluttertoast.showToast(
+    //   msg: "Booking confirmed!",
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.BOTTOM,
+    //   backgroundColor: Colors.blue,
+    //   textColor: Colors.white,
+    // );
+    //
+    // Navigator.pushAndRemoveUntil(
+    //   context!,
+    //   MaterialPageRoute(builder: (context) => BottomNavScreen()),
+    //       (route) => false,
+    // );
+    _storeBooking(paymentId: response.paymentId??"", status: "request", );
+    _storePayment(paymentId: response.paymentId??"");
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -115,21 +167,20 @@ class PaymentProvider with ChangeNotifier {
     required String paymentId,
     required String status,
   }) async {
-    if (partnerId == null ||
-        name == null ||
-        serviceName == null ||
-        originalPrice == null ||
-        workingImageUrl == null ||
-        quantity == null ||
-        selectedDate == null ||
-        startTime == null ||
-        endTime == null ||
-        context == null) {
-      debugPrint("Missing booking data or context. Cannot save booking.");
-      return;
-    }
+    // if (partnerId == null ||
+    //     name == null ||
+    //     serviceName == null ||
+    //     originalPrice == null ||
+    //     workingImageUrl == null ||
+    //     quantity == null ||
+    //     startTime == null ||
+    //     endTime == null ||
+    //     context == null) {
+    //   debugPrint("Missing booking data or context. Cannot save booking.");
+    //   return;
+    // }
 
-    try {
+    // try {
       final userId = FirebaseAuth.instance.currentUser?.uid;
       if (userId == null || userId.isEmpty) {
         debugPrint("User not logged in or invalid UID.");
@@ -143,26 +194,34 @@ class PaymentProvider with ChangeNotifier {
         return;
       }
 
-      debugPrint("Saving booking for userId: $userId");
 
-      DocumentReference docRef =
-          FirebaseFirestore.instance.collection('user_bookings').doc();
-      await docRef.set({
-        'bookingId': docRef.id,
-        'userId': userId,
-        'partnerId': partnerId,
-        'name': name,
-        'serviceName': serviceName,
-        'originalPrice': (int.parse(originalPrice!) * quantity!).toString(),
-        'workingImageUrl': workingImageUrl,
+      print("Saving booking for userId: $userId");
+      // var bookingDate =Timestamp.fromDate(selectedDate);
+      var bookingStartTime = _simpleFormatTimeOfDay(startTime??TimeOfDay(hour: 10, minute: 1) , true);
+      var bookingEndTime = _simpleFormatTimeOfDay(endTime??TimeOfDay(hour: 11, minute: 1) , false);
+      var currentTime =  DateTime.now();
+      print("Date time converted");
+      DocumentReference docRef = FirebaseFirestore.instance.collection('user_bookings').doc();
+      var bookingDetails = {
+        'bookingId':"${docRef.id}",
+        'userId': "$userId",
+        'partnerId': "$partnerId",
+        'name': "$name",
+        'serviceName': "$serviceName",
+        'originalPrice': payableAmount,
+        'workingImageUrl': "$workingImageUrl",
         'quantity': quantity,
-        'bookingDate': Timestamp.fromDate(selectedDate!),
-        'startTime': _simpleFormatTimeOfDay(startTime!),
-        'endTime': _simpleFormatTimeOfDay(endTime!),
+        'bookingDate': selectedDate,
+        'startTime': bookingStartTime,
+        'endTime': bookingEndTime,
         'booking_status': status,
         'paymentId': paymentId,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+        'timestamp':currentTime,
+      };
+      razorpay.clear();
+      print("object stored");
+
+      await docRef.set(bookingDetails);
 
       DeviceTokenServices.getDeviceToken("$partnerId").then(
         (value) {
@@ -191,16 +250,16 @@ class PaymentProvider with ChangeNotifier {
         MaterialPageRoute(builder: (context) => BottomNavScreen()),
         (route) => false,
       );
-    } catch (e) {
-      debugPrint("Error saving booking: $e");
-      Fluttertoast.showToast(
-        msg: "Failed to save booking: $e",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
+    // } catch (e) {
+    //   debugPrint("Error saving booking: $e");
+    //   Fluttertoast.showToast(
+    //     msg: "Failed to save booking: $e",
+    //     toastLength: Toast.LENGTH_SHORT,
+    //     gravity: ToastGravity.BOTTOM,
+    //     backgroundColor: Colors.red,
+    //     textColor: Colors.white,
+    //   );
+    // }
   }
 
   Future<void> _storePayment({required String paymentId}) async {
@@ -230,10 +289,19 @@ class PaymentProvider with ChangeNotifier {
     }
   }
 
-  String _simpleFormatTimeOfDay(TimeOfDay tod) {
-    final hour = tod.hour.toString().padLeft(2, '0');
-    final minute = tod.minute.toString().padLeft(2, '0');
-    return '$hour:$minute';
+  String _simpleFormatTimeOfDay(TimeOfDay time, bool is12Hour) {
+    try {
+      var timeString = time.toString();
+      if(timeString.contains("AM")){
+        timeString.replaceAll("AM", "");
+      }else if(timeString.contains("PM")) {
+        timeString.replaceAll("PM", "");
+      }
+      return timeString;
+    } catch (error) {
+      debugPrint("Error in _simpleFormatTimeOfDay: $error");
+      return "";
+    }
   }
 
   Future<void> updateBookingStatus(String bookingId, String newStatus) async {
