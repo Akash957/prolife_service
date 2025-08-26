@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/categories_model.dart';
@@ -85,15 +86,21 @@ class GetService extends GetxController {
     }
   }
 
-  var cartItems = <PartnersModel>[].obs;
 
-  final String userId = '1';
+
+  var cartItems = <PartnersModel>[].obs;
+  String get userId => FirebaseAuth.instance.currentUser!.uid;
+
+  // final String userId = '1';
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> addToCart(PartnersModel partner, BuildContext context) async {
     try {
-      final userCartRef =
-      _firestore.collection('carts').doc(userId).collection('items');
+      final userCartRef = _firestore
+          .collection('carts')
+          .doc(userId)
+          .collection('items');
+
       final newItemRef = await userCartRef.add(partner.toMap());
       cartItems.add(PartnersModel(
         partnerId: newItemRef.id,
@@ -111,7 +118,6 @@ class GetService extends GetxController {
       print('Error adding to cart: $e');
     }
   }
-
   Future<void> removeFromCart(int index) async {
     try {
       if (index >= 0 && index < cartItems.length) {
@@ -129,7 +135,6 @@ class GetService extends GetxController {
       print('Error removing from cart: $e');
     }
   }
-
   Future<void> clearCart() async {
     try {
       final cartCollection =
@@ -139,9 +144,7 @@ class GetService extends GetxController {
       for (var doc in cartSnapshot.docs) {
         await doc.reference.delete();
       }
-
       cartItems.clear();
-
       print('Cart cleared in Firestore!');
     } catch (e) {
       print('Error clearing cart: $e');
@@ -178,4 +181,6 @@ class GetService extends GetxController {
     });
     print('Listening for real-time cart updates from Firestore...');
   }
+
+
 }

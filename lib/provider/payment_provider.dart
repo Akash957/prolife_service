@@ -11,13 +11,10 @@ import '../notification/send_notification_ToPartners.dart';
 class PaymentProvider with ChangeNotifier {
   late Razorpay razorpay;
   BuildContext? context;
-  DateTime selectedDate = DateTime.now();
-  String payableAmount = "0.0";
+
   PaymentProvider() {
     razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse response){
-      _handlePaymentSuccess(response);
-    });
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
@@ -28,7 +25,7 @@ class PaymentProvider with ChangeNotifier {
 
   String? partnerId, name, serviceName, originalPrice, workingImageUrl;
   int? quantity;
-
+  DateTime? selectedDate;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
 
@@ -43,9 +40,11 @@ class PaymentProvider with ChangeNotifier {
     required DateTime selectedDate,
     required TimeOfDay startTime,
     required TimeOfDay endTime,
-    required payablePrice
   }) {
     this.context = context;
+
+    int totalAmount = int.parse(originalPrice) * quantity * 100;
+
     this.partnerId = partnerId;
     this.name = name;
     this.serviceName = serviceName;
@@ -56,17 +55,16 @@ class PaymentProvider with ChangeNotifier {
     this.startTime = startTime;
     this.endTime = endTime;
 
-    payableAmount = "$payablePrice";
-    var price = double.parse(payablePrice);
     var options = {
-      'key':'rzp_test_R7xQYpa54gC33c',
-      'amount': price,
-      'name': "$serviceName",
-      'description': "$name",
-      'image': "$workingImageUrl",
+      // 'key': 'rzp_test_bToB0wfbBdrPfq',
+      'key': 'rzp_test_R7xQYpa54gC33c',
+      'amount': totalAmount,
+      'name': serviceName,
+      'description': name,
+      'image': workingImageUrl,
       'prefill': {
-        'contact': '8292448021',
-        'email': 'sudishkumar.edugaon@gmail.com',
+        'contact': '8888888888',
+        'email': 'test@example.com',
       },
       'external': {
         'wallets': ['paytm']
@@ -81,7 +79,6 @@ class PaymentProvider with ChangeNotifier {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print(response);
     Fluttertoast.showToast(
       msg: "Payment Success: ${response.paymentId}",
       toastLength: Toast.LENGTH_SHORT,
@@ -90,10 +87,8 @@ class PaymentProvider with ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-
-    var  paymentId= "${response.paymentId}";
-    _storeBooking(paymentId: paymentId, status: "request", );
-    // _storePayment(paymentId: response.paymentId??"");
+    _storeBooking(paymentId: response.paymentId!, status: "request");
+    _storePayment(paymentId: response.paymentId!);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -120,18 +115,19 @@ class PaymentProvider with ChangeNotifier {
     required String paymentId,
     required String status,
   }) async {
-    // if (partnerId == null ||
-    //     name == null ||
-    //     serviceName == null ||
-    //     originalPrice == null ||
-    //     workingImageUrl == null ||
-    //     quantity == null ||
-    //     startTime == null ||
-    //     endTime == null ||
-    //     context == null) {
-    //   debugPrint("Missing booking data or context. Cannot save booking.");
-    //   return;
-    // }
+    if (partnerId == null ||
+        name == null ||
+        serviceName == null ||
+        originalPrice == null ||
+        workingImageUrl == null ||
+        quantity == null ||
+        selectedDate == null ||
+        startTime == null ||
+        endTime == null ||
+        context == null) {
+      debugPrint("Missing booking data or context. Cannot save booking.");
+      return;
+    }
 
     try {
       final userId = FirebaseAuth.instance.currentUser?.uid;
@@ -147,33 +143,26 @@ class PaymentProvider with ChangeNotifier {
         return;
       }
 
+      debugPrint("Saving booking for userId: $userId");
 
-      print("Saving booking for userId: $userId");
-      // var bookingDate =Timestamp.fromDate(selectedDate);
-      var bookingStartTime = "${startTime.toString()}";
-      var bookingEndTime = "${endTime.toString()}";
-      var currentTime =  DateTime.now();
-      print("Date time converted");
-      DocumentReference docRef = FirebaseFirestore.instance.collection('user_bookings').doc();
-      var bookingDetails = {
-        'bookingId':"${docRef.id}",
-        'userId': "$userId",
-        'partnerId': "$partnerId",
-        'name': "$name",
-        'serviceName': "$serviceName",
-        'originalPrice': payableAmount,
-        'workingImageUrl': "$workingImageUrl",
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection('user_bookings').doc();
+      await docRef.set({
+        'bookingId': docRef.id,
+        'userId': userId,
+        'partnerId': partnerId,
+        'name': name,
+        'serviceName': serviceName,
+        'originalPrice': (int.parse(originalPrice!) * quantity!).toString(),
+        'workingImageUrl': workingImageUrl,
         'quantity': quantity,
-        'bookingDate': selectedDate,
-        'startTime': bookingStartTime,
-        'endTime': bookingEndTime,
+        'bookingDate': Timestamp.fromDate(selectedDate!),
+        'startTime': _simpleFormatTimeOfDay(startTime!),
+        'endTime': _simpleFormatTimeOfDay(endTime!),
         'booking_status': status,
         'paymentId': paymentId,
-        'timestamp':currentTime,
-      };
-      print("object stored");
-
-      await docRef.set(bookingDetails);
+        'timestamp': FieldValue.serverTimestamp(),
+      });
 
       DeviceTokenServices.getDeviceToken("$partnerId").then(
         (value) {
@@ -241,26 +230,10 @@ class PaymentProvider with ChangeNotifier {
     }
   }
 
-  String _simpleFormatTimeOfDay(TimeOfDay tod, bool is12Hour) {
-    try {
-      int hour = tod.hour;
-      int minute = tod.minute;
-      String period = "";
-
-      if (is12Hour) {
-        period = hour >= 12 ? "PM" : "AM";
-        hour = hour % 12;
-        if (hour == 0) hour = 12;
-      }
-
-      final hourStr = hour.toString().padLeft(2, '0');
-      final minuteStr = minute.toString().padLeft(2, '0');
-
-      return is12Hour ? "$hourStr:$minuteStr $period" : "$hourStr:$minuteStr";
-    } catch (error) {
-      debugPrint("Error in _simpleFormatTimeOfDay: $error");
-      return "";
-    }
+  String _simpleFormatTimeOfDay(TimeOfDay tod) {
+    final hour = tod.hour.toString().padLeft(2, '0');
+    final minute = tod.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
   }
 
   Future<void> updateBookingStatus(String bookingId, String newStatus) async {

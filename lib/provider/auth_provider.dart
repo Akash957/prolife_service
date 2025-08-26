@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prolife_service/view/screen/singup_screen.dart';
@@ -43,12 +41,9 @@ class AuthProvider with ChangeNotifier {
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       setLoading(true);
-
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
-
       final googleAuth = await googleUser.authentication;
-
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -57,7 +52,6 @@ class AuthProvider with ChangeNotifier {
       final userCredential = await auth.signInWithCredential(credential);
 
       if (userCredential.user != null) {
-        Fluttertoast.showToast(msg: "Signup successfully");
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -104,7 +98,7 @@ class AuthProvider with ChangeNotifier {
       });
       currentUserModel = null;
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => SignUpScreen()),
+        MaterialPageRoute(builder: (context) => const SignUpScreen()),
         (route) => false,
       );
 
