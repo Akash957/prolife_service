@@ -91,7 +91,8 @@ class PaymentProvider with ChangeNotifier {
       fontSize: 16.0,
     );
 
-    // _storeBooking(paymentId: response.paymentId??"", status: "request", );
+    var  paymentId= "${response.paymentId}";
+    _storeBooking(paymentId: paymentId, status: "request", );
     // _storePayment(paymentId: response.paymentId??"");
   }
 
@@ -148,10 +149,10 @@ class PaymentProvider with ChangeNotifier {
 
 
       print("Saving booking for userId: $userId");
-      var bookingDate =Timestamp.fromDate(selectedDate);
-      var bookingStartTime = _simpleFormatTimeOfDay(startTime??TimeOfDay(hour: 10, minute: 1) , true);
-      var bookingEndTime = _simpleFormatTimeOfDay(endTime??TimeOfDay(hour: 11, minute: 1) , false);
-      var currentTime =  FieldValue.serverTimestamp();
+      // var bookingDate =Timestamp.fromDate(selectedDate);
+      var bookingStartTime = "${startTime.toString()}";
+      var bookingEndTime = "${endTime.toString()}";
+      var currentTime =  DateTime.now();
       print("Date time converted");
       DocumentReference docRef = FirebaseFirestore.instance.collection('user_bookings').doc();
       var bookingDetails = {
@@ -163,7 +164,7 @@ class PaymentProvider with ChangeNotifier {
         'originalPrice': payableAmount,
         'workingImageUrl': "$workingImageUrl",
         'quantity': quantity,
-        'bookingDate': bookingDate,
+        'bookingDate': selectedDate,
         'startTime': bookingStartTime,
         'endTime': bookingEndTime,
         'booking_status': status,
