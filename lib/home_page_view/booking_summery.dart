@@ -320,7 +320,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
               Get.to(
                 SelectBookingSlot(
                   partner: widget.product,
-                  finalPrice: discount, // 👈 Pass final price
+                  finalPrice: discount, payablePrice: '', // 👈 Pass final price
                 ),
               );
             }
