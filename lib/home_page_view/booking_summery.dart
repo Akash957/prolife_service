@@ -33,11 +33,12 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   void initState() {
     super.initState();
     paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    paymentProvider.registerRazorPay();
   }
 
   @override
   void dispose() {
-    paymentProvider.disposeRazorpay();
+    // paymentProvider.disposeRazorpay();
     super.dispose();
   }
 

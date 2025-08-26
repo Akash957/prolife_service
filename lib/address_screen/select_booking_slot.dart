@@ -21,6 +21,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
 
+
   @override
   Widget build(BuildContext context) {
     final paymentProvider =
