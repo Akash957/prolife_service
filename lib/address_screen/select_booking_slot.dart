@@ -28,6 +28,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   TimeOfDay? _endTime;
   final getController = Get.put(GetService());
 
+
   @override
   Widget build(BuildContext context) {
     final paymentProvider =

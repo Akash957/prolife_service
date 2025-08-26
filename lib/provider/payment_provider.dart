@@ -18,7 +18,8 @@ class PaymentProvider with ChangeNotifier {
   BuildContext? context;
   DateTime selectedDate = DateTime.now();
   String payableAmount = "0.0";
-  PaymentProvider() {
+
+  registerRazorPay(){
     razorpay = Razorpay();
     razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, (PaymentSuccessResponse response){
       print("success ${response.paymentId}");
@@ -27,7 +28,6 @@ class PaymentProvider with ChangeNotifier {
     razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-
   void disposeRazorpay() {
     razorpay.clear();
   }
@@ -86,6 +86,7 @@ class PaymentProvider with ChangeNotifier {
       razorpay.open(options);
     } catch (e) {
       debugPrint('Error opening Razorpay: $e');
+      disposeRazorpay();
     }
   }
 
