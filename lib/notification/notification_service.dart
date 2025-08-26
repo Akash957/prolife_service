@@ -37,7 +37,7 @@ class NotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      Fluttertoast.showToast(msg: "Notification permission granted");
+      // Fluttertoast.showToast(msg: "Notification permission granted");
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       Fluttertoast.showToast(msg: "️ Provisional permission granted");
