@@ -33,11 +33,12 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   void initState() {
     super.initState();
     paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    paymentProvider.registerRazorPay();
   }
 
   @override
   void dispose() {
-    paymentProvider.disposeRazorpay();
+    // paymentProvider.disposeRazorpay();
     super.dispose();
   }
 
@@ -49,6 +50,8 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -70,182 +73,143 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
 
           return Column(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GlobalWidget.BookingImage(
-                      context, widget.product.workingImageUrl),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      GlobalWidget.WorkNameText(
-                          context, widget.product.serviceName),
-                      Row(
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 5,
+                      child: GlobalWidget.BookingImage(
+                          context, widget.product.workingImageUrl),
+                    ),
+                    SizedBox(width: screenWidth * 0.04),
+                    Flexible(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RatingBarIndicator(
-                            rating: 4.5,
-                            itemBuilder: (context, _) =>
-                                const Icon(Icons.star, color: Colors.amber),
-                            itemCount: 5,
-                            itemSize: 25,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '4.5',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          const SizedBox(width: 5),
-                          Text(
-                            "₹${widget.product.originalPrice}",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 21),
-                          ),
-                          const SizedBox(width: 80),
+                          SizedBox(height: screenHeight * 0.02),
+                          GlobalWidget.WorkNameText(
+                              context, widget.product.serviceName),
                           Row(
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .decreaseQuantity();
-                                },
-                                child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: const Icon(Icons.remove,
-                                      color: Colors.white),
-                                ),
+                              RatingBarIndicator(
+                                rating: 4.5,
+                                itemBuilder: (context, _) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                                itemCount: 5,
+                                itemSize: screenWidth * 0.05,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  cart.quantity.toString(),
-                                  style: const TextStyle(fontSize: 18),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Provider.of<CartProvider>(context,
-                                          listen: false)
-                                      .increaseQuantity();
-                                },
-                                child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: const Icon(Icons.add,
-                                      color: Colors.white),
-                                ),
-                              ),
+                              SizedBox(width: screenWidth * 0.02),
+                              Text('4.5',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: screenWidth * 0.035,
+                                      color: Colors.black.withOpacity(0.7))),
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          Row(
+                            children: [
+                              Text("₹${widget.product.originalPrice}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: screenWidth * 0.05)),
+                              const Spacer(),
+                              quantityControl(context, cart),
                             ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 350,
-                        child: Obx(() => ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount:
-                                  categoryController.filteredProducts.length,
-                              itemBuilder: (context, index) {
-                                final partner =
-                                    categoryController.filteredProducts[index];
-                                return SizedBox(
-                                  width: 250,
-                                  child: Card(
-                                    color: Colors.white,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(height: 20),
-                                        GlobalWidget.BestServicesImage1(context,
-                                            widget.product.workingImageUrl),
-                                        Row(
-                                          children: [
-                                            RatingBarIndicator(
-                                              rating: 4.0,
-                                              itemBuilder: (context, _) =>
-                                                  const Icon(Icons.star,
-                                                      color: Colors.amber),
-                                              itemCount: 5,
-                                              itemSize: 25,
-                                            ),
-                                            const SizedBox(width: 6),
-                                            Text(
-                                              '4.0',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13,
-                                                color: Colors.black
-                                                    .withOpacity(0.7),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        GlobalWidget.WorkNameText(
-                                            context, partner.serviceName),
-                                        GlobalWidget.TextSpanTextOriginal(
-                                            context,
-                                            partner.originalPrice,
-                                            partner.discountPrice),
-                                        const SizedBox(width: 50),
-                                        Row(
-                                          children: [
-                                            GlobalWidget
-                                                .BestServicesCircleAvatar2(
-                                                    context,
-                                                    partner.profileImage),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                GlobalWidget.workername(
-                                                    context, partner.name),
-                                                GlobalWidget.serviceType(
-                                                    context, partner.workType),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            GlobalWidget
-                                                .ServicesProvideAddButton(() {
-                                              Get.to(ServiceDetailsPage(
-                                                  product: partner));
-                                            }, context, "Add"),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            )),
-                      ),
+                      // SizedBox(
+                      //   height: 350,
+                      //   child: Obx(() => ListView.builder(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemCount:
+                      //     categoryController.filteredProducts.length,
+                      //     itemBuilder: (context, index) {
+                      //       final partner =
+                      //       categoryController.filteredProducts[index];
+                      //       return SizedBox(
+                      //         width: 250,
+                      //         child: Card(
+                      //           color: Colors.white,
+                      //           child: Column(
+                      //             crossAxisAlignment:
+                      //             CrossAxisAlignment.start,
+                      //             children: [
+                      //               const SizedBox(height: 20),
+                      //               GlobalWidget.BestServicesImage1(context,
+                      //                   widget.product.workingImageUrl),
+                      //               Row(
+                      //                 children: [
+                      //                   RatingBarIndicator(
+                      //                     rating: 4.0,
+                      //                     itemBuilder: (context, _) =>
+                      //                     const Icon(Icons.star,
+                      //                         color: Colors.amber),
+                      //                     itemCount: 5,
+                      //                     itemSize: 25,
+                      //                   ),
+                      //                   const SizedBox(width: 6),
+                      //                   Text(
+                      //                     '4.0',
+                      //                     style: TextStyle(
+                      //                       fontWeight: FontWeight.w600,
+                      //                       fontSize: 13,
+                      //                       color: Colors.black
+                      //                           .withOpacity(0.7),
+                      //                     ),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //               GlobalWidget.WorkNameText(
+                      //                   context, partner.serviceName),
+                      //               GlobalWidget.TextSpanTextOriginal(
+                      //                   context,
+                      //                   partner.originalPrice,
+                      //                   partner.discountPrice),
+                      //               const SizedBox(width: 50),
+                      //               Row(
+                      //                 children: [
+                      //                   GlobalWidget
+                      //                       .BestServicesCircleAvatar2(
+                      //                       context,
+                      //                       partner.profileImage),
+                      //                   Column(
+                      //                     crossAxisAlignment:
+                      //                     CrossAxisAlignment.start,
+                      //                     children: [
+                      //                       GlobalWidget.workername(
+                      //                           context, partner.name),
+                      //                       GlobalWidget.serviceType(
+                      //                           context, partner.workType),
+                      //                     ],
+                      //                   ),
+                      //                   const Spacer(),
+                      //                   GlobalWidget
+                      //                       .ServicesProvideAddButton(() {
+                      //                     Get.to(ServiceDetailsPage(
+                      //                         product: partner));
+                      //                   }, context, "Add"),
+                      //                 ],
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   )),
+                      // ),
                       const Divider(
                           indent: 10, endIndent: 10, height: 30, thickness: 2),
                       priceRow("Item Total", originalTotal),
@@ -267,6 +231,37 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  Widget quantityControl(BuildContext context, CartProvider cart) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Row(
+      children: [
+        buildIconButton(
+            Icons.remove, () => cart.decreaseQuantity(), screenWidth),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: Text(
+            cart.quantity.toString(),
+            style: TextStyle(fontSize: screenWidth * 0.045),
+          ),
+        ),
+        buildIconButton(Icons.add, () => cart.increaseQuantity(), screenWidth),
+      ],
+    );
+  }
+
+  Widget buildIconButton(IconData icon, VoidCallback onTap, double width) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: width * 0.1,
+        width: width * 0.1,
+        decoration: BoxDecoration(
+            color: Colors.blue, borderRadius: BorderRadius.circular(5)),
+        child: Icon(icon, color: Colors.white, size: width * 0.06),
       ),
     );
   }
@@ -323,7 +318,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
               children: [
                 Text(
                   selectedAddress != null
-                      ? (selectedAddress!.addressType ?? "Address")
+                      ? (selectedAddress?.addressType ?? "Address")
                       : "No address selected",
                   style: const TextStyle(
                     fontSize: 16,
@@ -334,7 +329,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 const SizedBox(height: 4),
                 Text(
                   selectedAddress != null
-                      ? "${selectedAddress!.name ?? ''}, ${selectedAddress!.buildingName ?? ''}, ${selectedAddress!.areaName ?? ''}, ${selectedAddress!.city ?? ''} - ${selectedAddress!.pincode ?? ''}, ${selectedAddress!.state ?? ''}"
+                      ? "${selectedAddress?.name ?? ''}, ${selectedAddress?.buildingName ?? ''}, ${selectedAddress?.areaName ?? ''}, ${selectedAddress?.city ?? ''} - ${selectedAddress?.pincode ?? ''}, ${selectedAddress?.state ?? ''}"
                       : "Tap to select your address",
                   style: const TextStyle(
                     fontSize: 13,
@@ -351,7 +346,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 isScrollControlled: true,
                 shape: const RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(50))),
+                    BorderRadius.vertical(top: Radius.circular(50))),
                 builder: (context) => const SelectAddress(),
               );
 
@@ -404,8 +399,9 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
             ),
             onPressed: selectedAddress != null
                 ? () {
-                    Get.to(SelectBookingSlot(partner: widget.product));
-                  }
+              var payablePrice = discount *100;
+              Get.to(SelectBookingSlot(partner: widget.product, payablePrice: "$payablePrice" ,));
+            }
                 : null,
             child: const Text(
               "Book",

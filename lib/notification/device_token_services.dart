@@ -3,17 +3,19 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DeviceTokenServices {
+  final partnerDeviceToken = FirebaseFirestore.instance.collection("partnerDeviceToken");
+
   Future<void> storeDeviceToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
-    if (token != null) {
-      String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-      if (uid.isNotEmpty) {
-        await FirebaseFirestore.instance.collection('users').doc(uid).update({
-          'deviceToken': token,
-        });
-        print(' Device token stored in Firestore: $token');
-      }
-    } else {
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+    if (uid.isNotEmpty) {
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'deviceToken': token,
+      });
+      print(' Device token stored in Firestore: $token');
+      await partnerDeviceToken.doc(uid).set({'deviceToken': token},SetOptions(merge: true));
+    }
+    else {
       print(' Failed to get device token');
     }
   }

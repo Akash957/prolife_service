@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class CartProvider with ChangeNotifier {
   int _quantity = 1;
-
-
   int get quantity => _quantity;
 
   void increaseQuantity() {
@@ -22,4 +20,9 @@ class CartProvider with ChangeNotifier {
     _quantity = 1;
     notifyListeners();
   }
+
+
+
+
+
 }

@@ -9,7 +9,7 @@
 
 
     <application
-        android:label="prolife_service"
+        android:label="Prolife Service"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:prolife_service/home_page_view/home_screen.dart';
 import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
-
 import '../../bottonNavigation/botton_nav.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -35,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.orange,
       body: Stack(
         children: [
           Center(
@@ -48,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'PROLIFE SERVICE',
+                  'ProLife SERVICE',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

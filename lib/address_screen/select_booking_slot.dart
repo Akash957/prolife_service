@@ -8,8 +8,9 @@ import '../provider/cart_provider.dart';
 
 class SelectBookingSlot extends StatefulWidget {
   final PartnersModel partner;
+  String payablePrice;
 
-  const SelectBookingSlot({super.key, required this.partner});
+  SelectBookingSlot({super.key, required this.partner,required this.payablePrice});
 
   @override
   State<SelectBookingSlot> createState() => _SelectBookingSlotState();
@@ -19,6 +20,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
+
 
   @override
   Widget build(BuildContext context) {
@@ -118,17 +120,19 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                         );
                         return;
                       }
+
                       paymentProvider.openCheckout(
-                        context: context,
-                        partnerId: widget.partner.partnerId,
-                        name: widget.partner.name,
-                        serviceName: widget.partner.serviceName,
-                        originalPrice: widget.partner.originalPrice,
-                        workingImageUrl: widget.partner.workingImageUrl,
-                        quantity: cartProvider.quantity,
-                        selectedDate: _selectedDate,
-                        startTime: _startTime!,
-                        endTime: _endTime!,
+                          context: context,
+                          partnerId: widget.partner.partnerId,
+                          name: widget.partner.name,
+                          serviceName: widget.partner.serviceName,
+                          originalPrice: widget.partner.originalPrice,
+                          workingImageUrl: widget.partner.workingImageUrl,
+                          quantity: cartProvider.quantity,
+                          selectedDate: _selectedDate,
+                          startTime: _startTime!,
+                          endTime: _endTime!,
+                          payablePrice: widget.payablePrice
                       );
                     },
                     style: ElevatedButton.styleFrom(

@@ -3,7 +3,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:prolife_service/home_page_view/service_details.dart';
 import 'package:provider/provider.dart';
-import '../bottonNavigation/botton_nav.dart';
 import '../getx_service/getx_screen.dart';
 import '../global_widget/globle_screen.dart';
 import '../provider/location_provider.dart';
@@ -144,10 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Card(
                         color: Colors.white,
-                        elevation: 4,
                         shadowColor: Colors.black.withOpacity(0.1),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(6),
@@ -158,8 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
                                   category.imageUrl,
-                                  height: 55,
-                                  width: 55,
+                                  height: 58,
+                                  width: 58,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                       const Icon(Icons.error,
@@ -171,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 category.name,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black87,
                                 ),

@@ -201,11 +201,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconColor: const Color(0xFF9C27B0),
                             title: 'Privacy Policy',
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const PrivacyPolicyPage()),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (_) => const PrivacyPolicyPage()),
+                              // );
                             },
                           ),
                           const Divider(height: 1, indent: 16),
@@ -214,12 +214,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             iconColor: const Color(0xFF673AB7),
                             title: 'Terms Conditions'.tr,
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        const TermsAndConditionsPage()),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (_) =>
+                              //           const TermsAndConditionsPage()),
+                              // );
                             },
                           ),
                           const Divider(height: 1, indent: 16),

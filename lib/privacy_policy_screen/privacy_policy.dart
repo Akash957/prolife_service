@@ -11,8 +11,7 @@ class PrivacyPolicy extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Privacy Policy',
+        title: const Text('Privacy Policy',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
