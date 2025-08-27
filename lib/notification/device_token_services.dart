@@ -13,6 +13,7 @@ class DeviceTokenServices {
         'deviceToken': token,
       });
       print(' Device token stored in Firestore: $token');
+      await partnerDeviceToken.doc(uid).set({'deviceToken': token},SetOptions(merge: true));
     }
     else {
       print(' Failed to get device token');

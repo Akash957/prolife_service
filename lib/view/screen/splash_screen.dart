@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.orange,
       body: Stack(
         children: [
           Center(
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'PROLIFE SERVICE',
+                  'ProLife SERVICE',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,

@@ -1,22 +1,16 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:time_range/time_range.dart';
-import '../getx_service/getx_screen.dart';
 import '../models/partners_model.dart';
 import '../provider/payment_provider.dart';
 import '../provider/cart_provider.dart';
 
 class SelectBookingSlot extends StatefulWidget {
   final PartnersModel partner;
-  final int finalPrice;
+  String payablePrice;
 
-  const SelectBookingSlot({
-    super.key,
-    required this.partner,
-    required this.finalPrice,
-  });
+  SelectBookingSlot({super.key, required this.partner,required this.payablePrice});
 
   @override
   State<SelectBookingSlot> createState() => _SelectBookingSlotState();
@@ -26,13 +20,14 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
-  final getController = Get.put(GetService());
+
 
   @override
   Widget build(BuildContext context) {
     final paymentProvider =
     Provider.of<PaymentProvider>(context, listen: false);
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
@@ -67,8 +62,8 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                     TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 DatePicker(
-                  DateTime.now(),
                   height: 100,
+                  DateTime.now(),
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Colors.blue,
                   selectedTextColor: Colors.white,
@@ -97,8 +92,8 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                   activeBorderColor: Colors.blue,
                   backgroundColor: Colors.grey.shade300,
                   activeBackgroundColor: Colors.blue,
-                  firstTime: const TimeOfDay(hour: 10, minute: 0),
-                  lastTime: const TimeOfDay(hour: 18, minute: 0),
+                  firstTime: TimeOfDay(hour: 10, minute: 0),
+                  lastTime: TimeOfDay(hour: 18, minute: 0),
                   timeStep: 60,
                   timeBlock: 60,
                   onRangeCompleted: (range) {
@@ -127,19 +122,17 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                       }
 
                       paymentProvider.openCheckout(
-                        context: context,
-                        partnerId: widget.partner.partnerId,
-                        name: widget.partner.name,
-                        serviceName: widget.partner.serviceName,
-                        originalPrice: widget.finalPrice.toString(),
-                        workingImageUrl: widget.partner.workingImageUrl,
-                        quantity: cartProvider.quantity,
-                        selectedDate: _selectedDate,
-                        startTime: _startTime!,
-                        endTime: _endTime!,
-                        userName:"",
-                        userPhone: ''
-
+                          context: context,
+                          partnerId: widget.partner.partnerId,
+                          name: widget.partner.name,
+                          serviceName: widget.partner.serviceName,
+                          originalPrice: widget.partner.originalPrice,
+                          workingImageUrl: widget.partner.workingImageUrl,
+                          quantity: cartProvider.quantity,
+                          selectedDate: _selectedDate,
+                          startTime: _startTime!,
+                          endTime: _endTime!,
+                          payablePrice: widget.payablePrice
                       );
                     },
                     style: ElevatedButton.styleFrom(
