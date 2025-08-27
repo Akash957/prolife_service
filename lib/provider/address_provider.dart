@@ -16,7 +16,7 @@ class AddressProvider with ChangeNotifier {
   final TextEditingController roadNameController = TextEditingController();
   final TextEditingController cityNameController = TextEditingController();
   final TextEditingController stateNameController = TextEditingController();
-
+  AddressModel? selectedAddress;
   List<AddressModel> _address = [];
   bool _isLoading = false;
 

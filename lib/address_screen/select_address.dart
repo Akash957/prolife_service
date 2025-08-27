@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:prolife_service/provider/address_provider.dart';
+import 'package:provider/provider.dart';
 import '../models/address_model.dart';
 import 'add_address_screen.dart';
 
@@ -74,8 +76,10 @@ class _SelectAddressState extends State<SelectAddress> {
                     return const Center(child: Text('No address found.'));
                   }
 
-                  addresses = snapshot.data!.docs.map((doc) =>
-                      AddressModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
+                  addresses = snapshot.data!.docs
+                      .map((doc) => AddressModel.fromJson(
+                          doc.data() as Map<String, dynamic>))
+                      .toList();
 
                   return ListView.builder(
                     itemCount: addresses.length,
@@ -88,7 +92,8 @@ class _SelectAddressState extends State<SelectAddress> {
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: addressTile(title, subtitle, address.addressId ?? ''),
+                        child: addressTile(
+                            title, subtitle, address.addressId ?? ''),
                       );
                     },
                   );
@@ -101,11 +106,13 @@ class _SelectAddressState extends State<SelectAddress> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AddAddressScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const AddAddressScreen()),
                   );
                 },
                 icon: const Icon(Icons.add_circle_outline, color: Colors.white),
-                label: const Text("Add New Address", style: TextStyle(color: Colors.white)),
+                label: const Text("Add New Address",
+                    style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   minimumSize: const Size(250, 50),
@@ -122,8 +129,10 @@ class _SelectAddressState extends State<SelectAddress> {
                 onPressed: () {
                   if (selectedAddressId != null) {
                     final selectedAddress = addresses.firstWhere(
-                          (address) => address.addressId == selectedAddressId,
+                      (address) => address.addressId == selectedAddressId,
                     );
+                    var addressProvider = Provider.of<AddressProvider>(context, listen: false);
+                    addressProvider.selectedAddress = selectedAddress;
                     Navigator.pop(context, selectedAddress);
                   }
                 },
@@ -140,7 +149,8 @@ class _SelectAddressState extends State<SelectAddress> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green.shade600,
                   minimumSize: const Size(250, 50),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -148,8 +158,6 @@ class _SelectAddressState extends State<SelectAddress> {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),

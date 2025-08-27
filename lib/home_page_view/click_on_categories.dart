@@ -46,14 +46,16 @@ class ClickProduct extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: GlobalWidget.ReferImage(context, partner.workingImageUrl),
+                          child: GlobalWidget.ReferImage(
+                              context, partner.workingImageUrl),
                         ),
                         const SizedBox(height: 6),
                         Row(
                           children: [
                             RatingBarIndicator(
                               rating: 4.5,
-                              itemBuilder: (context, _) => const Icon(Icons.star, color: Colors.amber),
+                              itemBuilder: (context, _) =>
+                                  const Icon(Icons.star, color: Colors.amber),
                               itemCount: 5,
                               itemSize: 20,
                             ),
@@ -76,7 +78,8 @@ class ClickProduct extends StatelessWidget {
                         const Divider(height: 20, color: Colors.grey),
                         Row(
                           children: [
-                            GlobalWidget.BestServicesCircleAvatar(context, partner.profileImage),
+                            GlobalWidget.BestServicesCircleAvatar(
+                                context, partner.profileImage),
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

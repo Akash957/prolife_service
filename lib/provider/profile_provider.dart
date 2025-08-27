@@ -21,9 +21,9 @@ class ProfileProvider extends ChangeNotifier {
           .get();
       userData = snapshot.data();
       if (userData != null) {
-        nameController.text = userData!['name'] ?? '';
-        emailController.text = userData!['email'] ?? '';
-        phoneController.text = userData!['phone'] ?? '';
+        nameController.text = userData?['name'] ?? '';
+        emailController.text = userData?['email'] ?? '';
+        phoneController.text = userData?['phone'] ?? '';
       }
       notifyListeners();
     } catch (e) {
