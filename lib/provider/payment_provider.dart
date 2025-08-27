@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:prolife_service/home_page_view/home_screen.dart';
 import 'package:prolife_service/notification/device_token_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../bottonNavigation/botton_nav.dart';
@@ -23,7 +22,7 @@ class PaymentProvider with ChangeNotifier {
     razorpay.clear();
   }
 
-  String? partnerId, name, serviceName, originalPrice, workingImageUrl;
+  String? partnerId, name, serviceName, originalPrice, workingImageUrl,userName, userPhone;
   int? quantity;
   DateTime? selectedDate;
   TimeOfDay? startTime;
@@ -40,6 +39,8 @@ class PaymentProvider with ChangeNotifier {
     required DateTime selectedDate,
     required TimeOfDay startTime,
     required TimeOfDay endTime,
+    required String userName ,
+    required String userPhone,
   }) {
     this.context = context;
 
@@ -54,8 +55,11 @@ class PaymentProvider with ChangeNotifier {
     this.selectedDate = selectedDate;
     this.startTime = startTime;
     this.endTime = endTime;
+    this.userName = userName;
+    this.userPhone = userPhone;
 
-    var options = {
+    var options =
+    {
       // 'key': 'rzp_test_bToB0wfbBdrPfq',
       'key': 'rzp_test_R7xQYpa54gC33c',
       'amount': totalAmount,
@@ -185,7 +189,6 @@ class PaymentProvider with ChangeNotifier {
         backgroundColor: Colors.blue,
         textColor: Colors.white,
       );
-
       Navigator.pushAndRemoveUntil(
         context!,
         MaterialPageRoute(builder: (context) => BottomNavScreen()),
@@ -224,7 +227,7 @@ class PaymentProvider with ChangeNotifier {
         'timestamp': FieldValue.serverTimestamp(),
       });
       debugPrint("Payment saved successfully!");
-      Navigator.push(context!, MaterialPageRoute(builder: (context) => const HomeScreen(),));
+      Navigator.push(context!, MaterialPageRoute(builder: (context) => const BottomNavScreen(),));
     } catch (e) {
       debugPrint("Error saving payment: $e");
     }

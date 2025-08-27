@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:prolife_service/view/screen/verify_screen.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth_provider.dart';
 
@@ -43,11 +44,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               SizedBox(height:screenHeight * 0.02,),
-              const Text(
-                "This number will be used for all ride-related communication.\n"
-                    "You will receive an SMS with code for verification",
-                style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),
-              ),
+              // const Text(
+              //   "This number will be used for all ride-related communication.\n"
+              //       "You will receive an SMS with code for verification",
+              //   style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.bold),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
@@ -103,9 +104,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.symmetric(vertical: 15),
                     ),
-                    onPressed: () {},
+                    onPressed: ()=>authProvider.sendOtp(_phoneController.text.toString(), context),
                     child: const Text(
-                      "Continue",
+                      "Continue with Phone",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
@@ -124,6 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 15),
                     ),
                     onPressed: isTermsAccepted && !authProvider.isLoading ? () => authProvider.signInWithGoogle(context) : null,
+
                     icon: Image.network(
                       "https://cdn-icons-png.flaticon.com/512/300/300221.png",
                       height: 20,

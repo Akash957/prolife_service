@@ -137,6 +137,9 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                         selectedDate: _selectedDate,
                         startTime: _startTime!,
                         endTime: _endTime!,
+                        userName:"",
+                        userPhone: ''
+
                       );
                     },
                     style: ElevatedButton.styleFrom(
