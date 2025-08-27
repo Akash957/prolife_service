@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prolife_service/notification/notification_service.dart';
 import '../home_page_view/all_categories.dart';
 import '../home_page_view/home_screen.dart';
 import '../profile_screen/profile_screen.dart';
@@ -27,6 +28,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    NotificationService().initNotificationHandlers(context);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

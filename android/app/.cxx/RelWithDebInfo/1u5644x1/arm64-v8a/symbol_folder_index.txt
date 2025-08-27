@@ -1,0 +1,1 @@
+C:\Users\niraj\AndroidStudioProjects\prolife_service\build\app\intermediates\cxx\RelWithDebInfo\1u5644x1\obj\arm64-v8a
