@@ -1,9 +1,7 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:time_range/time_range.dart';
-import '../getx_service/getx_screen.dart';
 import '../models/partners_model.dart';
 import '../provider/payment_provider.dart';
 import '../provider/cart_provider.dart';
@@ -12,7 +10,7 @@ class SelectBookingSlot extends StatefulWidget {
   final PartnersModel partner;
   String payablePrice;
 
-  SelectBookingSlot({super.key, required this.partner,required this.payablePrice, required int finalPrice});
+  SelectBookingSlot({super.key, required this.partner,required this.payablePrice});
 
   @override
   State<SelectBookingSlot> createState() => _SelectBookingSlotState();
@@ -124,17 +122,17 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                       }
 
                       paymentProvider.openCheckout(
-                        context: context,
-                        partnerId: widget.partner.partnerId,
-                        name: widget.partner.name,
-                        serviceName: widget.partner.serviceName,
-                        originalPrice: widget.partner.originalPrice,
-                        workingImageUrl: widget.partner.workingImageUrl,
-                        quantity: cartProvider.quantity,
-                        selectedDate: _selectedDate,
-                        startTime: _startTime!,
-                        endTime: _endTime!,
-                        payablePrice: widget.payablePrice
+                          context: context,
+                          partnerId: widget.partner.partnerId,
+                          name: widget.partner.name,
+                          serviceName: widget.partner.serviceName,
+                          originalPrice: widget.partner.originalPrice,
+                          workingImageUrl: widget.partner.workingImageUrl,
+                          quantity: cartProvider.quantity,
+                          selectedDate: _selectedDate,
+                          startTime: _startTime!,
+                          endTime: _endTime!,
+                          payablePrice: widget.payablePrice
                       );
                     },
                     style: ElevatedButton.styleFrom(

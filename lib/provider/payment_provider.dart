@@ -62,9 +62,10 @@ class PaymentProvider with ChangeNotifier {
     this.startTime = startTime;
     this.endTime = endTime;
 
-    payableAmount = "${payablePrice * 100}";
 
     var price = int.parse(payablePrice);
+    payableAmount = "${price/100}";
+
     var orderId =await generateOrder(price);
     var options = {
       'key':'rzp_test_R7xQYpa54gC33c',
