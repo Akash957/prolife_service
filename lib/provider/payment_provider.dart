@@ -4,13 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:prolife_service/home_page_view/home_screen.dart';
 import 'package:prolife_service/notification/device_token_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../bottonNavigation/botton_nav.dart';
 import '../notification/send_notification_ToPartners.dart';
 import 'package:http/http.dart'as http;
-import 'package:firebase_auth/firebase_auth.dart';
+import '../getx_service/getx_screen.dart';
+
 
 import '../utils/functions/randomValues.dart';
 class PaymentProvider with ChangeNotifier {
@@ -18,6 +20,7 @@ class PaymentProvider with ChangeNotifier {
   BuildContext? context;
   DateTime selectedDate = DateTime.now();
   String payableAmount = "0.0";
+  final getxController = Get.put(GetService());
 
   registerRazorPay(){
     razorpay = Razorpay();
@@ -143,6 +146,10 @@ class PaymentProvider with ChangeNotifier {
     // );
     _storeBooking(paymentId: response.paymentId??"", status: "request", );
     _storePayment(paymentId: response.paymentId??"");
+
+    if(partnerId != null){
+      await getxController.removeItemFromCartById(partnerId!);
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -167,8 +174,7 @@ class PaymentProvider with ChangeNotifier {
 
   Future<void> _storeBooking({
     required String paymentId,
-    required String status,
-  }) async {
+    required String status}) async {
     // if (partnerId == null ||
     //     name == null ||
     //     serviceName == null ||
@@ -196,7 +202,6 @@ class PaymentProvider with ChangeNotifier {
         return;
       }
 
-
       print("Saving booking for userId: $userId");
       // var bookingDate =Timestamp.fromDate(selectedDate);
       var bookingStartTime = _simpleFormatTimeOfDay(startTime??TimeOfDay(hour: 10, minute: 1) , true);
@@ -220,6 +225,7 @@ class PaymentProvider with ChangeNotifier {
         'paymentId': paymentId,
         'timestamp':currentTime,
       };
+
       razorpay.clear();
       print("object stored");
 

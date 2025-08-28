@@ -1,7 +1,9 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:time_range/time_range.dart';
+import '../getx_service/getx_screen.dart';
 import '../models/partners_model.dart';
 import '../provider/payment_provider.dart';
 import '../provider/cart_provider.dart';
@@ -20,6 +22,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
+  final getxController = Get.put(GetService());
 
 
   @override
@@ -120,6 +123,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                         );
                         return;
                       }
+                    getxController.addToCart(widget.partner, context);
 
                       paymentProvider.openCheckout(
                           context: context,

@@ -135,6 +135,21 @@ class GetService extends GetxController {
       print('Error removing from cart: $e');
     }
   }
+
+  Future<void> removeItemFromCartById(String partnerId) async {
+    try{
+      final userCartRef = _firestore.collection('carts').doc(userId).collection('items');
+      final snapshot = await userCartRef.where("partner_id", isEqualTo: partnerId).get();
+      for(var doc in snapshot.docs){
+        await doc.reference.delete();
+      }
+      cartItems.removeWhere((item) => item.partnerId == partnerId);
+      print('Item removed from cart in Firestore!');
+    } catch (e) {
+      print('Error removing from cart: $e');
+    }
+  }
+
   Future<void> clearCart() async {
     try {
       final cartCollection =
