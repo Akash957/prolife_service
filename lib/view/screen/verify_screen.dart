@@ -165,7 +165,6 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 ),
                 SizedBox(height: screenHeight * 0.04),
 
-                // ✅ Pinput with controller
                 Pinput(
                   length: 6,
                   controller: otpController,
