@@ -118,13 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBox(
-              height: heightScreen * 0.3,
+              height: heightScreen * 0.33,
               child: Obx(
-                () => GridView.builder(
+                () =>
+                    GridView.builder(
                   itemCount: categoryController.categories.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
-                    mainAxisSpacing: 8,
+                    mainAxisSpacing: 2,
                     crossAxisSpacing: 8,
                     childAspectRatio: 0.7,
                   ),
@@ -135,15 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     return InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
-                        Get.to(() => ClickProduct(
-                              categoryName: category.name,
-                            ));
-                        categoryController
-                            .filterProductsByWorkType(category.name);
+                        Get.to(() => ClickProduct(categoryName: category.name,));
+                        categoryController.filterProductsByWorkType(category.name);
                       },
                       child: Card(
                         color: Colors.white,
-                        shadowColor: Colors.black.withOpacity(0.1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -191,14 +188,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Spacer(),
               ],
             ),
-            SizedBox(
-              height: heightScreen * 0.37,
-              child: Obx(() => ListView.builder(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: heightScreen * 0.37,
+                  child: Obx(() => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: categoryController.filteredProducts.length,
                     itemBuilder: (context, index) {
-                      final partner =
-                          categoryController.filteredProducts[index];
+                      final partner = categoryController.filteredProducts[index];
                       return Container(
                         width: widthScreen * 0.7,
                         child: Card(
@@ -212,9 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   RatingBarIndicator(
                                     rating: 4.5,
-                                    itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber),
+                                    itemBuilder: (context, _) =>
+                                    const Icon(Icons.star, color: Colors.amber),
                                     itemCount: 5,
                                     itemSize: 25,
                                   ),
@@ -231,14 +229,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               GlobalWidget.WorkNameText(
                                   context, partner.serviceName),
-                              SizedBox(width: 50),
+                              const SizedBox(width: 50),
                               Row(
                                 children: [
                                   GlobalWidget.BestServicesCircleAvatar2(
                                       context, partner.profileImage),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       GlobalWidget.workername(
                                           context, partner.name),
@@ -248,9 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   const Spacer(),
                                   GlobalWidget.ServicesProvideAddButton(
-                                    () {
-                                      Get.to(
-                                          ServiceDetailsPage(product: partner));
+                                        () {
+                                      Get.to(ServiceDetailsPage(product: partner));
                                     },
                                     context,
                                     "Add",
@@ -263,7 +259,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   )),
+                ),
+              ],
             )
+
           ],
         ),
       ),

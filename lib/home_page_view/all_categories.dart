@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../getx_service/getx_screen.dart';
 import 'click_on_categories.dart';
-
 class AllCategories extends StatefulWidget {
-  const AllCategories({super.key});
+  const AllCategories({
+    super.key,
+  });
 
   @override
   State<AllCategories> createState() => _AllCategoriesState();
@@ -17,10 +18,17 @@ class _AllCategoriesState extends State<AllCategories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("All Categories",style: TextStyle(color: Colors.black),),
+      appBar: AppBar(
+        title: const Text(
+          "All Categories",
+          style: TextStyle(color: Colors.black),
+        ),
         actions: [
           IconButton(
-            icon: Icon(showSearch ? Icons.close : Icons.search,color: Colors.black,),
+            icon: Icon(
+              showSearch ? Icons.close : Icons.search,
+              color: Colors.black,
+            ),
             onPressed: () {
               setState(() {
                 showSearch = !showSearch;
@@ -63,18 +71,21 @@ class _AllCategoriesState extends State<AllCategories> {
             : ListView.separated(
                 padding: const EdgeInsets.all(12),
                 itemCount: categoryController.categories.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 12),
+                separatorBuilder: (context, index) => const SizedBox(height: 0),
                 itemBuilder: (context, index) {
                   final category = categoryController.categories[index];
                   return InkWell(
                     onTap: () {
                       categoryController
                           .filterProductsByWorkType(category.name);
-                      Get.to(() => ClickProduct(categoryName: category.name,));
+                      Get.to(() => ClickProduct(
+                            categoryName: category.name,
+                          ));
                     },
                     borderRadius: BorderRadius.circular(16),
-                    child: Card(
+                    child:
+                    Card(
+                      elevation: 2,
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
@@ -147,3 +158,4 @@ class _AllCategoriesState extends State<AllCategories> {
     );
   }
 }
+

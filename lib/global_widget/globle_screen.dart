@@ -275,7 +275,6 @@ class GlobalWidget {
           ),
         ),
         TextSpan(
-            // text: "₹50",
             text: "${text2}",
             style: TextStyle(
               fontSize: 18,
@@ -335,13 +334,13 @@ class GlobalWidget {
           style: const TextStyle(
               overflow: TextOverflow.ellipsis,
               fontSize: 15,
-              fontStyle: FontStyle.italic)),
+              fontStyle: FontStyle.normal)),
     );
   }
 
   static Widget serviceType(BuildContext context, String text) {
     return Text(text,
-        style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic));
+        style: const TextStyle(fontSize: 18, fontStyle: FontStyle.normal));
   }
 
   static BestServiceImage(
