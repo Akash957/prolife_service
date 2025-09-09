@@ -18,6 +18,8 @@ class BookingModel {
   final DateTime timestamp;
   final String profileImage;
   final String discountPrice;
+  final String userName;
+  final String userPhone;
 
   BookingModel({
     required this.id,
@@ -35,6 +37,8 @@ class BookingModel {
     required this.bookingStatus,
     required this.paymentId,
     required this.timestamp,
+    required this.userName,
+    required this.userPhone,
     this.profileImage = '',
     this.discountPrice = '0',
   });
@@ -60,6 +64,8 @@ class BookingModel {
       timestamp: (data['timestamp'] as Timestamp?)?.toDate() ?? DateTime.now(),
       profileImage: data['profileImage'] ?? '',
       discountPrice: data['discountPrice'] ?? '0',
+      userName: data["userName"]??"",
+      userPhone: data["userPhone"]??"",
     );
   }
 }

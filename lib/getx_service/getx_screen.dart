@@ -11,6 +11,7 @@ class GetService extends GetxController {
   RxList filteredProducts = <PartnersModel>[].obs;
   RxList filteredProductsByType = <PartnersModel>[].obs;
   RxString selectedCategory = ''.obs;
+  RxList selectedItems = <int>[].obs;
 
   @override
   void onInit() {
