@@ -30,8 +30,8 @@ class _RatingScreenState extends State<RatingScreen> {
               ),
               onRatingUpdate: (rating) {
                 setState(() {
-                  selectedRating = rating;  // ⭐ Rating store karega
-                  reviewCount += 1;        // ⭐ Har bar ek review count badhega
+                  selectedRating = rating;
+                  reviewCount += 1;
                 });
               },
             ),

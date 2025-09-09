@@ -124,7 +124,7 @@ class _SelectBookingSlotState extends State<SelectBookingSlot> {
                       paymentProvider.openCheckout(
                           context: context,
                           partnerId: widget.partner.partnerId,
-                          name: widget.partner.name,
+                          partnerName: widget.partner.partnerName,
                           serviceName: widget.partner.serviceName,
                           originalPrice: widget.partner.originalPrice,
                           workingImageUrl: widget.partner.workingImageUrl,

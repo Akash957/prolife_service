@@ -70,8 +70,8 @@ class _AllCategoriesState extends State<AllCategories> {
                   return InkWell(
                     onTap: () {
                       categoryController
-                          .filterProductsByWorkType(category.name);
-                      Get.to(() => ClickProduct(categoryName: category.name,));
+                          .filterProductsByWorkType(category.userName);
+                      Get.to(() => ClickProduct(categoryName: category.userName,));
                     },
                     borderRadius: BorderRadius.circular(16),
                     child: Card(
@@ -117,7 +117,7 @@ class _AllCategoriesState extends State<AllCategories> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    category.name,
+                                    category.userName,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,

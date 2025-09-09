@@ -38,7 +38,7 @@ class PaymentProvider with ChangeNotifier {
     razorpay.clear();
   }
 
-  String? partnerId, name, serviceName, originalPrice, workingImageUrl;
+  String? partnerId, partnerName, serviceName, originalPrice, workingImageUrl;
   int? quantity;
 
   TimeOfDay? startTime;
@@ -47,7 +47,7 @@ class PaymentProvider with ChangeNotifier {
   void openCheckout({
     required BuildContext context,
     required String partnerId,
-    required String name,
+    required String partnerName,
     required String serviceName,
     required String originalPrice,
     required String workingImageUrl,
@@ -56,10 +56,11 @@ class PaymentProvider with ChangeNotifier {
     required TimeOfDay startTime,
     required TimeOfDay endTime,
     required payablePrice
-  }) async {
+  })
+  async {
     this.context = context;
     this.partnerId = partnerId;
-    this.name = name;
+    this.partnerName = partnerName;
     this.serviceName = serviceName;
     this.originalPrice = originalPrice;
     this.workingImageUrl = workingImageUrl;
@@ -67,6 +68,7 @@ class PaymentProvider with ChangeNotifier {
     this.selectedDate = selectedDate;
     this.startTime = startTime;
     this.endTime = endTime;
+
 
 
     var price = int.parse(payablePrice);
@@ -78,7 +80,7 @@ class PaymentProvider with ChangeNotifier {
       'amount': "$price",
       'name': "$serviceName",
       'order_id': orderId,
-      'description': "$name",
+      'description': "$partnerName",
       'image': "$workingImageUrl",
       'prefill': {
         'contact': '8292448021',
@@ -192,13 +194,13 @@ class PaymentProvider with ChangeNotifier {
     // var bookingDate =Timestamp.fromDate(selectedDate);
     var userProvider = Provider.of<ProfileProvider>(context!, listen: false);
     var addressProvider = Provider.of<AddressProvider>(context!, listen: false);
-    var userName = "${userProvider.userData?['name']}";
+    var userName = "${userProvider.userData?['userName']}";
     var userEmail = "${userProvider.userData?['email']}";
     var userPhone = "${userProvider.userData?['phone']}";
     var selectedAddress = addressProvider.selectedAddress;
-    var pinCode ="${ selectedAddress?.pincode}";
-    var areaName ="${ selectedAddress?.areaName}";
-    var buildingName ="${ selectedAddress?.buildingName}";
+    var pinCode ="${selectedAddress?.pinCode}";
+    var areaName ="${selectedAddress?.areaName}";
+    var buildingName ="${selectedAddress?.buildingName}";
     var bookingStartTime = _simpleFormatTimeOfDay(
         startTime ?? TimeOfDay(hour: 10, minute: 1), true);
     var bookingEndTime = _simpleFormatTimeOfDay(
@@ -211,7 +213,7 @@ class PaymentProvider with ChangeNotifier {
       'bookingId': "${docRef.id}",
       'userId': "$userId",
       'partnerId': "$partnerId",
-      'name': "$name",
+      'partnerName': "$partnerName",
       'serviceName': "$serviceName",
       'originalPrice': payableAmount,
       'workingImageUrl': "$workingImageUrl",
@@ -225,14 +227,15 @@ class PaymentProvider with ChangeNotifier {
       'userName' : userName,
       'userPhone': userPhone,
       'userEmail': userEmail,
-      'pincode': pinCode,
+      'pinCode': pinCode,
       'areaName': areaName,
       'buildingName':buildingName
     };
+    await docRef.set(bookingDetails);
+
     razorpay.clear();
     print("object stored");
 
-    await docRef.set(bookingDetails);
 
     DeviceTokenServices.getDeviceToken("$partnerId").then(
           (value) {
@@ -240,8 +243,8 @@ class PaymentProvider with ChangeNotifier {
           print("Notification sending");
           SendNotificationToPartners().sendNotificationToPartners(
               token: value,
-              message: "You have new booking from $name",
-              otherUid: "$partnerId",
+              message: "You have new booking from $userName",
+              otherUid: "$userId",
               title: "Booking Request");
         }
       },
@@ -249,7 +252,7 @@ class PaymentProvider with ChangeNotifier {
     debugPrint("Booking saved with ID: ${docRef.id} for userId: $userId");
 
     Fluttertoast.showToast(
-      msg: "Booking confirmed!",
+      msg: "Booking confirmed!$serviceName",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Colors.blue,
@@ -284,7 +287,7 @@ class PaymentProvider with ChangeNotifier {
       await FirebaseFirestore.instance.collection('user_payments').add({
         'userId': userId,
         'partnerId': partnerId,
-        'name': name,
+        'partnerName': partnerName,
         'serviceName': serviceName,
         'amountPaid': (int.parse(originalPrice!) * quantity!).toString(),
         'quantity': quantity,
@@ -295,7 +298,7 @@ class PaymentProvider with ChangeNotifier {
       });
       debugPrint("Payment saved successfully!");
       Navigator.push(context!,
-          MaterialPageRoute(builder: (context) => const HomeScreen(),));
+          MaterialPageRoute(builder: (context) => BottomNavScreen(),));
     } catch (e) {
       debugPrint("Error saving payment: $e");
     }

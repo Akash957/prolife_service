@@ -84,7 +84,7 @@ class ClickProduct extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                GlobalWidget.workername(context, partner.name),
+                                GlobalWidget.workername(context, partner.userName),
                                 const SizedBox(height: 1),
                                 GlobalWidget.serviceType(
                                     context, partner.workType),

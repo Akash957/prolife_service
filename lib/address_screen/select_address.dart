@@ -87,8 +87,8 @@ class _SelectAddressState extends State<SelectAddress> {
                       final address = addresses[index];
                       final title = address.addressType ?? "Address";
                       final subtitle =
-                          "${address.name ?? ''}, ${address.buildingName ?? ''}, ${address.areaName ?? ''}\n"
-                          "${address.city ?? ''} - ${address.pincode ?? ''}, ${address.state ?? ''}";
+                          "${address.userName ?? ''}, ${address.buildingName ?? ''}, ${address.areaName ?? ''}\n"
+                          "${address.city ?? ''} - ${address.pinCode ?? ''}, ${address.state ?? ''}";
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),

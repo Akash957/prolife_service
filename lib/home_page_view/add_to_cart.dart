@@ -76,7 +76,7 @@ class CartScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Price: ₹${item.originalPrice}'),
-                        Text('Service: ${item.name}'),
+                        Text('Service: ${item.partnerName}'),
                       ],
                     ),
                     trailing: TextButton(

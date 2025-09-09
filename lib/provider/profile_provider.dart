@@ -21,7 +21,7 @@ class ProfileProvider extends ChangeNotifier {
           .get();
       userData = snapshot.data();
       if (userData != null) {
-        nameController.text = userData?['name'] ?? '';
+        nameController.text = userData?['userName'] ?? '';
         emailController.text = userData?['email'] ?? '';
         phoneController.text = userData?['phone'] ?? '';
       }
@@ -43,7 +43,7 @@ class ProfileProvider extends ChangeNotifier {
       }
 
       final updatedData = {
-        'name': nameController.text,
+        'userName': nameController.text,
         'email': emailController.text,
         'phone': phoneController.text,
         'imageUrl': imageUrl,
