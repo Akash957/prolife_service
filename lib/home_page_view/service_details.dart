@@ -92,7 +92,7 @@ class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${widget.product.name}",
+                        "${widget.product.partnerName}",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

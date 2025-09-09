@@ -7,10 +7,10 @@ String addressModelToJson(AddressModel data) => json.encode(data.toJson());
 
 class AddressModel {
   String? addressId;
-  String? name;
+  String? userName;
   String? phoneNumber;
   String? alternateNumber;
-  String? pincode;
+  String? pinCode;
   String? city;
   String? state;
   String? buildingName;
@@ -20,10 +20,10 @@ class AddressModel {
 
   AddressModel(
       {this.addressId,
-      this.name,
+      this.userName,
       this.phoneNumber,
       this.alternateNumber,
-      this.pincode,
+      this.pinCode,
       this.city,
       this.state,
       this.buildingName,
@@ -33,10 +33,10 @@ class AddressModel {
 
   factory AddressModel.fromJson(Map<String, dynamic> json) => AddressModel(
       addressId: json["addressId"],
-      name: json["name"],
+      userName: json["name"],
       phoneNumber: json["phoneNumber"],
       alternateNumber: json["AlternateNumber"],
-      pincode: json["pincode"],
+      pinCode: json["pincode"],
       city: json["city"],
       state: json["state"],
       buildingName: json["buildingName"],
@@ -46,10 +46,10 @@ class AddressModel {
 
   Map<String, dynamic> toJson() => {
         "addressId": addressId,
-        "name": name,
+        "name": userName,
         "phoneNumber": phoneNumber,
         "AlternateNumber": alternateNumber,
-        "pincode": pincode,
+        "pincode": pinCode,
         "city": city,
         "state": state,
         "buildingName": buildingName,

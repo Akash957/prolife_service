@@ -116,7 +116,7 @@ class ShavedAddressScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            address.name ?? "",
+                            address.userName ?? "",
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -150,7 +150,7 @@ class ShavedAddressScreen extends StatelessWidget {
                         style: const TextStyle(color: Colors.black54),
                       ),
                       Text(
-                        "${address.city ?? ""} - ${address.pincode ?? ""}, ${address.state ?? ""}",
+                        "${address.city ?? ""} - ${address.pinCode ?? ""}, ${address.state ?? ""}",
                         style: const TextStyle(color: Colors.black54),
                       ),
                       Row(

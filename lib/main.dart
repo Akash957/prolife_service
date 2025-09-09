@@ -26,7 +26,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundHandler);
   FirebaseMessaging.onMessage.listen((event) {
 
-    // NotificationService().showNotification(event.notification);
+    NotificationService().showNotification(event);
   },);
 
 

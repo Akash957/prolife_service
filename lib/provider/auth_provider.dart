@@ -73,7 +73,7 @@ class AuthProvider with ChangeNotifier {
     if (!userDoc.exists) {
       final newUser = UserModel(
         id: user.uid,
-        name: user.displayName ?? '',
+        userName: user.displayName ?? '',
         email: user.email ?? '',
         imageUrl: user.photoURL,
         phone: '',

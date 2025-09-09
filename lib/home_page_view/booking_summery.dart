@@ -329,7 +329,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 const SizedBox(height: 4),
                 Text(
                   selectedAddress != null
-                      ? "${selectedAddress?.name ?? ''}, ${selectedAddress?.buildingName ?? ''}, ${selectedAddress?.areaName ?? ''}, ${selectedAddress?.city ?? ''} - ${selectedAddress?.pincode ?? ''}, ${selectedAddress?.state ?? ''}"
+                      ? "${selectedAddress?.userName ?? ''}, ${selectedAddress?.buildingName ?? ''}, ${selectedAddress?.areaName ?? ''}, ${selectedAddress?.city ?? ''} - ${selectedAddress?.pinCode ?? ''}, ${selectedAddress?.state ?? ''}"
                       : "Tap to select your address",
                   style: const TextStyle(
                     fontSize: 13,

@@ -33,14 +33,12 @@ class GetService extends GetxController {
         },
       ).toList();
 
-      final productSnapshot =
-      await FirebaseFirestore.instance.collection('partners').get();
-      partnerList.value = productSnapshot.docs.map(
-            (doc) {
+      final productSnapshot =      await FirebaseFirestore.instance.collection('partners').get();
+      partnerList.value = productSnapshot.docs.map(            (doc) {
           final data = doc.data();
           return PartnersModel(
             partnerId: "${data["partner_id"]}",
-            name: "${data["name"]}",
+            partnerName: "${data["partnerName"]}",
             profileImage: "${data["profileImage"]}",
             workType: "${data["workType"]}",
             workingImageUrl: "${data["workingImageUrl"]}",
@@ -78,7 +76,7 @@ class GetService extends GetxController {
 
       // SelectedCategory ko first match bana do agar available ho
       if (filtered.isNotEmpty) {
-        selectedCategory.value = filtered.first.name;
+        selectedCategory.value = filtered.first.userName;
         categories.value = filtered;
       } else {
         categories.clear();
@@ -104,7 +102,7 @@ class GetService extends GetxController {
       final newItemRef = await userCartRef.add(partner.toMap());
       cartItems.add(PartnersModel(
         partnerId: newItemRef.id,
-        name: partner.name,
+        partnerName: partner.partnerName,
         profileImage: partner.profileImage,
         serviceName: partner.serviceName,
         discountPrice: partner.discountPrice,
@@ -164,7 +162,7 @@ class GetService extends GetxController {
         final partner = PartnersModel.fromMap(data);
         temp.add(PartnersModel(
           partnerId: doc.id,
-          name: partner.name,
+          partnerName: partner.partnerName,
           profileImage: partner.profileImage,
           serviceName: partner.serviceName,
           discountPrice: partner.discountPrice,

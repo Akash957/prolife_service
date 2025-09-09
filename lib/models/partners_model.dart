@@ -1,6 +1,6 @@
 class PartnersModel {
   final String partnerId;
-  final String name;
+  final String partnerName;
   final String profileImage;
   final String workType;
   final String workingImageUrl;
@@ -10,7 +10,7 @@ class PartnersModel {
 
   PartnersModel({
     required this.partnerId,
-    required this.name,
+    required this.partnerName,
     required this.profileImage,
     required this.workType,
     required this.workingImageUrl,
@@ -22,7 +22,7 @@ class PartnersModel {
   factory PartnersModel.fromMap(Map<String, dynamic> map) {
     return PartnersModel(
       partnerId: map['partner_id'] ?? '',
-      name: map['name'] ?? '',
+      partnerName: map['partnerName'] ?? '',
       profileImage: map['profileImage'] ?? '',
       workType: map['workType'] ?? '',
       workingImageUrl: map['workingImageUrl'] ?? '',
@@ -35,7 +35,7 @@ class PartnersModel {
   Map<String, dynamic> toMap() {
     return {
       'partner_id': partnerId,
-      'name': name,
+      'partnerName': partnerName,
       'profileImage': profileImage,
       'workType': workType,
       'workingImageUrl': workingImageUrl,

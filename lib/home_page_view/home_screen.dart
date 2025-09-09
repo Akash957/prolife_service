@@ -136,10 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
                         Get.to(() => ClickProduct(
-                              categoryName: category.name,
+                              categoryName: category.userName,
                             ));
                         categoryController
-                            .filterProductsByWorkType(category.name);
+                            .filterProductsByWorkType(category.userName);
                       },
                       child: Card(
                         color: Colors.white,
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       GlobalWidget.workername(
-                                          context, partner.name),
+                                          context, partner.partnerName),
                                       GlobalWidget.serviceType(
                                           context, partner.workType),
                                     ],

@@ -16,7 +16,7 @@ class AddressProvider with ChangeNotifier {
   final TextEditingController roadNameController = TextEditingController();
   final TextEditingController cityNameController = TextEditingController();
   final TextEditingController stateNameController = TextEditingController();
-
+  AddressModel? selectedAddress;
   List<AddressModel> _address = [];
   bool _isLoading = false;
 
@@ -32,10 +32,10 @@ class AddressProvider with ChangeNotifier {
   }
 
   void setControllerWithData(AddressModel address){
-    nameController.text = address.name!;
+    nameController.text = address.userName!;
     personalNumberController.text = address.phoneNumber!;
     alternateNumberController.text = address.alternateNumber!;
-    pinCodeController.text = address.pincode!;
+    pinCodeController.text = address.pinCode!;
     cityNameController.text = address.city!;
     stateNameController.text = address.state!;
     houseNameController.text = address.buildingName!;
@@ -47,10 +47,10 @@ class AddressProvider with ChangeNotifier {
     try {
       final address = AddressModel(
         addressId: firestore.collection('address').doc().id,
-        name: nameController.text.trim(),
+        userName: nameController.text.trim(),
         phoneNumber: personalNumberController.text.trim(),
         alternateNumber: alternateNumberController.text.trim(),
-        pincode: pinCodeController.text.trim(),
+        pinCode: pinCodeController.text.trim(),
         city: cityNameController.text.trim(),
         state: stateNameController.text.trim(),
         buildingName: houseNameController.text.trim(),
@@ -94,10 +94,10 @@ class AddressProvider with ChangeNotifier {
     try {
       final updatedAddress = AddressModel(
         addressId: addressId,
-        name: nameController.text.trim(),
+        userName: nameController.text.trim(),
         phoneNumber: personalNumberController.text.trim(),
         alternateNumber: alternateNumberController.text.trim(),
-        pincode: pinCodeController.text.trim(),
+        pinCode: pinCodeController.text.trim(),
         city: cityNameController.text.trim(),
         state: stateNameController.text.trim(),
         buildingName: houseNameController.text.trim(),
