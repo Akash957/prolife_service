@@ -1,6 +1,6 @@
 import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:prolife_service/view/screen/verify_screen.dart';
 import 'package:provider/provider.dart';
 import '../../provider/auth_provider.dart';
 
@@ -17,11 +17,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String flagEmoji = "🇮🇳";
   final TextEditingController _phoneController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<UserAuthProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -168,5 +169,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.signOut();
   }
 }

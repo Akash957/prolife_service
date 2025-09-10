@@ -23,15 +23,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProfileProvider>(context, listen: false).getUserData();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
+    Provider.of<ProfileProvider>(context, listen: false).getUserData();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, provider, child) {
           final imageUrl = provider.userData?['imageUrl'];
           final email = provider.userData?['email'] ?? 'user@example.com';
-          final name = provider.userData?['name'] ?? 'Loading...';
+          final name = provider.userData?['userName'] ?? 'Loading...';
 
           return CustomScrollView(
             slivers: [
@@ -304,14 +304,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   icon: const Icon(Icons.exit_to_app),
                                   label: Text('Logout'.tr),
                                   onPressed: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop();
-                                    Future.delayed(
-                                        const Duration(milliseconds: 100), () {
-                                      Provider.of<AuthProvider>(context,
-                                              listen: false)
-                                          .signOut(context);
-                                    });
+
+                                    Provider.of<UserAuthProvider>(context,
+                                        listen: false)
+                                        .signOut(context);
                                   },
                                 ),
                               ],

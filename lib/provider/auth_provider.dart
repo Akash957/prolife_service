@@ -4,13 +4,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:prolife_service/view/screen/singup_screen.dart';
 
+import '../bottonNavigation/botton_nav.dart';
 import '../home_page_view/home_screen.dart';
 import '../models/user_model.dart';
 import '../notification/device_token_services.dart';
+import '../profile_screen/store_user_details.dart';
 import '../view/screen/account_create_successfully.dart';
 import '../view/screen/verify_screen.dart';
 
-class AuthProvider with ChangeNotifier {
+class UserAuthProvider with ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -18,7 +20,7 @@ class AuthProvider with ChangeNotifier {
   UserModel? currentUserModel;
   bool isLoading = false;
 
-  AuthProvider() {
+  UserAuthProvider() {
     auth.authStateChanges().listen((user) async {
       currentUser = user;
       if (user != null) {
@@ -91,24 +93,16 @@ class AuthProvider with ChangeNotifier {
   Future<void> signOut(BuildContext context) async {
     try {
       setLoading(true);
-      await googleSignIn.signOut().catchError((e) {
-        debugPrint("Google Sign Out Error: $e");
-      });
-      await auth.signOut().catchError((e) {
-        debugPrint("Firebase Sign Out Error: $e");
-      });
+      await auth.signOut();
       currentUserModel = null;
-      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const SignUpScreen()),
-        (route) => false,
-      );
 
-      notifyListeners();
     } catch (e) {
       debugPrint("Sign Out Error: $e");
       rethrow;
     } finally {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const SignUpScreen()), (route) => false,);
       setLoading(false);
+      notifyListeners();
     }
   }
 
@@ -147,7 +141,7 @@ class AuthProvider with ChangeNotifier {
         isOtpSent = true;
         _setLoading(false);
         notifyListeners();
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OtpVerifyScreen(),));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OtpVerifyScreen(phoneNumber:  '+91$phoneNumber'),));
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         _verificationId = verificationId;
@@ -155,7 +149,7 @@ class AuthProvider with ChangeNotifier {
     );
   }
 
-  Future<void> verifyOtp(String otp, BuildContext context) async {
+  Future<String> verifyOtp(String otp, BuildContext context, String phoneNumber) async {
     _setLoading(true);
     try {
       final credential = PhoneAuthProvider.credential(
@@ -164,15 +158,25 @@ class AuthProvider with ChangeNotifier {
 
       );
       await auth.signInWithCredential(credential);
+
+      var checkUser =await checkAlreadyRegister();
       _setLoading(false);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+      return checkUser;
 
     } catch (e) {
       _setLoading(false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid OTP")),
-      );
+     return "";
+
     }
+  }
+  Future<String> checkAlreadyRegister()async{
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    var result =await FirebaseFirestore.instance.collection("users").doc(userId).get();
+    if(result.data() != null){
+      return "${result.data()?.entries.first.value}";
+    }
+    return "";
   }
 
   Future<void> logout(BuildContext context) async {
@@ -181,12 +185,8 @@ class AuthProvider with ChangeNotifier {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const OtpVerifyScreen()),
+      MaterialPageRoute(builder: (context) => const OtpVerifyScreen(phoneNumber: '',)),
           (route) => false,
     );
   }
-
-
-
-
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -59,4 +60,38 @@ class ProfileProvider extends ChangeNotifier {
       debugPrint('Error updating profile: $e');
     }
   }
+
+  Future<void> saveProfile({File? imageFile}) async {
+    try {
+      String? imageUrl = userData?['imageUrl'];
+
+      if (imageFile != null) {
+        final storageRef =
+        FirebaseStorage.instance.ref().child('user_images/$_userId.jpg');
+        await storageRef.putFile(imageFile);
+        imageUrl = await storageRef.getDownloadURL();
+      }
+
+      var fcmToken =await FirebaseMessaging.instance.getToken();
+      final updatedData = {
+        'userId':_userId,
+        'userName': nameController.text,
+        'email': emailController.text,
+        'phone': phoneController.text,
+        'imageUrl': imageUrl,
+        'deviceToken' : '$fcmToken'
+      };
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_userId)
+          .set(updatedData);
+      Fluttertoast.showToast(msg: 'Profile created successfully');
+      await getUserData();
+    } catch (e) {
+      debugPrint('Error updating profile: $e');
+    }
+  }
+
+
 }

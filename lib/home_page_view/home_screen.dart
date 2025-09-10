@@ -136,10 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
                         Get.to(() => ClickProduct(
-                              categoryName: category.userName,
+                              categoryName: category.name,
                             ));
                         categoryController
-                            .filterProductsByWorkType(category.userName);
+                            .filterProductsByWorkType(category.name);
                       },
                       child: Card(
                         color: Colors.white,
