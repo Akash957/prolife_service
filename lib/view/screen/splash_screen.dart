@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:prolife_service/view/onboarding/onboarding_screen.dart';
 import 'dart:async';
 import '../../bottonNavigation/botton_nav.dart';
+import '../../location_permission_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), _checkAuthState);
+    Timer(
+      const Duration(seconds: 2),
+      () async {
+        await LocationPermissionService.requestLocationPermission(context);
+        _checkAuthState();
+      },
+    );
   }
 
   void _checkAuthState() async {
