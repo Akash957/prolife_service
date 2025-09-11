@@ -106,10 +106,13 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
+import '../../bottonNavigation/botton_nav.dart';
+import '../../profile_screen/store_user_details.dart';
 import '../../provider/auth_provider.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
-  const OtpVerifyScreen({super.key});
+  final String phoneNumber;
+  const OtpVerifyScreen({super.key ,required this.phoneNumber});
 
   @override
   State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
@@ -126,7 +129,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+    final authProvider = Provider.of<UserAuthProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -190,10 +193,19 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                       ),
                     ),
                     onPressed: otpController.text.length == 6
-                        ? () => authProvider.verifyOtp(
+                        ? () =>
+                        authProvider.verifyOtp(
                       otpController.text.trim(), // ✅ ab string milega
                       context,
-                    )
+                      widget.phoneNumber
+                    ).then((value) {
+                          if(value =="null" ||value =="" ){
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => StoreUserDetails(phoneNumber: widget.phoneNumber,),));
+
+                          }else{
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavScreen(),));
+                          }
+                    },)
                         : null,
                     child: const Text(
                       "Verify",

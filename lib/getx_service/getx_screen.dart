@@ -35,10 +35,10 @@ class GetService extends GetxController {
       ).toList();
 
       final productSnapshot =      await FirebaseFirestore.instance.collection('partners').get();
-      partnerList.value = productSnapshot.docs.map(            (doc) {
+      partnerList.value = productSnapshot.docs.map((doc) {
           final data = doc.data();
           return PartnersModel(
-            partnerId: "${data["partner_id"]}",
+            partnerId: "${data["partnerId"]}",
             partnerName: "${data["partnerName"]}",
             profileImage: "${data["profileImage"]}",
             workType: "${data["workType"]}",
@@ -77,7 +77,7 @@ class GetService extends GetxController {
 
       // SelectedCategory ko first match bana do agar available ho
       if (filtered.isNotEmpty) {
-        selectedCategory.value = filtered.first.userName;
+        selectedCategory.value = filtered.first.name;
         categories.value = filtered;
       } else {
         categories.clear();
